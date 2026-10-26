@@ -1,0 +1,23 @@
+# Indicador 11
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Cobertura de acciones para prevención del cáncer de mama en población objetivo
+- **Objetivo del indicador:** Monitorear cobertura de mamografías en población objetivo
+- **Meta anual:** 70,00%
+- **Responsable de medición:** Establecimiento de Salud
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 1 del Formulario A1 de la Subsecretaría de Redes Asistenciales
+- **Unidad de medida:** Porcentaje
+- **Tipo de indicador:** Proceso
+- **Dimensión que aborda:** Eficiencia
+- **Fórmula de Cálculo:** (N° de mujeres de 50 a 69 años adscritas con mamografía vigente a diciembre de 2025 / N° total de mujeres de 50 a 69 años adscritas para el año 2025) x 100
+- **Fuente de información del Numerador:** REM P12
+- **Fuente de información del Denominador:** FONASA - Población adscrita provista al momento de fijación de meta
+- **Número de decimales:** 2 decimales con resultado truncado
+- **Periodicidad de Medición:** Semestral
+- **Nivel de aplicación:** Establecimiento de Salud
+- **Definición de términos:**
+    - Población Adscrita: usuarios inscritos y validados en establecimientos dependientes de Servicios de Salud
+    - Mamografía vigente: realizada durante los últimos 2 años
+- **División que lo monitorea:** DIVAP

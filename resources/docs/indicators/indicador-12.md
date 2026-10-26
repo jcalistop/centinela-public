@@ -1,0 +1,24 @@
+# Indicador 12
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Llamadas al 131 contestadas en menos de 10 segundos
+- **Objetivo del indicador:** Velar por la oportunidad en la atención telefónica en los Centros de Atención Prehospitalaria, optimizando el tiempo de respuesta de llamados realizados por la población.
+- **Meta anual:** 90,00%
+- **Responsable de medición:** Establecimiento de Salud
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 3 del formulario A1 de la Subsecretaría de Redes Asistenciales
+- **Unidad de medida:** Porcentual
+- **Tipo de indicador:** Producción
+- **Dimensión que aborda:** Calidad
+- **Fórmula de Cálculo:** (Número de llamadas al 131 contestadas en menos de 10 segundos / (Número de llamadas totales entrantes a 131 - número de llamadas abandonadas antes de 3 segundos de espera)) x 100
+- **Fuente de información del Numerador:** Datos extraídos del Distribuidor automático de llamadas (ACD)
+- **Fuente de información del Denominador:** Datos extraídos del Distribuidor automático de llamadas (ACD)
+- **Número de decimales:** 2 decimales con resultado truncado
+- **Periodicidad de Medición:** Trimestral
+- **Nivel de aplicación:** Centros Regulador SAMU
+- **Definición de términos:**
+    - Llamada entrante: iniciada por el solicitante, dirigida al Centro Regulador SAMU, duración en cola de al menos 3 segundos.
+    - Llamada contestada: respondida por operador; puede establecerse comunicación.
+    - Llamada abandonada antes de 3 segundos (Ghost): abandona antes de los primeros 3 segundos.
+- **División que lo monitorea:** DIGERA

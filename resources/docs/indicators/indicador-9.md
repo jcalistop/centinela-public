@@ -1,0 +1,24 @@
+# Indicador 9
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Cobertura de capacitación de personal de salud de atención directa y unidades de apoyo en seguridad de la atención
+- **Objetivo del indicador:** Fortalecer y actualizar el conocimiento de funcionarios de salud en seguridad de la atención, para contribuir a mejorar la cultura de seguridad de la organización y la adherencia a prácticas preventivas propias de la seguridad de la atención.
+- **Meta anual:** 80,00%
+- **Responsable de medición:** Establecimiento de Salud
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 3 del Formulario A1 de la Subsecretaria de Redes Asistenciales
+- **Unidad de medida:** Porcentaje
+- **Tipo de indicador:** Producto
+- **Dimensión que aborda:** Seguridad de la atención
+- **Fórmula de Cálculo:** (N° de personal de salud de atención directa y unidades de apoyo con curso de seguridad de la atención aprobado con antigüedad menor o igual a 5 años / N° total de personal de salud de atención directa y unidades de apoyo) x 100
+- **Fuente de información del Numerador:** SIRH
+- **Fuente de información del Denominador:** SIRH
+- **Número de decimales:** 2 decimales con resultado truncado
+- **Periodicidad de Medición:** Semestral
+- **Nivel de aplicación:** Establecimientos de Salud de Atención Cerrada
+- **Definición de términos:**
+    - Personal de salud de atención clínica directa y unidades de apoyo: funcionarios que realizan atención práctica junto a unidades de apoyo clínico.
+    - Unidad de apoyo clínico: unidades destinadas a colaborar y complementar la atención de los pacientes.
+    - Capacitación en seguridad de la atención: curso certificado y validado por el Departamento de Seguridad y Calidad de los Servicios de Salud. Mínimo 20 horas, vigencia 5 años. Temas: calidad, errores, gestión de riesgos, eventos adversos.
+- **División que lo monitorea:** DIGERA

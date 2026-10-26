@@ -1,0 +1,22 @@
+# Indicador 4
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Pacientes con indicación de hospitalización desde UEH, que acceden a cama de dotación en menos de 12 horas
+- **Objetivo del indicador:** Fortalecer y optimizar procesos clínicos críticos
+- **Meta anual:** > 85,00%
+- **Responsable de medición:** Establecimientos de salud con UEH
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 2 y 5 del Formulario A1 de la Subsecretaria de Redes Asistenciales
+- **Unidad de medida:** Porcentaje
+- **Tipo de indicador:** Proceso
+- **Dimensión que aborda:** Eficacia
+- **Fórmula de Cálculo:** (Número total de pacientes con indicación de hospitalización que espera en UEH en un tiempo menor a 12 horas para acceder a cama de dotación / Número total de pacientes con indicación de hospitalización en UEH) x 100
+- **Fuente de información del Numerador:** REM 08 Sección D
+- **Fuente de información del Denominador:** REM 08 Sección D
+- **Número de decimales:** 2 decimales con resultado truncado
+- **Periodicidad de Medición:** Trimestral
+- **Nivel de aplicación:** Establecimientos con UEH que realizan hospitalizaciones adulto y/o pediátricas (excluida obstétrica)
+- **Definición de términos:**
+    - Pacientes con indicación de hospitalización: Son aquellos pacientes en que el profesional médico, decide que debe acceder a una cama hospitalaria o cupo de hospitalización domiciliaria, para recibir en forma inmediata atención médica, ya sea diagnóstica o terapéutica, pues de no mediar esta situación, él puede sufrir daño permanente. Esto es independiente si el paciente espera en camilla, silla u otros. Lo importante es la indicación de hospitalización.
+- **División que lo monitorea:** DIGERA

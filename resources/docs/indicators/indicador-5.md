@@ -1,0 +1,24 @@
+# Indicador 5 (texto definitivo)
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Reducción de los casos en Lista de espera con antigüedad sobre el percentil 75, para intervenciones quirúrgicas (IQ) electivas mayores y menores
+- **Objetivo del indicador:** Disminuir la LE para IQ mayores y menores, con mayor antigüedad
+- **Meta anual:** > 80,00% de casos con antigüedad calculados sobre el P.75
+- **Responsable de medición:** Establecimientos de Salud
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 2 y 5 del Formulario A1 de la Subsecretaria de Redes Asistenciales
+- **Unidad de medida:** Porcentaje
+- **Tipo de indicador:** Producto
+- **Dimensión que aborda:** Eficiencia
+- **Fórmula de Cálculo:** (Número de casos disminuidos de la Lista de Espera de intervenciones quirúrgicas (IQ) electivas mayores y menores sobre el percentil 75 al corte del 31 de diciembre 2024 / Total de casos en la Lista de Espera de intervenciones quirúrgicas (IQ) electivas mayores y menores sobre el percentil 75 al corte del 31 de diciembre 2024) x 100
+- **Fuente de información del Numerador:** SIGTE
+- **Fuente de información del Denominador:** SIGTE
+- **Número de decimales:** 1 decimal aproximado
+- **Periodicidad de Medición:** Trimestral
+- **Nivel de aplicación:** Establecimientos de Salud
+- **Definición de términos:**
+    - Percentil 75: Corresponde al 25% de los casos más antiguos de la lista de espera.
+    - Intervención quirúrgica electiva mayor: Es la intervención quirúrgica mayor que, por el tipo de diagnóstico y las características clínicas del paciente puede ser diferida en el tiempo para su realización y programada en tabla quirúrgica.
+    - Cirugía menor: Es una intervención quirúrgica médica u odontológica efectuada en un quirófano de cirugía menor, independiente de si los fines son diagnósticos, terapéuticos o estéticos. Dichas intervenciones involucran manipulación mecánica de las estructuras del cuerpo humano - excepto globo ocular y ablación corneal - incisión de la piel, mucosa y otros planos, acceso instrumental a vías o conductos naturales del organismo que requieren ser realizados con técnicas asépticas de máxima barrera; éstas no requieren hospitalización de la persona intervenida, podrán hacer uso de anestesia local y/o sedación consciente de corta duración, cuya realización conlleva bajo riesgo y mínimas complicaciones post quirúrgicas.
+- **División que lo monitorea:** DIGERA

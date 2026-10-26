@@ -1,0 +1,376 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Centinela Agent API v1",
+    "version": "1.0.0",
+    "description": "Fachada de lectura P3a (ADR-041 / SDD-249). Solo GET. Contrato neutral: instrumento como atributo."
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health extendido",
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/years": {
+      "get": {
+        "summary": "Catálogo de años",
+        "operationId": "getYears",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/context": {
+      "get": {
+        "summary": "Contexto año/SS del request",
+        "operationId": "getContext",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/instrumentos": {
+      "get": {
+        "summary": "Instrumentos disponibles",
+        "operationId": "getInstrumentos",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/compromisos": {
+      "get": {
+        "summary": "Compromisos COMGES (paginado)",
+        "operationId": "getCompromisos",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/indicadores": {
+      "get": {
+        "summary": "Listado indicadores neutrales",
+        "operationId": "getIndicadores",
+        "parameters": [
+          {
+            "name": "instrumento",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "comges",
+                "metas"
+              ]
+            }
+          },
+          {
+            "name": "ley",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/indicadores/{id}": {
+      "get": {
+        "summary": "Detalle indicador",
+        "operationId": "getIndicador",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "instrumento",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "comges",
+                "metas"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No encontrado"
+          }
+        }
+      }
+    },
+    "/search": {
+      "get": {
+        "summary": "Búsqueda unificada de indicadores COMGES+Metas (sin exigir instrumento)",
+        "operationId": "searchIndicadores",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "422": {
+            "description": "q inválido"
+          }
+        }
+      }
+    },
+    "/establecimientos": {
+      "get": {
+        "summary": "Establecimientos del SS del token (catálogo + dirección; paginado)",
+        "operationId": "listEstablecimientos",
+        "parameters": [
+          {
+            "name": "tipo",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Alias SAR|SAPU|SUR o glosa exacta de tipo"
+          },
+          {
+            "name": "vigente",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "true = estados Vigente en Operación Habitual/Transitoria"
+          },
+          {
+            "name": "estado_funcionamiento",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "comuna",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK — data + meta.total"
+          },
+          "422": {
+            "description": "tipo inválido"
+          }
+        }
+      }
+    },
+    "/establecimientos/{id}": {
+      "get": {
+        "summary": "Ficha de establecimiento (mismo SS del token)",
+        "operationId": "getEstablecimiento",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "No encontrado / otro SS"
+          }
+        }
+      }
+    },
+    "/resultados": {
+      "get": {
+        "summary": "Resultados Metas por establecimiento (paginado, filtrado por SS del token)",
+        "operationId": "getResultados",
+        "parameters": [
+          {
+            "name": "instrumento",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "metas"
+              ]
+            }
+          },
+          {
+            "name": "indicador_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/dashboard/alertas": {
+      "get": {
+        "summary": "Alertas dashboard parametrizadas",
+        "operationId": "getDashboardAlertas",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/glossary": {
+      "get": {
+        "summary": "Glosario versionado",
+        "operationId": "getGlossary",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/openapi.json": {
+      "get": {
+        "summary": "Contrato OpenAPI",
+        "operationId": "getOpenApi",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "Sanctum"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ]
+}

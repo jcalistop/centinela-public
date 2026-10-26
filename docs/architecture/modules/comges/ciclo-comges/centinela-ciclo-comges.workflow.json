@@ -1,0 +1,274 @@
+{
+    "schema_version": 2,
+    "diagram_type": "workflow",
+    "meta": {
+        "title": "COMGES — ciclo por Servicio de Salud",
+        "output": "docs/architecture/modules/comges/ciclo-comges/centinela-ciclo-comges.html",
+        "quality_profile": "showcase",
+        "visual_preset": "classic",
+        "legend": {
+            "entries": {
+                "cloud": {
+                    "label": "Parametrizador"
+                },
+                "backend": {
+                    "label": "Control de gestión"
+                },
+                "frontend": {
+                    "label": "Referente"
+                },
+                "database": {
+                    "visible": false
+                },
+                "messagebus": {
+                    "visible": false
+                },
+                "external": {
+                    "visible": false
+                },
+                "security": {
+                    "visible": false
+                }
+            }
+        }
+    },
+    "lanes": [
+        {
+            "id": "externo",
+            "label": "Fuera de plataforma"
+        },
+        {
+            "id": "global",
+            "label": "Parametrización global"
+        },
+        {
+            "id": "por_ss",
+            "label": "Por Servicio de Salud"
+        },
+        {
+            "id": "cortes_lane",
+            "label": "Cortes en autoevaluación"
+        }
+    ],
+    "groups": [],
+    "mainPath": [
+        "oott",
+        "param_global",
+        "config_ss",
+        "autoeval",
+        "eval_prelim",
+        "apelacion",
+        "eval_final",
+        "cerrado"
+    ],
+    "nodes": [
+        {
+            "id": "oott",
+            "lane": "externo",
+            "col": 0,
+            "type": "external",
+            "label": "OOTT",
+            "sublabel": "MINSAL — fuera de Centinela",
+            "width": 128
+        },
+        {
+            "id": "param_global",
+            "lane": "global",
+            "col": 0,
+            "type": "cloud",
+            "label": "Parametrización global",
+            "sublabel": "parametrizador",
+            "width": 160
+        },
+        {
+            "id": "config_ss",
+            "lane": "por_ss",
+            "col": 0,
+            "type": "backend",
+            "label": "Configuración SS",
+            "sublabel": "control de gestión",
+            "width": 128
+        },
+        {
+            "id": "autoeval",
+            "lane": "por_ss",
+            "col": 1,
+            "type": "frontend",
+            "label": "Autoevaluación",
+            "sublabel": "referentes",
+            "width": 128
+        },
+        {
+            "id": "eval_prelim",
+            "lane": "por_ss",
+            "col": 2,
+            "type": "backend",
+            "label": "Evaluación preliminar",
+            "sublabel": "control de gestión",
+            "width": 152
+        },
+        {
+            "id": "apelacion",
+            "lane": "por_ss",
+            "col": 3,
+            "type": "frontend",
+            "label": "Apelación",
+            "sublabel": "referentes",
+            "width": 120
+        },
+        {
+            "id": "eval_final",
+            "lane": "por_ss",
+            "col": 4,
+            "type": "backend",
+            "label": "Evaluación final",
+            "sublabel": "control de gestión",
+            "width": 128
+        },
+        {
+            "id": "cerrado",
+            "lane": "por_ss",
+            "col": 5,
+            "type": "security",
+            "label": "Cerrado",
+            "sublabel": "solo lectura",
+            "width": 112
+        },
+        {
+            "id": "corte1",
+            "lane": "cortes_lane",
+            "col": 1,
+            "type": "frontend",
+            "label": "Corte 1",
+            "sublabel": "referentes",
+            "width": 128
+        },
+        {
+            "id": "corte2",
+            "lane": "cortes_lane",
+            "col": 2,
+            "type": "frontend",
+            "label": "Corte 2",
+            "sublabel": "referentes",
+            "width": 128
+        },
+        {
+            "id": "corteN",
+            "lane": "cortes_lane",
+            "col": 3,
+            "type": "frontend",
+            "label": "Corte n",
+            "sublabel": "referentes",
+            "width": 128
+        }
+    ],
+    "edges": [
+        {
+            "id": "oott-param",
+            "from": "oott",
+            "to": "param_global",
+            "variant": "emphasis"
+        },
+        {
+            "id": "param-config",
+            "from": "param_global",
+            "to": "config_ss",
+            "variant": "default"
+        },
+        {
+            "id": "config-auto",
+            "from": "config_ss",
+            "to": "autoeval",
+            "variant": "default"
+        },
+        {
+            "id": "auto-prelim",
+            "from": "autoeval",
+            "to": "eval_prelim",
+            "variant": "emphasis"
+        },
+        {
+            "id": "prelim-apel",
+            "from": "eval_prelim",
+            "to": "apelacion",
+            "variant": "default"
+        },
+        {
+            "id": "apel-final",
+            "from": "apelacion",
+            "to": "eval_final",
+            "variant": "default"
+        },
+        {
+            "id": "final-cerrado",
+            "from": "eval_final",
+            "to": "cerrado",
+            "variant": "emphasis"
+        },
+        {
+            "id": "config-corte1",
+            "from": "config_ss",
+            "to": "corte1",
+            "label": "activa/desactiva",
+            "variant": "dashed",
+            "role": "branch",
+            "fromSide": "bottom",
+            "toSide": "top"
+        },
+        {
+            "id": "auto-corte1",
+            "from": "autoeval",
+            "to": "corte1",
+            "label": "cortes",
+            "variant": "dashed",
+            "role": "branch",
+            "fromSide": "bottom",
+            "toSide": "top",
+            "labelAt": [
+                310,
+                429
+            ]
+        },
+        {
+            "id": "corte1-corte2",
+            "from": "corte1",
+            "to": "corte2",
+            "variant": "dashed"
+        },
+        {
+            "id": "corte2-corteN",
+            "from": "corte2",
+            "to": "corteN",
+            "label": "…",
+            "variant": "dashed"
+        }
+    ],
+    "cards": [
+        {
+            "dot": "cyan",
+            "title": "Roles",
+            "items": [
+                "Parametrizador: catálogo global del año",
+                "Control de gestión: configuración, cierres y evaluaciones externas por SS",
+                "Referentes: carga en autoevaluación y apelación"
+            ]
+        },
+        {
+            "dot": "emerald",
+            "title": "Cortes (OOTT)",
+            "items": [
+                "Pueden ser varios cortes por año (Corte 1, Corte 2, …, Corte n)",
+                "Según OOTT: evaluaciones locales (monitoreos) o cortes anuales",
+                "Centinela parametriza el catálogo; cantidad y significado los fija la normativa"
+            ]
+        },
+        {
+            "dot": "rose",
+            "title": "Escala de cumplimiento",
+            "items": [
+                "Año indicador anterior a 2025: porcentaje",
+                "Año indicador 2025 en adelante: puntaje de 0 a 4"
+            ]
+        }
+    ]
+}

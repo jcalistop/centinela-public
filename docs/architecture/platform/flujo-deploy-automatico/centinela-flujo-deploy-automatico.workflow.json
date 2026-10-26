@@ -1,0 +1,219 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Centinela — disparo deploy automático",
+    "output": "docs/architecture/platform/flujo-deploy-automatico/centinela-flujo-deploy-automatico.html",
+    "quality_profile": "showcase",
+    "legend": {
+      "entries": {
+        "backend": {
+          "label": "Producción"
+        },
+        "security": {
+          "label": "Gate / bloqueo"
+        },
+        "frontend": {
+          "label": "succeeded"
+        },
+        "cloud": {
+          "label": "skipped"
+        },
+        "database": {
+          "visible": false
+        },
+        "messagebus": {
+          "visible": false
+        },
+        "external": {
+          "visible": false
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "prod",
+      "label": "Producción"
+    },
+    {
+      "id": "resultado",
+      "label": "Resultado"
+    }
+  ],
+  "groups": [],
+  "mainPath": [
+    "ts00",
+    "flag",
+    "auto_cmd",
+    "orch",
+    "succeeded"
+  ],
+  "nodes": [
+    {
+      "id": "ts00",
+      "lane": "prod",
+      "col": 0,
+      "type": "backend",
+      "label": "Tarea ~00:00",
+      "sublabel": "schedule:run",
+      "tag": "inicio",
+      "width": 156
+    },
+    {
+      "id": "flag",
+      "lane": "prod",
+      "col": 1,
+      "type": "security",
+      "label": "Interruptor",
+      "sublabel": "On sigue / Off bloquea",
+      "tag": "gate",
+      "width": 156
+    },
+    {
+      "id": "block_off",
+      "lane": "resultado",
+      "col": 1,
+      "type": "security",
+      "label": "Bloquea despliegue",
+      "sublabel": "Off (estado actual)",
+      "tag": "stop",
+      "width": 156
+    },
+    {
+      "id": "auto_cmd",
+      "lane": "prod",
+      "col": 2,
+      "type": "backend",
+      "label": "centinela:deploy:auto",
+      "sublabel": "comando Artisan",
+      "tag": "auto",
+      "width": 156
+    },
+    {
+      "id": "orch",
+      "lane": "prod",
+      "col": 3,
+      "type": "backend",
+      "label": "DeployOrchestrator",
+      "sublabel": "backup→pull→migrate…",
+      "tag": "CD pull",
+      "width": 156
+    },
+    {
+      "id": "succeeded",
+      "lane": "resultado",
+      "col": 4,
+      "type": "frontend",
+      "label": "succeeded",
+      "sublabel": "deploy exitoso",
+      "tag": "OK",
+      "width": 156
+    },
+    {
+      "id": "skipped",
+      "lane": "resultado",
+      "col": 5,
+      "type": "cloud",
+      "label": "skipped",
+      "sublabel": "registra sin cambios",
+      "tag": "noop",
+      "width": 156
+    },
+    {
+      "id": "fail",
+      "lane": "resultado",
+      "col": 3,
+      "type": "security",
+      "label": "rollback + bloqueo",
+      "sublabel": "lock hasta revisar falla",
+      "tag": "stop",
+      "width": 156
+    }
+  ],
+  "edges": [
+    {
+      "id": "ts-flag",
+      "from": "ts00",
+      "to": "flag",
+      "variant": "emphasis"
+    },
+    {
+      "id": "flag-off",
+      "from": "flag",
+      "to": "block_off",
+      "label": "Off",
+      "variant": "security",
+      "role": "error",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [
+        [
+          310,
+          183
+        ]
+      ]
+    },
+    {
+      "id": "flag-on",
+      "from": "flag",
+      "to": "auto_cmd",
+      "label": "On",
+      "variant": "emphasis"
+    },
+    {
+      "id": "cmd-orch",
+      "from": "auto_cmd",
+      "to": "orch",
+      "variant": "emphasis"
+    },
+    {
+      "id": "orch-ok",
+      "from": "orch",
+      "to": "succeeded",
+      "label": "releases",
+      "variant": "emphasis"
+    },
+    {
+      "id": "orch-skip",
+      "from": "orch",
+      "to": "skipped",
+      "label": "sin cambios",
+      "variant": "dashed"
+    },
+    {
+      "id": "orch-fail",
+      "from": "orch",
+      "to": "fail",
+      "label": "falla",
+      "variant": "security",
+      "role": "error",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [
+        [
+          688,
+          183
+        ]
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Camino On",
+      "items": [
+        "Tarea ~00:00 → Interruptor On → deploy:auto → orquestador",
+        "Salidas: succeeded (releases), skipped (sin cambios)"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Cortes",
+      "items": [
+        "Off: bloquea despliegue (estado actual)",
+        "Falla: rollback + bloqueo del schedule automático"
+      ]
+    }
+  ]
+}

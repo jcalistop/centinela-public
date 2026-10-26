@@ -1,0 +1,24 @@
+# Indicador 6 (texto definitivo)
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Reducción de los casos en Lista de espera con antigüedad sobre el percentil 75, para Consulta Nueva de Especialidad Médica
+- **Objetivo del indicador:** Disminuir la LE para Consultas Nuevas de Especialidad Médica, con mayor antigüedad
+- **Meta anual:** > 80,00% de casos con antigüedad calculados sobre el P.75
+- **Responsable de medición:** Establecimientos de Salud
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 2 y 5 del Formulario A1 de la Subsecretaria de Redes Asistenciales
+- **Unidad de medida:** Porcentaje
+- **Tipo de indicador:** Producto
+- **Dimensión que aborda:** Eficiencia
+- **Fórmula de Cálculo:** (Número de casos disminuidos de la Lista de Espera de Consulta Nueva de Especialidad Médica sobre el percentil 75 al corte del 31 de diciembre 2024 / Total de casos en la Lista de Espera de Consulta Nueva de Especialidad Médica sobre el percentil 75 al corte del 31 de diciembre 2024) x 100
+- **Fuente de información del Numerador:** SIGTE
+- **Fuente de información del Denominador:** SIGTE
+- **Número de decimales:** 1 decimal aproximado
+- **Periodicidad de Medición:** Trimestral
+- **Nivel de aplicación:** Establecimientos de Salud
+- **Definición de términos:**
+    - Percentil 75: Corresponde al 25% de los casos más antiguos de la lista de espera.
+    - Consulta Nueva Especialidad: Es la primera atención generada por un episodio de una enfermedad, mediante la que se puede o no dar resolución al problema de salud y es independiente de atenciones anteriores que se hayan efectuado al usuario en la misma especialidad, pero por otras causas.
+    - Lista de Espera: registro de todos los casos indicados para atención ambulatoria especializada. Incluye indicaciones para atención médica/u odontológica de especialidad, procedimientos en atención especializada, intervenciones quirúrgicas mayores o menores programadas. Considera a todas las personas, aun si la atención requerida no está en la cartera de servicios, debiendo el gestor resolver a través de la red u otras redes.
+- **División que lo monitorea:** DIGERA

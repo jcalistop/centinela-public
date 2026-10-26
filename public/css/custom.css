@@ -1,0 +1,826 @@
+:root {
+    --centinela-text-primary: #353d47;
+    --centinela-text-muted: #606060;
+    /* SDD-143: modales Bootstrap en /admin sobre .side-body (z-index 2) */
+    --centinela-modal-backdrop-z: 10040;
+    --centinela-modal-z: 10050;
+    /* Velo sobre admin.bg_image (#gradient_bg::after); pisa compass/includes/styles */
+    --centinela-gradient-bg-veil-top: rgba(248, 248, 248, 0.85);
+    --centinela-gradient-bg-veil-mid: rgba(248, 248, 248, 0.9);
+    --centinela-gradient-bg-veil-bottom: rgba(248, 248, 248, 1);
+    /* Acciones secundarias (btn-default): tono brand, no gris Bootstrap */
+    --centinela-btn-default-color: #2a3f54;
+    --centinela-btn-default-bg: #e8f2fb;
+    --centinela-btn-default-border: #c5dcf0;
+    --centinela-btn-default-hover-bg: #62a8ea;
+    --centinela-btn-default-hover-color: #fff;
+}
+
+/* Franja admin.bg_image (master + partial gradient-bg; pisa compass/includes/styles) */
+#gradient_bg {
+    position: fixed;
+    top: 61px;
+    left: 0;
+    width: 100%;
+    height: 220px;
+    z-index: 0;
+    background-image: var(--imagen-de-fondo);
+    background-size: cover;
+    background-position: 0;
+}
+
+#gradient_bg::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: linear-gradient(
+        to bottom,
+        var(--centinela-gradient-bg-veil-top) 0%,
+        var(--centinela-gradient-bg-veil-mid) 80%,
+        var(--centinela-gradient-bg-veil-bottom) 100%
+    );
+    filter: none;
+}
+
+/* BREAD y Livewire sin compass: el fixed #gradient_bg tapaba page_header / page-title */
+.voyager .side-body {
+    position: relative;
+}
+
+.voyager .side-body > :not(#gradient_bg) {
+    position: relative;
+    z-index: 2;
+}
+
+.voyager .side-body .page-title,
+.voyager .side-body .page-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* SDD-143: stack unificado modales Bootstrap (Voyager BREAD + partial bootstrap-modal-stack) */
+body.centinela-bootstrap-modal-open .modal-backdrop {
+    z-index: var(--centinela-modal-backdrop-z) !important;
+}
+
+body.centinela-bootstrap-modal-open .modal.in {
+    z-index: var(--centinela-modal-z) !important;
+}
+
+body,
+html {
+    color: var(--centinela-text-primary);
+    font-weight: 400;
+}
+
+/* Texto en tablas COMGES / resultados (pisa Voyager .table { color: #76838f }) */
+.voyager .table.table-results,
+.voyager .table.table-results td,
+.voyager .table.table-results th {
+    color: var(--centinela-text-primary);
+}
+.voyager .text-muted {
+    color: var(--centinela-text-muted);
+}
+
+.voyager .compass .nav-tabs > li > a {
+    color: var(--centinela-text-muted);
+}
+
+.voyager .metas-instrument-table,
+.voyager .metas-center-selection-table,
+.voyager .metas-instrument-indicator-catalog {
+    color: var(--centinela-text-primary);
+}
+
+.voyager #dataTable,
+.voyager #dataTable td,
+.voyager #dataTable th {
+    color: var(--centinela-text-primary);
+}
+
+.text-bold {
+    font-weight: bold;
+}
+.panel {
+    margin: 1rem;
+}
+.panel-body {
+    margin-top: 1rem;
+}
+.panel-danger {
+    border: #fa2a00 solid 1px;
+}
+.panel-danger .panel-heading {
+    background-color: #fa2a00 !important;
+}
+.panel-primary {
+    border: #62a8ea solid 1px !important;
+}
+.panel-warning {
+    border: #f2a654 solid 1px !important;
+}
+
+.panel-action {
+    border: #016cba solid 1px !important;
+}
+.panel-action .panel-heading {
+    background-color: #016cba;
+}
+.panel-action .panel-heading .panel-title {
+    color: white;
+}
+
+/* Metas catálogo — modo ordenar: hint legible dentro de panel-primary */
+.metas-indicator-catalog-sort-panel
+    .panel-heading
+    .metas-indicator-catalog-sort-hint {
+    color: #555 !important;
+}
+
+/* Enlaces con apariencia .btn (SDD-080: show/edit/carga) sin subrayado de <a> */
+a.btn,
+a.btn:hover,
+a.btn:focus,
+a.btn:active,
+a.btn i {
+    text-decoration: none !important;
+}
+.panel-action .panel-body {
+    margin: 0;
+    padding: 0;
+}
+.panel .panel-footer {
+    text-align: end;
+}
+
+.panel-hidden {
+    padding: 0;
+    margin: 0 !important;
+    box-shadow: none !important;
+}
+
+/* .form-group .settings {width: 20rem;} */
+/* .control-label .settings {width: 20rem;} */
+
+.table {
+    margin-bottom: 0;
+}
+.table-action {
+    margin: 0;
+}
+.table-action th {
+    background-color: #016cba;
+    color: white;
+}
+.table-results table {
+    border-collapse: collapse !important;
+}
+.table-results td,
+.table-results th {
+    text-align: center;
+    border: 1px solid #bbbbbb !important;
+}
+
+.label-action {
+    background-color: #006fb3;
+}
+
+.btn-action {
+    background-color: #006fb3;
+    color: #fff;
+}
+.btn-action:hover,
+.btn-action:focus {
+    background-color: #005f9a;
+    color: #fff;
+}
+
+.semaforo {
+    /* position: absolute; */
+    width: 3rem;
+    height: 2rem;
+    border: 1px solid grey;
+    border-radius: 50%;
+    margin: auto;
+    line-height: 1.9rem;
+    text-align: center;
+}
+.semaforo.red {
+    background-color: red;
+    color: #fff;
+}
+.semaforo.green {
+    background-color: forestgreen;
+    color: #fff;
+}
+.semaforo.orange {
+    background-color: orange;
+    color: #fff;
+}
+.semaforo.error {
+    background-color: black;
+    color: #fff;
+}
+.semaforo.nulo {
+    background-color: transparent;
+}
+
+.semaforo-legend-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    margin-bottom: 0.75rem;
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.semaforo-legend,
+.semaforo-legend__item,
+.semaforo-legend__note {
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.voyager .semaforo-legend-wrap .semaforo-legend,
+.voyager .semaforo-legend-wrap .semaforo-legend__item,
+.voyager .semaforo-legend-wrap .semaforo-legend__note {
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.semaforo-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.5rem;
+    max-width: 100%;
+    padding: 0.5rem 1.5rem 0;
+    margin-bottom: 0;
+    border-radius: 4px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.semaforo-legend__note {
+    display: block;
+    float: none !important;
+    margin: 0.15rem 1.5rem 0;
+    padding: 0;
+    text-align: right;
+}
+
+.semaforo-legend__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+}
+
+.semaforo-legend__dot {
+    width: 1.2rem !important;
+    height: 0.9rem !important;
+    line-height: 0.85rem !important;
+    border-radius: 50% !important;
+    font-size: 0.55rem !important;
+    border: 1px solid #999 !important;
+    flex-shrink: 0;
+}
+
+.btn {
+    border: none;
+    margin: 2px 2px 2px 2px;
+}
+
+/* Secundarios: pisa Voyager (.voyager .btn.btn-default { #f0f0f0 }) — acento Compass. */
+.voyager .btn.btn-default,
+.voyager a.btn.btn-default,
+.voyager .btn-group-sm > .btn.btn-default {
+    color: var(--centinela-btn-default-color);
+    background-color: var(--centinela-btn-default-bg);
+    border: 1px solid var(--centinela-btn-default-border);
+}
+
+.voyager .btn.btn-default.btn-sm,
+.voyager .btn.btn-default.btn-sm:hover {
+    color: var(--centinela-btn-default-color);
+}
+
+.voyager .btn.btn-default:hover,
+.voyager .btn.btn-default:focus,
+.voyager .btn.btn-default:active,
+.voyager .btn.btn-default.active,
+.voyager a.btn.btn-default:hover,
+.voyager a.btn.btn-default:focus,
+.voyager a.btn.btn-default:active,
+.voyager .open > .dropdown-toggle.btn-default {
+    color: var(--centinela-btn-default-hover-color);
+    background-color: var(--centinela-btn-default-hover-bg);
+    border-color: var(--centinela-btn-default-hover-bg);
+}
+
+.voyager .btn.btn-default:active:hover,
+.voyager .btn.btn-default.active:hover,
+.voyager .open > .dropdown-toggle.btn-default:hover,
+.voyager .btn.btn-default:active:focus,
+.voyager .btn.btn-default.active:focus,
+.voyager .open > .dropdown-toggle.btn-default:focus {
+    color: var(--centinela-btn-default-hover-color);
+    background-color: #4f97d9;
+    border-color: #4f97d9;
+}
+
+.voyager .btn.btn-default.disabled,
+.voyager .btn.btn-default[disabled],
+.voyager fieldset[disabled] .btn.btn-default {
+    color: var(--centinela-btn-default-color);
+    background-color: var(--centinela-btn-default-bg);
+    border-color: var(--centinela-btn-default-border);
+    opacity: 0.65;
+}
+
+strong {
+    font-weight: 600;
+}
+
+/* Toggle activo/inactivo (catálogo Metas y configuración) */
+.switch-toggle {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    vertical-align: middle;
+    margin-right: 8px;
+    margin-bottom: 0;
+}
+
+.switch-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 34px;
+}
+
+.switch-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: #fff;
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+.switch-toggle input:checked + .switch-slider {
+    background-color: #22a7f0;
+}
+
+.switch-toggle input:checked + .switch-slider:before {
+    transform: translateX(26px);
+}
+
+.switch-label {
+    vertical-align: middle;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Metas — tab Establecimientos (selección de centros y responsables) */
+.metas-establishments-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.metas-establishments-summary__stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.95em;
+    background: #f4f8fc;
+    border: 1px solid #d4e4f4;
+    color: var(--centinela-text-primary);
+}
+
+.metas-establishments-summary__stat--included {
+    border-color: #62a8ea;
+    background: rgba(98, 168, 234, 0.12);
+}
+
+.metas-center-selection-table tbody tr.metas-center-row--included > td {
+    background-color: rgba(98, 168, 234, 0.07);
+}
+
+.metas-center-selection-table
+    tbody
+    tr.metas-center-row--included
+    > td:first-child {
+    border-left: 3px solid #62a8ea;
+}
+
+.metas-center-selection-table .metas-center-status--included {
+    color: #016cba;
+}
+
+.metas-establishments-appeal-section {
+    margin-top: 1.75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #e8e8e8;
+}
+
+.metas-establishments-appeal-section > h4 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: var(--centinela-text-primary);
+    font-weight: 600;
+}
+
+.metas-establishments-appeal-section .table {
+    margin-bottom: 0;
+}
+
+/* Catálogo Metas — modales auxiliares (fixed + z-index; estilos en CSS, no en <style> del componente Livewire) */
+.centinela-metas-catalog-modal {
+    position: fixed !important;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: var(--centinela-modal-z) !important;
+    display: block;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.centinela-metas-catalog-modal .modal-dialog {
+    position: relative;
+    z-index: 1;
+    margin: 80px auto;
+}
+
+/* Catálogo Metas — etiquetas en tabla y modal (SDD-136: paridad COMGES) */
+.metas-instrument-table .label {
+    font-size: 0.9em;
+    font-weight: normal;
+    padding: 2px 6px;
+    line-height: 1.42857143;
+    vertical-align: baseline;
+}
+
+.metas-instrument-table .label strong {
+    font-weight: bold;
+}
+
+#indicatorModalTable .label {
+    font-size: 0.9em;
+    font-weight: normal;
+    padding: 2px 6px;
+    line-height: 1.42857143;
+    vertical-align: baseline;
+}
+
+.metas-instrument-indicator-catalog th.metas-catalog-col--nowrap,
+.metas-instrument-indicator-catalog td.metas-catalog-col--nowrap {
+    white-space: nowrap;
+}
+
+.metas-instrument-indicator-catalog th.metas-catalog-col--nombre,
+.metas-instrument-indicator-catalog td.metas-catalog-col--nombre {
+    text-align: left;
+    vertical-align: middle;
+    white-space: normal;
+}
+
+.metas-instrument-indicator-catalog th.metas-catalog-col--clave,
+.metas-instrument-indicator-catalog td.metas-catalog-col--clave {
+    width: 148px;
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.metas-instrument-indicator-catalog .metas-catalog-duplicate-action {
+    margin-top: 6px;
+    display: flex;
+    justify-content: center;
+}
+
+.metas-instrument-indicator-catalog th.metas-catalog-col--actualizado,
+.metas-instrument-indicator-catalog td.metas-catalog-col--actualizado {
+    text-align: center;
+    vertical-align: middle;
+    white-space: normal;
+}
+
+.metas-instrument-indicator-catalog
+    td.metas-catalog-col--actualizado
+    .componente-corte-alerta {
+    display: inline-block;
+    margin: 0;
+    max-width: 100%;
+    text-align: left;
+}
+
+.metas-instrument-indicator-catalog th.metas-catalog-col--cumplimiento,
+.metas-instrument-indicator-catalog td.metas-catalog-col--cumplimiento {
+    width: 120px;
+    white-space: normal;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.metas-instrument-indicator-catalog .metas-catalog-cumplimiento-label {
+    font-size: 12px;
+    font-weight: normal;
+    padding: 3px 8px;
+    line-height: 1.42857143;
+    vertical-align: baseline;
+}
+
+.metas-instrument-indicator-catalog th.metas-catalog-col--acciones,
+.metas-instrument-indicator-catalog td.metas-catalog-col--acciones {
+    width: auto;
+    min-width: 108px;
+    max-width: 148px;
+    white-space: normal;
+    vertical-align: middle;
+}
+
+.metas-instrument-indicator-catalog .metas-catalog-acciones-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;
+    align-items: center;
+}
+
+.metas-instrument-indicator-catalog .metas-catalog-alerts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
+    align-items: center;
+}
+
+.metas-instrument-indicator-catalog .metas-catalog-alert-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: normal;
+    padding: 3px 8px;
+    line-height: 1.42857143;
+    vertical-align: baseline;
+    margin: 0;
+    white-space: nowrap;
+    cursor: help;
+}
+
+.metas-instrument-indicator-catalog .metas-catalog-alert-tag .glyphicon {
+    margin: 0;
+    font-size: 11px;
+}
+
+.metas-instrument-indicator-catalog .metas-catalog-alert-tag strong {
+    font-size: inherit;
+    font-weight: 600;
+}
+
+.metas-instrument-indicator-catalog .componente-corte-alerta {
+    border-left: 4px solid #f0ad4e;
+    padding: 0.35rem 0.35rem 0.35rem 0.5rem;
+    margin: -0.35rem -0.5rem;
+    background-color: #fcf8f3;
+}
+
+.metas-instrument-indicator-catalog .componente-corte-alerta .glyphicon {
+    margin-right: 0.35rem;
+}
+
+.metas-instrument-indicator-catalog .metas-catalog-actualizado-label {
+    font-size: 0.9em;
+    font-weight: normal;
+    padding: 3px 8px;
+    line-height: 1.42857143;
+    vertical-align: baseline;
+}
+
+.metas-instrument-indicator-catalog .metas-catalog-actualizado-empty {
+    color: #999;
+}
+
+.metas-instrument-indicator-catalog .componente-corte-alerta strong {
+    font-size: 0.95em;
+}
+
+a.metas-referente-label-link,
+a.metas-referente-label-link:hover,
+a.metas-referente-label-link:focus,
+a.metas-referente-label-link:active {
+    text-decoration: none;
+}
+
+a.metas-referente-label-link.label-default {
+    color: inherit;
+}
+
+.user-referent-indicators-panel {
+    margin-top: 0;
+}
+
+a.user-referent-indicator-link,
+a.user-referent-indicator-link:hover,
+a.user-referent-indicator-link:focus {
+    text-decoration: none;
+}
+
+.indicator-ambitos-field__intro {
+    margin-top: 0;
+}
+
+.indicator-ambitos-picker__search {
+    margin-bottom: 0.5rem;
+}
+
+.indicator-ambitos-picker__list {
+    max-height: 220px;
+    overflow-y: auto;
+    border: 1px solid #dce4ec;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.indicator-ambitos-picker__item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0.5rem 0.75rem;
+    font-weight: normal;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f3f6;
+}
+
+.indicator-ambitos-picker__item:last-child {
+    border-bottom: 0;
+}
+
+.indicator-ambitos-picker__item:hover {
+    background: #f8fafc;
+}
+
+.indicator-ambitos-picker__item input[type="checkbox"] {
+    margin: 0.2rem 0 0;
+}
+
+.indicator-ambitos-picker__empty {
+    margin: 0.5rem 0 0;
+}
+
+.voyager .indicator-ambitos-select + .select2-container {
+    width: 100% !important;
+}
+
+.voyager
+    .indicator-ambitos-select
+    + .select2-container
+    .select2-selection--multiple {
+    min-height: 38px;
+    border-color: #dce4ec;
+}
+
+.voyager
+    .indicator-ambitos-select
+    + .select2-container
+    .select2-selection__choice {
+    font-size: 12px;
+    background: #e8f4fc;
+    border-color: #c5dff0;
+    color: #1a5276;
+}
+
+.voyager .indicator-ambitos-select + .select2-container .select2-search__field {
+    font-size: 13px;
+}
+
+.indicator-ambitos-badges .indicator-ambito-badge-link,
+.indicator-ambitos-badges .indicator-ambito-badge-link:hover,
+.indicator-ambitos-badges .indicator-ambito-badge-link:focus {
+    display: inline-block;
+    font-weight: normal;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    text-decoration: none;
+    color: white;
+}
+
+/* SDD-209: footer Voyager — card Soporte+crédito; left sincronizado con side-menu */
+.voyager .app-container {
+    /* Footer absoluto más alto (card 2 líneas); el 30px nativo no alcanza */
+    padding-bottom: 120px;
+}
+
+.voyager .app-footer {
+    box-sizing: border-box;
+    height: auto;
+    /* Gana a Voyager `.voyager .app-footer { left: 0; width: 100% }` */
+    left: 60px !important;
+    right: 0 !important;
+    width: auto !important;
+    /* Al estar dentro de .app-container Voyager fuerza 12px; restaurar tipografía del body */
+    font-size: inherit !important;
+    line-height: 1.45;
+    opacity: 1;
+    z-index: 5;
+    text-align: right;
+    transition: left 0.25s ease;
+}
+
+.voyager .app-container.expanded .app-footer {
+    left: 250px !important;
+}
+
+.voyager .app-footer__card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    width: calc(100% - 48px);
+    box-sizing: border-box;
+    margin: 0 24px;
+    padding: 8px 20px;
+    border: 1px solid #dce4ec;
+    border-radius: 4px;
+    background: #f7fafc;
+    line-height: 1.45;
+}
+
+.voyager .app-footer__support {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px 10px;
+    margin: 0;
+    text-align: right;
+}
+
+.voyager .app-footer__support-text {
+    margin: 0;
+}
+
+.voyager .app-footer__support-cta {
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+.voyager .app-footer .site-footer-right {
+    float: none;
+    padding-right: 0;
+    text-align: right;
+}
+
+@media (max-width: 767px) {
+    .voyager .app-footer,
+    .voyager .app-container.expanded .app-footer {
+        left: 0 !important;
+    }
+
+    .voyager .app-footer__card {
+        align-items: center;
+        width: calc(100% - 24px);
+        margin: 0 12px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .voyager .app-footer__support {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .voyager .app-footer .site-footer-right {
+        text-align: center;
+    }
+}

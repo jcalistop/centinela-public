@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "diagram_id": "centinela-vision-tecnica",
+  "domain": "platform",
+  "slug": "vision-tecnica",
+  "lens": "technical-runtime",
+  "diagram_revision": 2,
+  "app_version": "v4.12.0",
+  "delivered_at": "2026-09-01",
+  "quality_profile": "showcase",
+  "visual_preset": "classic",
+  "acerca_de_svg": {
+    "path": "public/docs/diagrams/vision-tecnica.svg",
+    "theme": "light",
+    "preset": "classic",
+    "export_command": "npm run diagrams:export-vision-tecnica"
+  },
+  "files": {
+    "spec": "centinela-vision-tecnica.architecture.json",
+    "html": "centinela-vision-tecnica.html"
+  },
+  "receipt": {
+    "specification_sha256": "22dbdd9d61e190d55d6445c4fcc3bf34729dce32905fb436d8f01089e7073d65",
+    "specification_bytes": 4983,
+    "artifact_sha256": "c7698caec191b90d570b0d1c7d34d7ae0630229429c1e68c7c6e0c9d7a174ab0",
+    "artifact_bytes": 716150
+  }
+}

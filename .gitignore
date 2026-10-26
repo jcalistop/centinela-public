@@ -1,0 +1,66 @@
+/.phpunit.cache
+/node_modules
+/public/hot
+/public/js/filament
+/public/build
+/public/css/filament
+# Livewire — generados por `php artisan livewire:publish --assets` (post-composer en deploy)
+/public/vendor/livewire/
+/public/storage
+/public/web.config
+/public/error_log
+/public/fonts/filament
+/storage/app/private
+/storage/*.key
+/vendor
+.env
+.env.backup
+.env.production
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode/*
+!/.vscode/settings.json
+/.idx
+null
+.playwright-mcp/
+/*.bat
+.devdbrc
+/docs/ss_reloncavi/
+
+# Skills Cursor generadas por install-agents (no versionar)
+.cursor/skills/sdd-*/
+.cursor/skills/.sdd-kit-manifest.json
+
+# Skills DSH generadas por install-agents (no versionar)
+.dsh/skills/sdd-*/
+.dsh/skills/.sdd-kit-manifest.json
+
+# TS-Producción — schedule diario + cola releases (servidor IIS; no versionado)
+cron_mail.bat
+
+# Monitor externo - archivos env-específicos (generados por setup_config.ps1)
+/scripts/monitor/config/monitor.config.json
+/scripts/monitor/config/monitor.smtp.json
+/scripts/monitor/config/monitor_state.json
+/scripts/monitor/config/monitor_email_bundle.json
+/scripts/monitor/config/logs/*.log
+/scripts/monitor/secrets/monitor.secrets.json
+/scripts/monitor/secrets/*.sec
+/scripts/monitor/log/*.log
+/scripts/monitor/log/scheduler_recovery_digest_state.json
+/scripts/monitor/log/scheduler_recovery_hourly_gate.json
+
+
+# Gitleaks local
+.gitleaks-bin/
+.gitleaks-scan/
+.gitleaks-report.json
+
+# Mirror export local — no versionar
+.public-mirror-export/

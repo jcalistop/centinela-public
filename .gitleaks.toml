@@ -1,0 +1,27 @@
+title = "centinela"
+
+[extend]
+# Inherit default rules; local allowlists below.
+useDefault = true
+
+[allowlist]
+description = "centinela allowlist"
+paths = [
+  '''incidentes''',
+  '''phpunit\.xml''',
+  '''\.env\.testing''',
+  '''\.env\.example''',
+  '''tests''',
+  '''monitor\.secrets\.example\.json''',
+  '''monitor\.config\.example\.json''',
+  '''centers[/\\]index\.blade\.php''',
+  '''\.gitleaks-bin''',
+  '''\.public-mirror-export''',
+]
+regexes = [
+  '''test-cron-token''',
+  '''TOKEN_SANCTUM_GENERADO_VIA_POST_api_admin_token''',
+  '''VALOR_DE_CRON_SECRET_TOKEN_EN_\.ENV''',
+  '''claveAnterior1''',
+  '''claveNueva88''',
+]

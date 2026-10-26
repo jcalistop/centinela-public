@@ -1,0 +1,7 @@
+# Snapshots privados creados por `archify deliver` (no versionar).
+.archify-delivery-*/
+
+# Evidencia opcional de `visual-check` (regenerable; no versionar por defecto).
+*.visual-check*.png
+*.visual-check.html
+*.visual-check.json

@@ -1,0 +1,222 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "Centinela — ciclo SDD hasta producción",
+    "output": "docs/architecture/platform/flujo-entrega-produccion/centinela-flujo-entrega-produccion.html",
+    "quality_profile": "showcase",
+    "legend": {
+      "entries": {
+        "frontend": {
+          "label": "Spec / local"
+        },
+        "backend": {
+          "label": "Producción"
+        },
+        "cloud": {
+          "label": "Git"
+        },
+        "security": {
+          "label": "Gate o sensor"
+        },
+        "database": {
+          "visible": false
+        },
+        "messagebus": {
+          "visible": false
+        },
+        "external": {
+          "visible": false
+        }
+      }
+    }
+  },
+  "lanes": [
+    {
+      "id": "local",
+      "label": "Local (sin push)"
+    },
+    {
+      "id": "github",
+      "label": "GitHub"
+    },
+    {
+      "id": "produccion",
+      "label": "Producción"
+    }
+  ],
+  "groups": [],
+  "mainPath": [
+    "ready",
+    "in_build",
+    "verify",
+    "validating",
+    "released",
+    "deploy_auto"
+  ],
+  "nodes": [
+    {
+      "id": "ready",
+      "lane": "local",
+      "col": 0,
+      "type": "frontend",
+      "label": "Planificación",
+      "sublabel": "Discovery→Draft→Ready",
+      "tag": "SDD",
+      "width": 156
+    },
+    {
+      "id": "in_build",
+      "lane": "local",
+      "col": 1,
+      "type": "frontend",
+      "label": "Implementación",
+      "sublabel": "In Build→Validating",
+      "tag": "local",
+      "width": 156
+    },
+    {
+      "id": "verify",
+      "lane": "local",
+      "col": 2,
+      "type": "security",
+      "label": "verify-implementation",
+      "sublabel": "sensor; sin push/PR",
+      "tag": "gate",
+      "width": 156
+    },
+    {
+      "id": "stop",
+      "lane": "github",
+      "col": 2,
+      "type": "security",
+      "label": "No publicar",
+      "sublabel": "verify, DoD/Test o CI rojo",
+      "tag": "stop",
+      "width": 156
+    },
+    {
+      "id": "validating",
+      "lane": "github",
+      "col": 4,
+      "type": "cloud",
+      "label": "Validating",
+      "sublabel": "DoD + Test + close-release",
+      "tag": "campaña",
+      "width": 156
+    },
+    {
+      "id": "released",
+      "lane": "github",
+      "col": 5,
+      "type": "cloud",
+      "label": "Released",
+      "sublabel": "CI + Merge",
+      "tag": "merge",
+      "width": 156
+    },
+    {
+      "id": "deploy_auto",
+      "lane": "produccion",
+      "col": 5,
+      "type": "backend",
+      "label": "DeployOrchestrator",
+      "sublabel": "Despliegue a producción",
+      "tag": "CD pull",
+      "width": 156
+    }
+  ],
+  "edges": [
+    {
+      "id": "ready-build",
+      "from": "ready",
+      "to": "in_build",
+      "variant": "emphasis"
+    },
+    {
+      "id": "build-verify",
+      "from": "in_build",
+      "to": "verify",
+      "variant": "emphasis"
+    },
+    {
+      "id": "verify-validating",
+      "from": "verify",
+      "to": "validating",
+      "label": "OK",
+      "variant": "emphasis"
+    },
+    {
+      "id": "validating-released",
+      "from": "validating",
+      "to": "released",
+      "label": "open-pr",
+      "variant": "default"
+    },
+    {
+      "id": "released-deploy",
+      "from": "released",
+      "to": "deploy_auto",
+      "label": "main listo + pull",
+      "variant": "dashed",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [
+        [
+          941.6,
+          309
+        ]
+      ]
+    },
+    {
+      "id": "verify-stop",
+      "from": "verify",
+      "to": "stop",
+      "label": "falla",
+      "variant": "security",
+      "role": "error",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [
+        [
+          494,
+          183
+        ]
+      ]
+    },
+    {
+      "id": "validating-stop",
+      "from": "validating",
+      "to": "stop",
+      "label": "DoD/Test/CI",
+      "variant": "security",
+      "role": "error"
+    },
+    {
+      "id": "stop-impl",
+      "from": "stop",
+      "to": "in_build",
+      "label": "repara/corrige",
+      "variant": "security",
+      "role": "return"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Ciclo SDD",
+      "items": [
+        "Planificación (Discovery→Draft→Ready)→Implementación (In Build→Validating)→Released",
+        "Validating: DoD + Test + close-release; Released: CI + Merge"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "DevOps",
+      "items": [
+        "CI en runners cloud; no despliega a intranet",
+        "Tras Merge en Released, el pull ~00:00 no inventa commits"
+      ]
+    }
+  ]
+}

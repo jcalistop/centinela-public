@@ -1,0 +1,374 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Centinela — visión funcional",
+    "output": "centinela-vision-funcional.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "usuarios",
+      "type": "external",
+      "label": "Usuarios por SS",
+      "sublabel": "CG · Referente · Visualiz.",
+      "pos": [
+        12,
+        80
+      ],
+      "size": [
+        130,
+        64
+      ]
+    },
+    {
+      "id": "auth",
+      "type": "security",
+      "label": "Autenticación",
+      "sublabel": "Sesión segura",
+      "pos": [
+        220,
+        80
+      ],
+      "size": [
+        130,
+        64
+      ]
+    },
+    {
+      "id": "dash",
+      "type": "frontend",
+      "label": "Dashboard Centinela",
+      "sublabel": "Menú lateral · Perfil",
+      "pos": [
+        411,
+        80
+      ],
+      "size": [
+        150,
+        64
+      ]
+    },
+    {
+      "id": "metas",
+      "type": "frontend",
+      "label": "Metas",
+      "sublabel": "18.834 · 19.664 · 20.707",
+      "pos": [
+        180,
+        380
+      ],
+      "size": [
+        140,
+        64
+      ]
+    },
+    {
+      "id": "comges",
+      "type": "frontend",
+      "label": "COMGES",
+      "sublabel": "Compromisos e indicadores",
+      "pos": [
+        336,
+        380
+      ],
+      "size": [
+        130,
+        64
+      ]
+    },
+    {
+      "id": "adp",
+      "type": "frontend",
+      "label": "ADP",
+      "sublabel": "Convenio y periodo",
+      "pos": [
+        482,
+        380
+      ],
+      "size": [
+        120,
+        64
+      ]
+    },
+    {
+      "id": "snss",
+      "type": "frontend",
+      "label": "SNSS",
+      "sublabel": "Establecimientos",
+      "pos": [
+        618,
+        380
+      ],
+      "size": [
+        120,
+        64
+      ]
+    },
+    {
+      "id": "soporte",
+      "type": "frontend",
+      "label": "Soporte",
+      "sublabel": "Consultas e incidencias",
+      "pos": [
+        754,
+        380
+      ],
+      "size": [
+        120,
+        64
+      ]
+    },
+    {
+      "id": "admin",
+      "type": "frontend",
+      "label": "Administración",
+      "sublabel": "Usuarios · Config",
+      "pos": [
+        890,
+        380
+      ],
+      "size": [
+        130,
+        64
+      ]
+    },
+    {
+      "id": "ano",
+      "type": "frontend",
+      "label": "Año indicador / Servicio de Salud",
+      "sublabel": "Contexto de sesión",
+      "pos": [
+        180,
+        600
+      ],
+      "size": [
+        422,
+        52
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Plataforma Centinela",
+      "wraps": [
+        "dash",
+        "metas",
+        "comges",
+        "adp",
+        "snss",
+        "soporte",
+        "admin",
+        "ano"
+      ],
+      "pad": 28
+    }
+  ],
+  "connections": [
+    {
+      "id": "usuarios-to-auth",
+      "from": "usuarios",
+      "to": "auth",
+      "label": "inicia sesión",
+      "variant": "emphasis",
+      "labelDy": 56
+    },
+    {
+      "id": "auth-to-dash",
+      "from": "auth",
+      "to": "dash"
+    },
+    {
+      "id": "dash-to-metas",
+      "from": "dash",
+      "to": "metas",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [
+        [
+          486,
+          262
+        ],
+        [
+          250,
+          262
+        ]
+      ]
+    },
+    {
+      "id": "dash-to-comges",
+      "from": "dash",
+      "to": "comges",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [
+        [
+          486,
+          262
+        ],
+        [
+          401,
+          262
+        ]
+      ]
+    },
+    {
+      "id": "dash-to-adp",
+      "from": "dash",
+      "to": "adp",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [
+        [
+          486,
+          262
+        ],
+        [
+          542,
+          262
+        ]
+      ]
+    },
+    {
+      "id": "dash-to-snss",
+      "from": "dash",
+      "to": "snss",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [
+        [
+          486,
+          262
+        ],
+        [
+          678,
+          262
+        ]
+      ]
+    },
+    {
+      "id": "dash-to-soporte",
+      "from": "dash",
+      "to": "soporte",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [
+        [
+          486,
+          262
+        ],
+        [
+          814,
+          262
+        ]
+      ]
+    },
+    {
+      "id": "dash-to-admin",
+      "from": "dash",
+      "to": "admin",
+      "fromSide": "bottom",
+      "toSide": "top",
+      "via": [
+        [
+          486,
+          262
+        ],
+        [
+          955,
+          262
+        ]
+      ]
+    },
+    {
+      "id": "ano-to-metas",
+      "from": "ano",
+      "to": "metas",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "via": [
+        [
+          391,
+          522
+        ],
+        [
+          250,
+          522
+        ]
+      ]
+    },
+    {
+      "id": "ano-to-comges",
+      "from": "ano",
+      "to": "comges",
+      "label": "condiciona datos",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "via": [
+        [
+          391,
+          522
+        ],
+        [
+          375,
+          522
+        ],
+        [
+          401,
+          522
+        ]
+      ],
+      "labelAt": [
+        388,
+        508
+      ]
+    },
+    {
+      "id": "ano-to-adp",
+      "from": "ano",
+      "to": "adp",
+      "variant": "dashed",
+      "fromSide": "top",
+      "toSide": "bottom",
+      "via": [
+        [
+          391,
+          522
+        ],
+        [
+          542,
+          522
+        ]
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Multi-SS",
+      "items": [
+        "Cada Servicio de Salud opera con datos segregados",
+        "El contexto de SS se aplica automáticamente al autenticarse"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Roles",
+      "items": [
+        "Admin, parametrizador, CG, referente y visualizador",
+        "Apelador por establecimiento en Metas cuando aplica"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Trazabilidad",
+      "items": [
+        "Auditoría de cambios relevantes en datos operativos",
+        "Medios verificables y descargas controladas por módulo"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "version": "2026-10-21",
+  "entries": [
+    {
+      "term": "SS",
+      "definition": "Servicio de Salud — unidad de filtrado de datos del token de agente."
+    },
+    {
+      "term": "instrumento",
+      "definition": "Familia de medición (comges, metas). Atributo de recurso; no prefijo de esquema público."
+    },
+    {
+      "term": "COMGES",
+      "definition": "Compromisos de Gestión. Escala porcentaje antes de 2025; puntaje 0–4 desde 2025."
+    },
+    {
+      "term": "Metas",
+      "definition": "Metas sanitarias leyes 18.834, 19.664 y 20.707. Cualquier otro código (p. ej. 19.813) queda fuera del catálogo y se informa como ausente."
+    },
+    {
+      "term": "corte",
+      "definition": "Ventana de evaluación COMGES (p. ej. CORTE I/II). editable según etapa_vigente."
+    },
+    {
+      "term": "etapa_vigente",
+      "definition": "Etapa del ciclo Metas/COMGES que habilita o cierra la captura y edición de datos en un periodo."
+    },
+    {
+      "term": "ley",
+      "definition": "Ley de Metas sanitarias usada como filtro del instrumento metas: 18834, 19664 o 20707."
+    },
+    {
+      "term": "numerador",
+      "definition": "Componente del cálculo de un indicador (lectura). Junto al denominador determina el resultado."
+    },
+    {
+      "term": "denominador",
+      "definition": "Componente del cálculo de un indicador (lectura). Junto al numerador determina el resultado."
+    },
+    {
+      "term": "ability read",
+      "definition": "Única ability de tokens agente en P3a; sin mutaciones de dominio."
+    },
+    {
+      "term": "sin bypass admin",
+      "definition": "El token de agente no bypasea el GlobalScope de SS. Un admin humano en Voyager no es equivalente a un usuario técnico agente."
+    },
+    {
+      "term": "PII/egreso",
+      "definition": "La API/MCP en intranet no implica egreso seguro hacia el proveedor del modelo LLM. Ver domain-rules (PII y egreso) y ADR-041; activar el flag requiere aceptación institucional."
+    },
+    {
+      "term": "search",
+      "definition": "Búsqueda unificada de indicadores (COMGES+Metas) vía GET /api/v1/search o search-indicadores-tool. No exige parámetro instrumento; cada hit declara instrumento (y ley en Metas)."
+    },
+    {
+      "term": "establecimiento",
+      "definition": "Centro del catálogo CEN (maestro). Lectura P3a: GET /api/v1/establecimientos y tools list/get-establecimientos. Territorio = SS del token. Incluye catálogo + dirección/geo y fechas updated_at/synced_at; no incluye notas/bitácora. Teléfono/geo pueden egresar al LLM (ver PII/egreso)."
+    },
+    {
+      "term": "SAR",
+      "definition": "Servicio de Atención Primaria de Urgencia de Alta Resolutividad. Alias de filtro tipo=SAR en listado de establecimientos."
+    },
+    {
+      "term": "vigente",
+      "definition": "En establecimientos: filtro vigente=true restringe a estado_funcionamiento «Vigente en Operación Habitual» o «Vigente en Operación Transitoria». Usar meta.total para conteos."
+    },
+    {
+      "term": "territorio",
+      "definition": "En P3a agentes: el territorio de datos es el SS fijado en el token Sanctum (cen_hie_dependency_id). No se elige por query."
+    },
+    {
+      "term": "ausente",
+      "definition": "Código (instrumento o ley) que no forma parte del catálogo Centinela vigente. Se informa con success y data vacía: meta.empty_reason=ausente más el código pedido. No es un olvido de carga ni un error de validación; tampoco implica que deba cargarse (p. ej. Ley 19.813, ADP)."
+    },
+    {
+      "term": "sin_datos",
+      "definition": "Código presente en el catálogo pero sin filas para el año consultado (p. ej. Ley 20.707 en 2026). meta.empty_reason=sin_datos. Distinto de ausente: aquí el instrumento/ley sí existe en Centinela."
+    },
+    {
+      "term": "sección COMGES",
+      "definition": "Fila de compromiso del año (clave/nombre, p. ej. «COMGES Monitoreo» o «COMGES ELIMINADOS»). La etiqueta es opaca: no define tipo, evaluabilidad ni taxonomía. Usar indicadores_count para dimensionarla; no inferir categorías desde el nombre."
+    },
+    {
+      "term": "catálogo tal cual",
+      "definition": "Las claves y nombres se serializan exactamente como están en la BD (incluidos typos y espacios). El MCP no corrige, recorta ni certifica vigencia OOTT; una fila «Eliminado de OOTT» o una clave con typo se muestran sin cambios."
+    },
+    {
+      "term": "frescura de alertas",
+      "definition": "meta.last_evaluated_at (ISO-8601) y meta.reglas_evaluadas en get-dashboard-alertas/GET dashboard/alertas describen la evaluación ejecutada en ese request. count=0 con timestamp no nulo y reglas_evaluadas>=1 significa «corrió y no hay alertas»; timestamp null y 0 significa «no se evaluó» (p. ej. SS inválido). No es historial."
+    }
+  ]
+}

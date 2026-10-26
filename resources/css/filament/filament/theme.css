@@ -1,0 +1,363 @@
+@import "../../../../vendor/filament/filament/resources/css/theme.css";
+
+/* Panel Filament + Resources (T1/T2) */
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+
+/* Livewire / COMGES que C1a hosteará bajo el panel (SDD-276) */
+@source '../../../../app/Livewire/**/*';
+@source '../../../../resources/views/livewire/**/*';
+@source '../../../../resources/views/livewire/comges/**/*';
+@source '../../../../resources/views/centinela/comges/**/*';
+
+/*
+ * Tokens Centinela — canónico:
+ * .github/docs/sdd/design/paleta-centinela-filament.md
+ * Shell asimilado a Voyager/Compass legacy (sidebar oscuro, primary MINSAL).
+ */
+@theme {
+    --color-centinela-brand: #2a3f54;
+    --color-centinela-sidebar: #2d353c;
+    --color-centinela-primary: #016cba;
+    --color-centinela-primary-hover: #005f9a;
+    --color-centinela-soft: #e8f2fb;
+    --color-centinela-bg: #f8f8f8;
+    --color-centinela-surface: #ffffff;
+    --color-centinela-border: #e8edf2;
+    --color-centinela-text: #353d47;
+    --color-centinela-muted: #6b7c93;
+    --color-centinela-success: #5cb85c;
+    --color-centinela-warning: #f0ad4e;
+    --color-centinela-danger: #fa2a00;
+    --color-centinela-null: #94a3b8;
+}
+
+/* ——— Canvas (legacy admin body) ——— */
+.fi-body {
+    background-color: var(--color-centinela-bg);
+    color: var(--color-centinela-text);
+}
+
+/* ——— Sidebar oscuro tipo Voyager (contraste alto en labels/iconos) ——— */
+.fi-sidebar {
+    --sidebar-bg: var(--color-centinela-sidebar);
+    background-color: var(--color-centinela-sidebar) !important;
+}
+
+.fi-body-has-topbar .fi-sidebar-header,
+.fi-sidebar-header {
+    /* Shell conjunto público/Filament — azul medio institucional */
+    background: linear-gradient(
+        90deg,
+        #4b7396 0%,
+        #3e6485 50%,
+        #355a78 100%
+    ) !important;
+    border-color: rgb(255 255 255 / 0.08) !important;
+    box-shadow: none !important;
+    --tw-ring-color: transparent !important;
+}
+
+.fi-sidebar-header .fi-logo,
+.fi-sidebar-header a {
+    color: #ffffff !important;
+}
+
+/* Logo badge — misma caja blanca / 36px que dashboard público */
+.fi-logo {
+    display: inline-flex !important;
+    align-items: center;
+    background: #fff;
+    border-radius: 8px;
+    padding: 4px 8px;
+    box-sizing: content-box;
+    line-height: 0;
+}
+
+.fi-logo img {
+    height: 2.25rem !important;
+    width: auto !important;
+    object-fit: contain;
+    display: block;
+}
+
+.fi-sidebar-nav {
+    background-color: transparent;
+    scrollbar-gutter: auto;
+}
+
+.fi-sidebar-group-label {
+    color: rgb(255 255 255 / 0.55) !important;
+}
+
+.fi-sidebar-group-btn .fi-icon {
+    color: rgb(255 255 255 / 0.55) !important;
+}
+
+.fi-sidebar-item-btn {
+    color: rgb(255 255 255 / 0.88) !important;
+}
+
+.fi-sidebar-item-btn > .fi-sidebar-item-label,
+.fi-sidebar-item-label {
+    color: rgb(255 255 255 / 0.88) !important;
+}
+
+.fi-sidebar-item-btn > .fi-icon,
+.fi-sidebar-item-btn .fi-sidebar-item-icon {
+    color: rgb(255 255 255 / 0.7) !important;
+}
+
+.fi-sidebar-item.fi-sidebar-item-has-url > .fi-sidebar-item-btn:hover,
+.fi-sidebar-item.fi-sidebar-item-has-url > .fi-sidebar-item-btn:focus-visible {
+    background-color: rgb(255 255 255 / 0.1) !important;
+}
+
+.fi-sidebar-item.fi-sidebar-item-has-url
+    > .fi-sidebar-item-btn:hover
+    > .fi-sidebar-item-label,
+.fi-sidebar-item.fi-sidebar-item-has-url
+    > .fi-sidebar-item-btn:hover
+    > .fi-icon {
+    color: #ffffff !important;
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn,
+.fi-sidebar-item.fi-sidebar-item-has-active-child-items > .fi-sidebar-item-btn {
+    background-color: #3e6485 !important;
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-sidebar-item-label,
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-icon,
+.fi-sidebar-item.fi-sidebar-item-has-active-child-items
+    > .fi-sidebar-item-btn
+    > .fi-sidebar-item-label,
+.fi-sidebar-item.fi-sidebar-item-has-active-child-items
+    > .fi-sidebar-item-btn
+    > .fi-icon {
+    color: #ffffff !important;
+}
+
+.fi-sidebar-item.fi-active
+    > .fi-sidebar-item-btn
+    > .fi-sidebar-item-grouped-border
+    > .fi-sidebar-item-grouped-border-part {
+    background-color: #ffffff !important;
+}
+
+.fi-sidebar-footer {
+    border-color: rgb(255 255 255 / 0.08) !important;
+    color: rgb(255 255 255 / 0.55);
+}
+
+.cen-sidebar-session {
+    position: relative;
+    min-width: 0;
+    margin: calc(var(--spacing) * -8) calc(var(--spacing) * -6) 0.75rem;
+    padding: 0.9rem 0.85rem;
+    background-color: var(--color-centinela-sidebar);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.fi-body-has-sidebar-collapsible-on-desktop
+    .fi-sidebar:not(.fi-sidebar-open)
+    .cen-sidebar-session,
+.fi-body-has-sidebar-fully-collapsible-on-desktop
+    .fi-sidebar:not(.fi-sidebar-open)
+    .cen-sidebar-session {
+    display: none;
+}
+
+.cen-sidebar-session__dimmer {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        rgb(45 53 61 / 0.79) 0%,
+        rgb(45 53 61 / 0.5) 100%
+    );
+}
+
+.cen-sidebar-session__content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-width: 0;
+}
+
+.cen-sidebar-session__avatar {
+    width: 2.75rem;
+    height: 2.75rem;
+    flex: none;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.cen-sidebar-session__text {
+    min-width: 0;
+}
+
+.cen-sidebar-session__name,
+.cen-sidebar-session__email {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.cen-sidebar-session__name {
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.cen-sidebar-session__email {
+    margin-top: 0.15rem;
+    color: rgb(255 255 255 / 0.65);
+    font-size: 0.75rem;
+    line-height: 1.3;
+}
+
+/* ——— Topbar: shell chrome conjunto (público + Filament) ——— */
+.fi-topbar {
+    position: relative;
+    /* Shell conjunto público/Filament — azul medio institucional */
+    background: linear-gradient(
+        90deg,
+        #4b7396 0%,
+        #3e6485 50%,
+        #355a78 100%
+    ) !important;
+    border-bottom: 1px solid rgb(255 255 255 / 0.08) !important;
+    box-shadow: none !important;
+    --tw-ring-color: transparent !important;
+}
+
+.fi-topbar::before {
+    content: none;
+}
+
+/*
+ * Chrome del topbar en blanco. Ojo: el menú de usuario (dropdown) se teleporta
+ * dentro de .fi-topbar, y su panel es claro; si se pinta .fi-topbar .fi-icon
+ * en blanco, los íconos del dropdown desaparecen. Se listan solo los
+ * controles del chrome, no el panel.
+ */
+.fi-topbar-open-sidebar-btn .fi-icon,
+.fi-topbar-close-sidebar-btn .fi-icon,
+.fi-global-search .fi-icon,
+.fi-user-menu-trigger .fi-icon,
+.fi-topbar-item-btn > .fi-icon,
+.fi-topbar .fi-topbar-item-label {
+    color: rgb(255 255 255 / 0.9) !important;
+}
+
+.fi-topbar .fi-topbar-item-btn:hover,
+.fi-topbar .fi-topbar-item-btn:focus-visible {
+    background-color: rgb(255 255 255 / 0.12) !important;
+}
+
+.fi-topbar .fi-user-menu-trigger {
+    color: #ffffff !important;
+}
+
+.fi-main {
+    position: relative;
+    z-index: 1;
+    background-color: transparent;
+}
+
+/* Franja admin.bg_image, igual que #gradient_bg de Voyager */
+.cen-gradient-bg {
+    position: fixed;
+    top: var(--topbar-height, 4rem);
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 220px;
+    pointer-events: none;
+    background-color: var(--color-centinela-bg);
+    background-size: cover;
+    background-position: 0;
+}
+
+.cen-gradient-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgb(248 248 248 / 0.85) 0%,
+        rgb(248 248 248 / 0.9) 80%,
+        rgb(248 248 248) 100%
+    );
+}
+
+/* ——— Botones sólidos: texto blanco (legacy Bootstrap) ——— */
+.fi-btn:not(.fi-outlined).fi-color {
+    --text: #ffffff;
+    --hover-text: #ffffff;
+    --dark-text: #ffffff;
+    --dark-hover-text: #ffffff;
+    border-radius: 0.25rem;
+}
+
+.fi-btn:not(.fi-outlined).fi-color-primary {
+    --bg: var(--color-centinela-primary);
+    --hover-bg: var(--color-centinela-primary-hover);
+}
+
+.fi-btn:not(.fi-outlined).fi-color-success {
+    --bg: var(--color-centinela-success);
+    --hover-bg: #449d44;
+}
+
+.fi-btn:not(.fi-outlined).fi-color-warning {
+    --bg: var(--color-centinela-warning);
+    --hover-bg: #ec971f;
+}
+
+.fi-btn:not(.fi-outlined).fi-color-danger {
+    --bg: var(--color-centinela-danger);
+    --hover-bg: #d42400;
+}
+
+/* ——— Secciones: superficie mockup C1a (no accordion Voyager azul) ——— */
+.fi-section-content-ctn,
+.fi-ta-ctn {
+    border-color: var(--color-centinela-border);
+    background-color: var(--color-centinela-surface);
+}
+
+/* ——— Tablas: thead gris claro legacy ——— */
+.fi-ta-header-cell {
+    background-color: #f5f5f5 !important;
+    color: var(--color-centinela-text) !important;
+    font-weight: 600;
+}
+
+.fi-ta-row {
+    border-color: var(--color-centinela-border);
+}
+
+/* ——— Inputs más cercanos a Bootstrap ——— */
+.fi-input-wrp {
+    border-radius: 0.25rem;
+}
+
+.fi-badge {
+    border-radius: 0.25rem;
+}
+
+/* Topbar: año + SS con el mismo radio (SDD-275) */
+.fi-panel-context-bar #filament-indicator-year,
+.fi-panel-context-bar .fi-ss-chip {
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+}

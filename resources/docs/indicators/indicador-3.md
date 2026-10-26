@@ -1,0 +1,24 @@
+# Indicador 3
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Cobertura de exámenes de detección precoz del cáncer de cuello uterino
+- **Objetivo del indicador:** Monitorear cobertura y productividad de exámenes de tamizajes
+- **Meta anual:** Aumentar el 30,00% de la brecha para cumplir el 80% de cobertura
+- **Responsable de medición:** Establecimiento de APS dependiente y Hospitales de baja complejidad que tengan APS.
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 1 del formulario A1 de la Subsecretaría de Redes Asistenciales
+- **Unidad de medida:** Porcentaje
+- **Tipo de indicador:** Proceso
+- **Dimensión que aborda:** Eficiencia
+- **Fórmula de Cálculo:** (N° de personas de 25 a 64 años adscrita con PAP o test de VPH vigente a Diciembre 2025 / N° de personas de 25 a 64 años adscrita para el año 2025) * 100
+- **Fuente de información del Numerador:** REM P12
+- **Fuente de información del Denominador:** FONASA - Población adscrita (mujeres y transmasculinos) debiera ser provisto por el establecimiento al momento de la fijación de la meta
+- **Número de decimales:** 2 decimales con resultado truncado
+- **Periodicidad de Medición:** Semestral
+- **Nivel de aplicación:** Establecimiento de APS dependiente y Hospitales de baja complejidad que tengan APS.
+- **Definición de términos:**
+    - Población Adscrita: La población adscrita corresponde a los usuarios inscritos y validados en establecimientos dependientes de Servicios de Salud
+    - VPH: Virus Papiloma Humano
+    - PAP: Papanicolaou
+- **División que lo monitorea:** DIVAP

@@ -1,0 +1,26 @@
+# Indicador 15 (texto definitivo)
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Personal de salud con atención clínica directa capacitados en temáticas asociadas a temas clínicos relevantes
+- **Objetivo del indicador:** Fortalecer y actualizar conocimientos del personal de salud con atención clínica directa en temas clínicos relevantes en los Establecimientos de salud.
+- **Meta anual:** Que el 7% de la dotación del personal de atención clínica directa tenga al menos una capacitación en temáticas asociadas a temas clínicos relevantes
+- **Responsable de medición:** Establecimiento de salud
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 3 del Formulario A1 de la Subsecretaría de Redes Asistenciales
+- **Unidad de medida:** Porcentaje
+- **Tipo de indicador:** Proceso
+- **Dimensión que aborda:** Eficacia
+- **Fórmula de Cálculo:** (N° de funcionarios/as de atención clínica directa capacitados/as en al menos una temática clínica relevante en el año t/ N° total de funcionarios/as de atención clínica directa en el año t) *100
+- **Fuente de información del Numerador:** SIRH
+- **Fuente de información del Denominador:** SIRH
+- **Número de decimales:** 2 decimales con resultado truncado
+- **Periodicidad de Medición:** Semestral
+- **Nivel de aplicación:** Establecimientos de Salud
+- **Definición de términos:**
+    - Temas clínicos relevantes: Salud mental, Oncología, Interrupción voluntaria del embarazo, Parto respetado.
+    - Curso: Actividad mínima de 20 horas pedagógicas abarcando una temática clínica relevante.
+    - Funcionarios/as capacitados: aprobaron el curso con nota igual o mayor a 4.0
+    - Dotación: Corte al 31 de marzo de 2025.
+    - Personal de salud de atención clínica directa: realiza atención práctica; se excluyen los de apoyo administrativo o actividades sin intervención directa.
+- **División que lo monitorea:** DIGEDEP

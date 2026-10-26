@@ -1,0 +1,23 @@
+# Indicador 1
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Intervenciones psicosociales grupales realizadas a personas en tratamiento por salud mental
+- **Objetivo del indicador:** Aumentar el número de intervenciones psicosociales grupales realizadas a personas en tratamiento por salud mental en la APS.
+- **Meta anual:** Aumento del 20,00% con relación a la línea base del año 2024
+- **Responsable de medición:** Establecimiento de APS dependiente y Hospitales de baja complejidad que tengan APS.
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 1 del formulario A1 de la Subsecretaría de Redes Asistenciales.
+- **Unidad de medida:** Porcentaje
+- **Tipo de indicador:** Producto
+- **Dimensión que aborda:** Eficiencia
+- **Fórmula de Cálculo:** (Número de intervenciones psicosociales grupales realizadas a personas en tratamiento por salud mental / Número de controles de salud mental realizados a personas en tratamiento por salud mental) x 100
+- **Fuente de información del Numerador:** REM A06 sección A1
+- **Fuente de información del Denominador:** REM A06 sección A1
+- **Número de decimales:** 2 decimales con resultado truncado
+- **Periodicidad de Medición:** Semestral
+- **Nivel de aplicación:** Establecimiento de APS dependiente y Hospitales de baja complejidad que tengan APS.
+- **Definición de términos:**
+    - **Intervención Psicosocial Grupal:** Es un control de salud mental que consiste en una intervención grupal realizada en el contexto de la atención integral de personas que ingresan a tratamiento por algún condicionante de la salud mental, factor de riesgo y/o trastornos mentales.
+    - **Control de Salud Mental:** Es la intervención individual realizada por profesionales del equipo de sector con formación en salud mental, médica, técnica y/o gestor comunitario. Esta intervención es realizada en el contexto de tratamiento individual, a personas consultantes, sus familiares y/o cuidadores. Incluye elaboración de plan de cuidados integrales (PCI), psicoterapia individual (cuando corresponda), control y seguimiento para evolución, psicoeducación, entre otras actividades.
+- **División que lo monitorea:** DIVAP

@@ -1,0 +1,50 @@
+# Dependabot: abre PRs de actualización de dependencias en GitHub.
+# No despliega al servidor; tras merge, el despliegue sigue siendo manual según vuestro runbook.
+# Los PRs van contra la rama `deps-integration` (no `dev`) para no saturar la lista de PRs de integración;
+# el equipo fusiona `deps-integration` → `dev` cuando corresponda.
+# La rama `deps-integration` debe existir en el remoto (crearla desde `dev` si aún no está).
+# Limitación Git: NO usar la rama `dependabot` como target-branch — choca con las ramas
+# `dependabot/<ecosistema>/...` que crea Dependabot (error file_fetcher_error en la revisión semanal).
+# https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
+
+# Dependabot simula PHP con config.platform.php en composer.json (o el mínimo de require.php).
+# Sin platform explícito, la resolución Composer puede fallar (tool_version_not_supported) y no abrir PRs.
+version: 2
+updates:
+  - package-ecosystem: "composer"
+    directory: "/"
+    target-branch: "deps-integration"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Santiago"
+    open-pull-requests-limit: 8
+    labels:
+      - "dependencies"
+      - "composer"
+
+  - package-ecosystem: "npm"
+    directory: "/"
+    target-branch: "deps-integration"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "America/Santiago"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "npm"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    target-branch: "deps-integration"
+    schedule:
+      interval: "monthly"
+      time: "09:00"
+      timezone: "America/Santiago"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"

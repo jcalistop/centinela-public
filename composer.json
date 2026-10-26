@@ -1,0 +1,106 @@
+{
+    "name": "laravel/laravel",
+    "type": "project",
+    "description": "The skeleton application for the Laravel framework.",
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
+    "license": "EUPL-1.2",
+    "require": {
+        "php": "^8.3",
+        "arielmejiadev/larapex-charts": "^9.0",
+        "doctrine/dbal": "^3.8",
+        "filament/filament": "~5.0",
+        "guzzlehttp/guzzle": "^7.2",
+        "laravel/framework": "^11.45",
+        "laravel/mcp": "^0.5.3",
+        "laravel/sanctum": "^4.0",
+        "laravel/tinker": "^3.0",
+        "league/csv": "^9.15",
+        "livewire/livewire": "^4.3.1",
+        "orangehill/iseed": "^3.0",
+        "owen-it/laravel-auditing": "^14.0",
+        "spatie/laravel-markdown": "^2.4",
+        "spatie/simple-excel": "^3.6",
+        "tcg/voyager": "^1.8"
+    },
+    "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.13",
+        "fakerphp/faker": "^1.9.1",
+        "laravel-lang/common": "^6.8",
+        "laravel/boost": "^1.8",
+        "laravel/pint": "^1.0",
+        "laravel/sail": "^1.18",
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^8.1",
+        "phpunit/phpunit": "^10.5.62",
+        "spatie/laravel-ignition": "^2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/",
+            "App\\Helpers\\": "app/Helpers/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test:migrate:fresh": "@php artisan migrate:fresh --env=testing --no-interaction --force",
+        "schema:parity": "@php artisan centinela:schema-diff --target=mysql_schema_parity --require-voyager",
+        "schema:fresh": "@php artisan centinela:schema-fresh --no-interaction",
+        "route-audit": "@php artisan centinela:route-audit",
+        "route-audit-strict": "@php artisan centinela:route-audit --fail-on-high-gaps",
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.3.0"
+        },
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "php-http/discovery": true
+        },
+        "audit": {
+            "ignore": {
+                "CVE-2025-32931": "tcg/voyager <=1.8.0 sin parche upstream; admin BREAD acotado (auditor\u00eda 2026-04-29 \u00a75).",
+                "CVE-2024-55417": "tcg/voyager <=1.8.0 sin parche upstream; mitigaci\u00f3n operativa admin-only.",
+                "CVE-2024-55416": "tcg/voyager <=1.8.0 sin parche upstream; mitigaci\u00f3n operativa admin-only.",
+                "CVE-2024-55415": "tcg/voyager <=1.8.0 sin parche upstream; mitigaci\u00f3n operativa admin-only.",
+                "CVE-2026-48019": "Laravel 11 sin backport (parche solo 12.60+/13.10+); mitigaci\u00f3n RejectCrlfInMailAddresses.",
+                "PKSA-3r5d-mb8f-1qw9": "Mismo GHSA-5vg9-5847-vvmq; Laravel 11 sin backport; mitigaci\u00f3n RejectCrlfInMailAddresses.",
+                "PKSA-m5cs-t1y6-qpcs": "Laravel 11 sin backport; Centinela no usa temporarySignedRoute (auditor\u00eda 2026-06-17).",
+                "CVE-2026-114509": "Laravel 11 sin backport (parche solo 12.68+/13.29+); Centinela no usa TokenGuard (auth.php solo web; API Sanctum).",
+                "PKSA-b41t-wbzk-9q51": "Mismo GHSA-f9x3-7vq9-cph6; Laravel 11 sin backport; no hay guard driver=token."
+            }
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

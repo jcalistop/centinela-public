@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: Si usa este software, cítalo con estos metadatos.
+title: Centinela
+type: software
+authors:
+    - family-names: Calisto Peñafiel
+      given-names: José Luis
+      affiliation: Servicio de Salud del Reloncaví
+license: EUPL-1.2
+repository-code: https://github.com/jcalistop/centinela-public

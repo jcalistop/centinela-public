@@ -1,0 +1,29 @@
+{
+    "baseUrl": "https://ejemplo.intranet.local/centinela",
+    "schedulerRunIntervalMinutes": 60,
+    "httpTimeoutSeconds": 30,
+    "timeouts": {
+        "health": 10,
+        "schedule_run": 120,
+        "queue_process": 60,
+        "db_backup": 300
+    },
+    "securityWarningThreshold": 10,
+    "alertAfterConsecutiveFailures": 3,
+    "logRetentionDays": 31,
+    "reporting": {
+        "dailyAt": "07:00",
+        "weeklyOnDay": 1
+    },
+    "smtp": {
+        "server": "smtp.ejemplo.gob.cl",
+        "port": 587,
+        "useSsl": true,
+        "fromAddress": "centinela-monitor@ejemplo.gob.cl",
+        "fromName": "Monitor Centinela (PC externo)",
+        "to": [
+            "destinatario@ejemplo.gob.cl"
+        ],
+        "passwordFile": "smtpPassword.sec"
+    }
+}

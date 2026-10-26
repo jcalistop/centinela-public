@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "diagram_id": "centinela-vision-funcional",
+  "domain": "platform",
+  "slug": "vision-funcional",
+  "lens": "functional",
+  "diagram_revision": 7,
+  "app_version": "v4.12.0",
+  "delivered_at": "2026-09-01",
+  "quality_profile": "showcase",
+  "visual_preset": "classic",
+  "acerca_de_svg": {
+    "path": "public/docs/diagrams/vision-funcional.svg",
+    "theme": "light",
+    "preset": "classic",
+    "export_command": "npm run diagrams:export-vision-funcional"
+  },
+  "files": {
+    "spec": "centinela-vision-funcional.architecture.json",
+    "html": "centinela-vision-funcional.html"
+  },
+  "receipt": {
+    "specification_sha256": "e0516be7837b7dc6428de27fc904c412c47ebd498cec5703b12777c35a5947bc",
+    "specification_bytes": 6286,
+    "artifact_sha256": "1c61092612ec244a27cf9da29425db0a1d7e57d93ba9970c168a231aee8ae7b0",
+    "artifact_bytes": 713622
+  }
+}

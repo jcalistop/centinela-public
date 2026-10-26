@@ -1,0 +1,24 @@
+# Indicador 2
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Lactancia Materna Exclusiva en niños y niñas al sexto mes de vida
+- **Objetivo del indicador:**
+  - Promoción y aumento de los factores protectores de salud, capaces de retrasar el desenlace de ENTs.
+  - Aumentar el porcentaje de normalidad del Estado Nutricional en niños/as menores de 6 años.
+  - Disminuir o mantener el porcentaje de obesidad en niños/as pertenecientes a establecimientos del sistema público de salud
+- **Meta anual:** Alcanzar al menos el 60,00%
+- **Responsable de medición:** Establecimiento de APS dependiente y Hospitales de baja complejidad que tengan APS.
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 1 del formulario A1 de la Subsecretaría de Redes Asistenciales.
+- **Unidad de medida:** Porcentaje
+- **Tipo de indicador:** Proceso
+- **Dimensión que aborda:** Eficiencia
+- **Fórmula de Cálculo:** (N* de niños y niñas con control de salud del sexto mes mantuvieron LME / N* de niños y niñas con control de salud al sexto mes) * 100
+- **Fuente de información del Numerador:** REM A03, Sección A5
+- **Fuente de información del Denominador:** REM A03, Sección A5
+- **Número de decimales:** 2 decimales con resultado truncado
+- **Periodicidad de Medición:** Trimestral
+- **Nivel de aplicación:** Establecimiento de APS dependiente y Hospitales de baja complejidad que tengan APS.
+- **Definición de términos:** LME: Lactancia Materna Exclusiva
+- **División que lo monitorea:** DIVAP

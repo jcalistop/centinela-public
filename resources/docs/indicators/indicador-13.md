@@ -1,0 +1,23 @@
+# Indicador 13
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Llamados telefónicos de emergencia 131 por Paro cardio respiratorio (PCR) con entrega de instrucciones de Soporte Vital Básico a testigos o solicitante.
+- **Objetivo del indicador:** Entregar instrucciones de soporte vital básico a testigos ante eventos de paro cardio respiratorio.
+- **Meta anual:** 95,00%
+- **Responsable de medición:** Establecimiento de Salud
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 2 y 5 del formulario A1 de la Subsecretaría de Redes Asistenciales
+- **Unidad de medida:** Porcentual
+- **Tipo de indicador:** Producto
+- **Dimensión que aborda:** Eficacia
+- **Fórmula de Cálculo:** (Número de llamados telefónicos con instrucciones de soporte vital básico entregadas a testigos en caso de PCR / Total de llamados telefónicos de atención de pacientes por PCR) x 100
+- **Fuente de información del Numerador:** Reporte del sistema de información del Centro Regulador
+- **Fuente de información del Denominador:** Reporte del sistema de información del Centro Regulador
+- **Número de decimales:** 2 decimales con resultado truncado
+- **Periodicidad de Medición:** Trimestral
+- **Nivel de aplicación:** Centros Regulador SAMU
+- **Definición de términos:**
+    - PCR: Paro Cardiorrespiratorio
+    - Instrucciones Soporte Vital básico Telefónico: indicaciones verbales dadas a testigos/solicitantes presentes en la escena de un PCR
+- **División que lo monitorea:** DIGERA

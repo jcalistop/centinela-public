@@ -1,0 +1,19 @@
+---
+description: Pausa de plataforma Filament — admin visible = Voyager /admin
+alwaysApply: false
+---
+
+# Plataforma — producto cerrado (admin Voyager)
+
+Usar cuando el humano o el contexto toque: Filament, reconstrucción de plataforma, retiro Voyager, o paneles `/servicio-salud`, `/catalogo`, `/pais`, `/configuracion`.
+
+## Invariante
+
+La administración visible del producto cerrado es **Voyager `/admin`**. Filament permanece en el árbol y está **oculto** (maestro hard-off; rutas 404). No reabrir el chasis Filament ni borrar su código sin spec nuevo.
+
+Guest Livewire (dashboard público) y la fachada de lectura para agentes no cambian por esta pausa.
+
+## Qué no hacer
+
+- No implementar Filament “de paso” fuera del alcance pedido.
+- No asumir reglas de negocio no escritas en `domain-rules.md`.

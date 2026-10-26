@@ -1,0 +1,24 @@
+# Indicador 14
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Disponibilidad Operativa de Call Takers SAMU
+- **Objetivo del indicador:** Monitorear la disponibilidad y conectividad de los operadores telefónicos, asegurando personal capacitado y conectado para atender todas las llamadas entrantes de forma eficiente y oportuna
+- **Meta anual:** 65,00% del tiempo de turno del operador esté conectado y disponible
+- **Responsable de medición:** Centro Regulador SAMU
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 2 y 5 del formulario A1 de la Subsecretaría de Redes Asistenciales
+- **Unidad de medida:** Porcentaje
+- **Tipo de indicador:** Proceso
+- **Dimensión que aborda:** Eficiencia
+- **Fórmula de Cálculo:** ((Minutos totales del turno – minutos en pausa, modo auxiliar o desconectado) / Minutos totales del turno) * 100
+- **Fuente de información del Numerador:** Distribuidor Automático de Llamadas (ACD)
+- **Fuente de información del Denominador:** Distribuidor Automático de Llamadas (ACD)
+- **Número de decimales:** 2 decimales con resultado truncado
+- **Periodicidad de Medición:** Semestral
+- **Nivel de aplicación:** Centros Regulador SAMU
+- **Definición de términos:**
+    - Disponibilidad Operativa: porcentaje de call takers habilitados y conectados respecto del total programado.
+    - Call Takers: operadores que responden llamadas de emergencia; procesan, coordinan y aseguran respuesta rápida y adecuada.
+    - Call Takers Habilitados: asignados oficialmente a un turno tras cumplir requisitos.
+- **División que lo monitorea:** DIGERA

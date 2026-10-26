@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "diagram_id": "centinela-ciclo-metas",
+  "domain": "modules/metas",
+  "slug": "ciclo-metas",
+  "lens": "workflow",
+  "diagram_revision": 2,
+  "app_version": "v4.12.0",
+  "delivered_at": "2026-09-01",
+  "quality_profile": "showcase",
+  "visual_preset": "classic",
+  "acerca_de_svg": {
+    "path": "public/docs/diagrams/ciclo-metas.svg",
+    "theme": "light",
+    "preset": "classic",
+    "export_command": "npm run diagrams:export-ciclo-metas"
+  },
+  "files": {
+    "spec": "centinela-ciclo-metas.workflow.json",
+    "html": "centinela-ciclo-metas.html"
+  },
+  "receipt": {
+    "specification_sha256": "3e74363df1df3a5c6d1da521eb7289999fe20e056830069efda5d702a8cede80",
+    "specification_bytes": 6716,
+    "artifact_sha256": "ea44c3621d8f24992391ad95d55d2d9158f23dc32f2ac95648ca57ad38c29bcd",
+    "artifact_bytes": 712197
+  }
+}

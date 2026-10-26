@@ -1,0 +1,59 @@
+---
+description: Convenciones PHP/Laravel para tipado IDE (Intelephense) y evitar falsos positivos
+globs: "**/*.php"
+alwaysApply: false
+---
+
+# PHP e Intelephense (Centinela)
+
+Reglas obligatorias al tocar **PHP** en este repo (Livewire, controladores, modelos, jobs, migraciones, tests). Reducen **P1013**, **P1080**, **P1008** y avisos similares en Intelephense.
+
+## `Auth::user()` y métodos Voyager (`hasRole`, `hasPermission`, …)
+
+`Auth::user()` está tipado como `Authenticatable|null`. **No** encadenar métodos definidos en `App\Models\User` / Voyager sin acotar tipo.
+
+**Hacer:**
+
+```php
+$user = Auth::user();
+if (! $user instanceof \App\Models\User) {
+    abort(401);
+}
+$user->hasRole('admin');
+```
+
+**O** un método privado reutilizable (p. ej. `authenticatedUser(): User`) como en los Livewire Metas existentes.
+
+**Evitar:** `Auth::user()->hasRole(...)` directo en código nuevo o al refactorizar.
+
+## Sesión `indicator_year` (modelo `Year`)
+
+El helper `session('clave')` + propiedad suele inferirse mal (p. ej. `Store::$id`).
+
+**Hacer:** `Session::get('indicator_year')` + `instanceof \App\Models\Year` antes de usar `->id` / `->ano`, o `\App\Helpers\Helper::showCurrentYear()` cuando encaje.
+
+**Evitar:** `session('indicator_year')->id` como única expresión en modelos, scopes o servicios.
+
+## Closures (`Migration`, `Schema::table`, rutas, callbacks)
+
+Cualquier variable del método/padre usada **dentro** de `function (...) { }` debe pasarse con **`use ($var)`**. Sin `use`, PHP e Intelephense marcan variable indefinida (p. ej. `$isSqlite` en migraciones).
+
+## Parámetros con default `null`
+
+Usar **nulabilidad explícita**: `?int $x = null`, `?float $x = null` (no `int $x = null`). Coherente con `pint.json` → `nullable_type_declaration_for_default_null_value: true`.
+
+## Componentes Metas (Livewire)
+
+Al añadir Livewire bajo `App\Livewire\MetasInstrument\`, alinear con componentes que ya usan **`authenticatedUser()`** / **`indicatorYear()`** en lugar de duplicar patrones frágiles.
+
+## Livewire / vendor (P1009, P1013)
+
+Si Intelephense marca `Undefined type 'Livewire\Component'`, `Undefined type 'Livewire\Attributes\On'` o `Undefined method 'addError'` en componentes Livewire, **no refactorizar el PHP**: el código es válido; el IDE no está resolviendo `vendor/livewire`.
+
+**Síntoma típico:** P1009 en `extends Component` y P1013 en `$this->addError()` (cascada del trait `HandlesValidation`).
+
+**Solución (workspace):** [`.vscode/settings.json`](../../.vscode/settings.json) con `intelephense.environment.includePaths: ["vendor"]`, `phpVersion` 8.3 y sin excluir `vendor/` de la indexación.
+
+**Tras cambiar settings o `composer install`:** Command Palette → `Intelephense: Clear Cache and Reload` → `Developer: Reload Window`.
+
+**Evitar:** `@method addError` por componente, cambiar `addError` por `ValidationException` solo para silenciar el IDE, o añadir `barryvdh/laravel-ide-helper` solo por tipos de vendor.

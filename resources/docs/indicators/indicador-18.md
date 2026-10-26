@@ -1,0 +1,23 @@
+# Indicador 18
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Cobertura de personal de salud con atención clínica directa capacitados en prevención y control de infecciones asociadas a la atención de salud
+- **Objetivo del indicador:** Fortalecer y actualizar el conocimiento de personal de salud con atención clínica directa en las principales medidas de prevención y control de IAAS, con especial énfasis en precauciones estándares
+- **Meta anual:** 70,00%
+- **Responsable de medición:** Establecimiento de salud
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 3 del Formulario A1 de la Subsecretaria de Redes Asistenciales
+- **Unidad de medida:** Porcentaje
+- **Tipo de indicador:** Producto
+- **Dimensión que aborda:** Seguridad de la atención
+- **Fórmula de Cálculo:** (N° de personal de salud con atención clínica directa con curso de prevención y control de IAAS aprobado con antigüedad menor a 5 años / N° total de personal de salud con atención clínica directa) * 100
+- **Fuente de información del Numerador:** SIRH
+- **Fuente de información del Denominador:** SIRH
+- **Número de decimales:** 2 decimales con resultado truncado
+- **Periodicidad de Medición:** Semestral
+- **Nivel de aplicación:** Establecimientos de salud
+- **Definición de términos:**
+    - Personal de salud de atención clínica directa: funcionarios que realiza atención práctica; excluye administrativos y actividades de apoyo sin intervención directa
+    - Curso de prevención y control de IAAS aprobado: mínimo 20 horas pedagógicas abordando precauciones estándares y técnica aséptica
+- **División que lo monitorea:** DIGERA

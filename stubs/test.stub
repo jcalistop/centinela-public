@@ -1,0 +1,22 @@
+<?php
+
+namespace {{ namespace }};
+
+use Tests\TestCase;
+
+class {{ class }} extends TestCase
+{
+    /**
+     * A basic feature test example.
+     *
+     * Si necesita RefreshDatabase, agreguelo explícitamente:
+     * use Illuminate\Foundation\Testing\RefreshDatabase;
+     * use RefreshDatabase;
+     */
+    public function test_example(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+    }
+}

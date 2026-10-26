@@ -1,0 +1,138 @@
+# Sincroniza deps-integration con dev (fast-forward) antes del run semanal de Dependabot.
+# Fast-forward de deps-integration desde dev; si diverge, Issue de alerta.
+# Si el FF falla (rama divergente), abre o comenta un Issue de alerta.
+
+name: Sync deps-integration from dev
+
+on:
+  schedule:
+    # Lunes 02:00 UTC ≈ domingo 22:00 America/Santiago (UTC-4); antes de Dependabot (lunes 09:00 CL).
+    - cron: "0 2 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: deps-integration-sync
+  cancel-in-progress: false
+
+jobs:
+  fast-forward:
+    name: Fast-forward deps-integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout deps-integration
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          ref: deps-integration
+
+      - name: Fast-forward to origin/dev
+        id: sync
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git fetch origin dev deps-integration
+          git checkout deps-integration
+
+          before="$(git rev-parse HEAD)"
+          ahead="$(git rev-list --count origin/dev..HEAD)"
+          behind="$(git rev-list --count HEAD..origin/dev)"
+
+          {
+            echo "before=$before"
+            echo "ahead=$ahead"
+            echo "behind=$behind"
+          } >> "$GITHUB_OUTPUT"
+
+          echo "deps-integration vs origin/dev — ahead: $ahead, behind: $behind" >> "$GITHUB_STEP_SUMMARY"
+
+          if git merge --ff-only origin/dev; then
+            after="$(git rev-parse HEAD)"
+            echo "after=$after" >> "$GITHUB_OUTPUT"
+
+            if [ "$before" = "$after" ]; then
+              echo "deps-integration already up to date with dev ($after)"
+              echo "Resultado: ya al día." >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+
+            echo "Fast-forwarded deps-integration: ${before:0:7} -> ${after:0:7}"
+            echo "Resultado: FF ${before:0:7} → ${after:0:7}" >> "$GITHUB_STEP_SUMMARY"
+            git push origin deps-integration
+            exit 0
+          fi
+
+          {
+            echo "## Fast-forward falló"
+            echo ""
+            echo "\`deps-integration\` tiene commits no presentes en \`dev\` (ahead=$ahead)."
+            echo "No se puede hacer \`merge --ff-only\`. Promover bumps o alinear la rama antes de Dependabot."
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          exit 1
+
+      - name: Alert with GitHub Issue
+        if: failure() && steps.sync.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          AHEAD: ${{ steps.sync.outputs.ahead }}
+          BEHIND: ${{ steps.sync.outputs.behind }}
+          BEFORE: ${{ steps.sync.outputs.before }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+
+          MARKER='[deps-integration-sync]'
+          TITLE="${MARKER} Fast-forward falló: alinear deps-integration con dev"
+
+          BODY="## Sync FF falló
+
+          El workflow **Sync deps-integration from dev** no pudo hacer fast-forward de \`dev\` → \`deps-integration\`.
+
+          | Dato | Valor |
+          | ---- | ----- |
+          | Ahead de \`dev\` | ${AHEAD:-?} |
+          | Behind de \`dev\` | ${BEHIND:-?} |
+          | Tip \`deps-integration\` | \`${BEFORE:-?}\` |
+          | Run | ${RUN_URL} |
+
+          ### Qué hacer
+
+          1. Revisar / mergear bumps pendientes: PR **\`deps-integration\` → \`dev\`**.
+          2. Si no hay promoción pendiente, alinear a mano (\`reset --hard origin/dev\` solo si aceptas perder commits locales de la rama de deps).
+          3. Re-lanzar este workflow (\`workflow_dispatch\`) o esperar el próximo lunes 02:00 UTC.
+          4. Dependabot corre ~**lunes 09:00 America/Santiago**; conviene alinear **antes**.
+
+          _Issue generado automáticamente. Cerrar cuando el FF vuelva a pasar en verde._"
+
+          # Dedup: si ya hay un Issue abierto con el marcador, comentar en vez de crear otro.
+          existing="$(gh issue list --state open --search "${MARKER} in:title" --json number --jq '.[0].number // empty')"
+
+          if [ -n "$existing" ]; then
+            COMMENT="## Nuevo fallo de sync
+
+          El FF volvió a fallar.
+
+          | Dato | Valor |
+          | ---- | ----- |
+          | Ahead | ${AHEAD:-?} |
+          | Behind | ${BEHIND:-?} |
+          | Tip | \`${BEFORE:-?}\` |
+          | Run | ${RUN_URL} |"
+            gh issue comment "$existing" --body "$COMMENT"
+            echo "Comentado en Issue #$existing"
+          else
+            gh issue create \
+              --title "$TITLE" \
+              --label "dependencies" \
+              --body "$BODY"
+            echo "Issue de alerta creado"
+          fi

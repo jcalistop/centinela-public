@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "diagram_id": "centinela-ciclo-comges",
+  "domain": "modules/comges",
+  "slug": "ciclo-comges",
+  "lens": "workflow",
+  "diagram_revision": 11,
+  "app_version": "v4.12.0",
+  "delivered_at": "2026-09-01",
+  "quality_profile": "showcase",
+  "visual_preset": "classic",
+  "acerca_de_svg": {
+    "path": "public/docs/diagrams/ciclo-comges.svg",
+    "theme": "light",
+    "preset": "classic",
+    "export_command": "npm run diagrams:export-ciclo-comges"
+  },
+  "files": {
+    "spec": "centinela-ciclo-comges.workflow.json",
+    "html": "centinela-ciclo-comges.html"
+  },
+  "receipt": {
+    "specification_sha256": "7f4b228929d06ddeeecdac8ae3c6e731f964960f40bef0bd2dd8bd9308f19bf0",
+    "specification_bytes": 7347,
+    "artifact_sha256": "188e61602927ab1de5c21161be1df0a848a6c7697ec281847586de6d6ccd1dac",
+    "artifact_bytes": 714658
+  }
+}

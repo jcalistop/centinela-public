@@ -1,0 +1,5 @@
+﻿# Variables y secretos locales: no indexar en el contexto del agente.
+# No sustituye controles de acceso: evitar comandos que sobrescriban .env sin copia previa.
+.env.backup
+.env.production
+.env.*.local

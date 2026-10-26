@@ -1,0 +1,197 @@
+# CI en runners de GitHub (Ubuntu en la nube de Microsoft).
+# Cada job corre en una VM efímera: aquí se ejecutan composer install y php artisan test.
+# No toca vuestro servidor ni sustituye el despliegue manual.
+
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "**/*.md"
+  pull_request:
+    branches:
+      - main
+      - dev
+      - deps-integration
+    paths-ignore:
+      - "**/*.md"
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gitleaks:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Install gitleaks
+        shell: bash
+        run: |
+          set -euo pipefail
+          VER=8.21.2
+          # Extraer fuera del workspace: el tarball incluye un README.md con ejemplos
+          # (p. ej. sidekiq-secret) que ensucian el scan si se descomprimen en la raíz.
+          TMP="$(mktemp -d)"
+          curl -sSL "https://github.com/gitleaks/gitleaks/releases/download/v${VER}/gitleaks_${VER}_linux_x64.tar.gz" \
+            | tar -xz -C "$TMP"
+          sudo mv "$TMP/gitleaks" /usr/local/bin/gitleaks
+          rm -rf "$TMP"
+          gitleaks version
+
+      # Checkout limpio (--no-git): sin storage/ local ni historial completo.
+      - name: Detect secrets (checkout tree)
+        run: gitleaks detect --source . --no-git --verbose --redact --config .gitleaks.toml
+
+  php-tests:
+    name: PHP tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # Necesario para `git diff` base…head en detección de frontend (PRs shallow).
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+          tools: composer:2.8
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, intl, fileinfo, tokenizer
+          coverage: none
+
+      - name: Get Composer cache dir
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache Composer
+        uses: actions/cache@v6
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Validar composer.json y composer.lock
+        run: composer validate --no-check-publish --no-interaction
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --no-progress --ansi
+
+      - name: Composer audit (fail on high/critical)
+        shell: bash
+        run: |
+          set -euo pipefail
+          AUDIT_JSON="$(composer audit --no-interaction --format=json || true)"
+          echo "$AUDIT_JSON" > composer-audit.json
+
+          php -r '
+          $raw = file_get_contents("composer-audit.json");
+          $data = json_decode($raw, true);
+          if (!is_array($data)) { fwrite(STDERR, "composer audit: invalid JSON\n"); exit(2); }
+
+          $advisories = $data["advisories"] ?? [];
+          if (!is_array($advisories) || count($advisories) === 0) {
+              fwrite(STDOUT, "composer audit: OK (no advisories)\n");
+              exit(0);
+          }
+
+          $severities = ["low" => 0, "medium" => 1, "high" => 2, "critical" => 3];
+          $max = -1;
+          $worst = "unknown";
+          foreach ($advisories as $package => $items) {
+              if (!is_array($items)) { continue; }
+              foreach ($items as $adv) {
+                  if (!is_array($adv)) { continue; }
+                  $sev = strtolower((string)($adv["severity"] ?? "unknown"));
+                  $rank = $severities[$sev] ?? -1;
+                  if ($rank > $max) { $max = $rank; $worst = $sev; }
+              }
+          }
+
+          fwrite(STDOUT, "composer audit: advisories found (worst severity: {$worst})\n");
+          if ($max >= 2) { exit(1); }
+          exit(0);
+          ';
+
+      - name: Copy environment & key
+        run: |
+          cp .env.example .env
+          php artisan key:generate --force --ansi
+
+      - name: Security scan (repo script)
+        run: php scripts/security-scan.php
+
+      - name: Detect frontend changes
+        id: frontend
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE_SHA=""
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE_SHA="${{ github.event.pull_request.base.sha }}"
+          else
+            BASE_SHA="${{ github.event.before }}"
+          fi
+
+          echo "Base SHA: $BASE_SHA"
+          echo "Head SHA: ${{ github.sha }}"
+
+          CHANGED=""
+          if [ -n "$BASE_SHA" ] && git cat-file -e "${BASE_SHA}^{commit}" 2>/dev/null; then
+            CHANGED="$(git diff --name-only "$BASE_SHA" "${{ github.sha }}" || true)"
+          else
+            echo "WARN: base SHA no disponible en el clone; se asume frontend changed=true"
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "$CHANGED"
+
+          if echo "$CHANGED" | grep -Eq '^(package\.json|package-lock\.json|vite\.config\.(js|ts)|resources/(js|sass)/|resources/css/|resources/.*\.(js|ts|vue|scss|css)|public/)' ; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Setup Node (only when frontend changes)
+        if: steps.frontend.outputs.changed == 'true'
+        uses: actions/setup-node@v7
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Build frontend (only when frontend changes)
+        if: steps.frontend.outputs.changed == 'true'
+        run: |
+          npm ci
+          npm run build
+
+      - name: Route inventory artifact
+        run: php artisan centinela:route-audit --write-inventory
+
+      - name: Upload route inventory artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: route-inventory-json
+          path: .github/docs/sdd/audits/route_inventory/*_route-inventory.json
+
+      - name: Route vs tests gap report (strict high)
+        run: php artisan centinela:route-audit --fail-on-high-gaps
+
+      - name: Run PHPUnit via Artisan
+        run: php artisan test --compact
+
+      - name: Check Pint style (pint.json excluye bootstrap/cache)
+        run: vendor/bin/pint --test

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Pixodesk SVG (https://pixodesk.com) -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:pixodesk="https://pixodesk.com" viewBox="0 0 200 50" text-rendering="geometricPrecision" shape-rendering="geometricPrecision" fill="none">
+  <defs>
+    <linearGradient id="1766" x1="-35.347" y1="0" x2="35.347" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="50%" stop-color="rgb(235,60,70)"/>
+      <stop offset="51.1%" stop-color="rgb(15,105,180)"/>
+    </linearGradient>
+  </defs>
+  <ellipse fill="url(#1766)" stroke="none" transform="translate(32.3253, 24.5644)scale(0.5, 0.5)" rx="35.347" ry="34.441"/>
+  <g transform="translate(174.716, 17.9184)translate(-235.9517, -48.3384)">
+    <text fill="#eb3c46" xml:space="preserve" transform="translate(122.0544, 62.2356)" data-gn-el-type="text" style="white-space:pre"><tspan font-family="Arial Black" font-size="20px">CENTINELA</tspan><tspan font-family="Roboto-Regular" font-size="40px"> </tspan><tspan font-family="Roboto-Regular" font-size="40px"></tspan></text>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+# Indicador 10 (texto definitivo)
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Disminución del exceso de días de estancias asociados a egresos con estancias prolongadas (outliers superiores)
+- **Objetivo del indicador:** Mejorar la eficiencia en el uso de recurso cama de los establecimientos de la Red Asistencial
+- **Meta anual:** Disminución de un 5% en el número de exceso de estancias asociados a outliers superiores, respecto del mismo periodo año previo, para hospitales con porcentaje de outliers superiores mayor o igual a 5,0% y para hospitales con porcentaje menor a 5% debe disminuir un 2.0%. Esto según base emitida desde el nivel central (fuente ALCOR GRD)
+- **Responsable de medición:** Establecimiento de Salud
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 2 y 5 del Formulario A1 de la Subsecretaría de Redes Asistenciales
+- **Unidad de medida:** Variación porcentual
+- **Tipo de indicador:** Resultado
+- **Dimensión que aborda:** Eficiencia
+- **Fórmula de Cálculo:** [(Exceso de estancias outliers superiores periodo t - exceso de estancias outliers superiores periodo t-1) / Exceso de estancias outliers superiores periodo t-1] x 100
+- **Fuente de información del Numerador:** GRD Alcor
+- **Fuente de información del Denominador:** GRD Alcor
+- **Número de decimales:** 2 decimales con resultado truncado
+- **Periodicidad de Medición:** Anual
+- **Nivel de aplicación:** Establecimientos de alta y mediana complejidad
+- **Definición de términos:**
+    - Exceso de estancias outliers superiores: sumatoria de los días consumidos en exceso por cada caso con estancia prolongada.
+- **División que lo monitorea:** DIGERA

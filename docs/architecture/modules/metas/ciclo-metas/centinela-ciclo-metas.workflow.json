@@ -1,0 +1,244 @@
+{
+    "schema_version": 2,
+    "diagram_type": "workflow",
+    "meta": {
+        "title": "Metas — ciclo por Servicio de Salud",
+        "output": "docs/architecture/modules/metas/ciclo-metas/centinela-ciclo-metas.html",
+        "quality_profile": "showcase",
+        "visual_preset": "classic",
+        "legend": {
+            "entries": {
+                "cloud": {
+                    "label": "Parametrizador"
+                },
+                "backend": {
+                    "label": "Control de gestión"
+                },
+                "frontend": {
+                    "label": "Referente"
+                },
+                "database": {
+                    "visible": false
+                },
+                "messagebus": {
+                    "visible": false
+                },
+                "external": {
+                    "visible": false
+                },
+                "security": {
+                    "visible": false
+                }
+            }
+        }
+    },
+    "lanes": [
+        {
+            "id": "externo",
+            "label": "Fuera de plataforma"
+        },
+        {
+            "id": "global",
+            "label": "Parametrización global"
+        },
+        {
+            "id": "por_ss",
+            "label": "Por Servicio de Salud"
+        },
+        {
+            "id": "formulacion_lane",
+            "label": "En formulación"
+        }
+    ],
+    "groups": [],
+    "mainPath": [
+        "oott",
+        "param_global",
+        "formulacion",
+        "autoeval",
+        "eval_prelim",
+        "apelacion",
+        "eval_final",
+        "cerrado"
+    ],
+    "nodes": [
+        {
+            "id": "oott",
+            "lane": "externo",
+            "col": 0,
+            "type": "external",
+            "label": "OOTT",
+            "sublabel": "MINSAL — fuera de Centinela",
+            "width": 128
+        },
+        {
+            "id": "param_global",
+            "lane": "global",
+            "col": 0,
+            "type": "cloud",
+            "label": "Parametrización global",
+            "sublabel": "parametrizador",
+            "width": 160
+        },
+        {
+            "id": "formulacion",
+            "lane": "por_ss",
+            "col": 0,
+            "type": "backend",
+            "label": "Formulación",
+            "sublabel": "CG + participantes",
+            "width": 128
+        },
+        {
+            "id": "autoeval",
+            "lane": "por_ss",
+            "col": 1,
+            "type": "frontend",
+            "label": "Autoevaluación",
+            "sublabel": "referentes",
+            "width": 128
+        },
+        {
+            "id": "eval_prelim",
+            "lane": "por_ss",
+            "col": 2,
+            "type": "backend",
+            "label": "Eval. preliminar",
+            "sublabel": "control de gestión",
+            "width": 120
+        },
+        {
+            "id": "apelacion",
+            "lane": "por_ss",
+            "col": 3,
+            "type": "frontend",
+            "label": "Apelación",
+            "sublabel": "resp. establecimiento",
+            "width": 120
+        },
+        {
+            "id": "eval_final",
+            "lane": "por_ss",
+            "col": 4,
+            "type": "backend",
+            "label": "Eval. final",
+            "sublabel": "control de gestión",
+            "width": 120
+        },
+        {
+            "id": "cerrado",
+            "lane": "por_ss",
+            "col": 5,
+            "type": "security",
+            "label": "Cerrado",
+            "sublabel": "solo lectura",
+            "width": 112
+        },
+        {
+            "id": "cg_config",
+            "lane": "formulacion_lane",
+            "col": 0,
+            "type": "backend",
+            "label": "Aplica y metas",
+            "sublabel": "control de gestión",
+            "width": 120
+        },
+        {
+            "id": "resp_convenio",
+            "lane": "formulacion_lane",
+            "col": 1,
+            "type": "frontend",
+            "label": "Convenio",
+            "sublabel": "resp. establecimiento",
+            "width": 120
+        }
+    ],
+    "edges": [
+        {
+            "id": "oott-param",
+            "from": "oott",
+            "to": "param_global",
+            "variant": "emphasis"
+        },
+        {
+            "id": "param-form",
+            "from": "param_global",
+            "to": "formulacion",
+            "variant": "default"
+        },
+        {
+            "id": "form-auto",
+            "from": "formulacion",
+            "to": "autoeval",
+            "variant": "emphasis"
+        },
+        {
+            "id": "auto-prelim",
+            "from": "autoeval",
+            "to": "eval_prelim",
+            "variant": "emphasis"
+        },
+        {
+            "id": "prelim-apel",
+            "from": "eval_prelim",
+            "to": "apelacion",
+            "variant": "default"
+        },
+        {
+            "id": "apel-final",
+            "from": "apelacion",
+            "to": "eval_final",
+            "variant": "default"
+        },
+        {
+            "id": "final-cerrado",
+            "from": "eval_final",
+            "to": "cerrado",
+            "variant": "emphasis"
+        },
+        {
+            "id": "form-cg",
+            "from": "formulacion",
+            "to": "cg_config",
+            "variant": "dashed",
+            "role": "branch",
+            "fromSide": "bottom",
+            "toSide": "top"
+        },
+        {
+            "id": "cg-resp",
+            "from": "cg_config",
+            "to": "resp_convenio",
+            "variant": "dashed"
+        }
+    ],
+    "cards": [
+        {
+            "dot": "cyan",
+            "title": "Roles",
+            "items": [
+                "Parametrizador: catálogo global del instrumento",
+                "Control de gestión: avance de etapas, metas y evaluaciones externas",
+                "Por SS inicia en No iniciado (solo CG avanza etapa; referentes no ven el instrumento)",
+                "Responsable de establecimiento: convenio, ponderaciones y apelaciones en su centro"
+            ]
+        },
+        {
+            "dot": "emerald",
+            "title": "Periodos (sin cortes COMGES)",
+            "items": [
+                "Carga y evaluación período a período según tipo de entrada",
+                "Mensual, trimestral, semestral o anual según configuración",
+                "No usa cortes ni pestañas por corte como COMGES"
+            ]
+        },
+        {
+            "dot": "rose",
+            "title": "Metas 20.707",
+            "items": [
+                "Puede desagregarse la carga por unidad interna del establecimiento",
+                "Según configuración del instrumento y del centro"
+            ]
+        }
+    ]
+}

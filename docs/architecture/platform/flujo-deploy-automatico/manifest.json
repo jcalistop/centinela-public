@@ -1,0 +1,16 @@
+{
+  "title": "Centinela — disparo deploy automático",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "sha256": "2e14a99e2464909e2694a6adc8bf808d6e2524c93081fdfba78579f5aee93c2d",
+    "bytes": 4392
+  },
+  "artifact": {
+    "sha256": "7b65d209c2e4b173df3b4e69a9e98765122438c9ac35f328fcbff5203e917cbd",
+    "bytes": 710580
+  },
+  "exportPng": "centinela-flujo-deploy-automatico.export.png",
+  "updatedAt": "2026-09-08T14:34:00.921Z",
+  "document": "docs/ss_reloncavi/2026-08-27-solicitud-cambio-deploy-automatico-produccion/solicitud-cambio-deploy-automatico-produccion-2026-08-27.md"
+}

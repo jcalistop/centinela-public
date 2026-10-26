@@ -1,0 +1,24 @@
+# Indicador 16 (texto definitivo)
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Personal de salud capacitado en temáticas asociadas a temas transversales relevantes
+- **Objetivo del indicador:** Fortalecer y actualizar conocimientos de los funcionarios en temas transversales relevantes en los Establecimientos de salud.
+- **Meta anual:** Que el 7% de la dotación del personal de salud tenga al menos una capacitación en temas transversales relevantes
+- **Responsable de medición:** Establecimiento de salud
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 3 del Formulario A1 de la Subsecretaría de Redes Asistenciales
+- **Unidad de medida:** Porcentaje
+- **Tipo de indicador:** Proceso
+- **Dimensión que aborda:** Eficacia
+- **Fórmula de Cálculo:** (N° de funcionarios/as capacitados/as en al menos una temática transversal relevante en el año t/ N° total de funcionarios/as del establecimiento de salud en el año t) *100
+- **Fuente de información del Numerador:** SIRH
+- **Fuente de información del Denominador:** SIRH
+- **Número de decimales:** 2 decimales con resultado truncado
+- **Periodicidad de Medición:** Semestral
+- **Nivel de aplicación:** Establecimientos de Salud
+- **Definición de términos:**
+    - Temas transversales relevantes: Discriminación, Derechos Humanos, Género, Humanización, Ley Karin.
+    - Curso: Actividad mínima de 20 horas pedagógicas abarcando una temática transversal relevante.
+    - Funcionarios/as capacitados: aprobaron curso con nota igual o mayor a 4.0
+- **División que lo monitorea:** DIGEDEP

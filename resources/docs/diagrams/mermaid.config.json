@@ -1,0 +1,10 @@
+{
+    "theme": "neutral",
+    "flowchart": {
+        "nodeSpacing": 50,
+        "rankSpacing": 60,
+        "padding": 16,
+        "useMaxWidth": true
+    },
+    "securityLevel": "strict"
+}

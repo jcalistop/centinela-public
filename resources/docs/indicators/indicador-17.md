@@ -1,0 +1,24 @@
+# Indicador 17
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Personal de salud de atención clínica directa con capacitación actualizada en reanimación cardiopulmonar
+- **Objetivo del indicador:** Mantener con capacitación actualizada en reanimación cardiopulmonar al personal de salud
+- **Meta anual:** 60,00%
+- **Responsable de medición:** Servicio de Salud
+- **Prioridad:** Mediana
+- **Objetivo estratégico asociado:** Objetivo 3 del formulario A1 de la Subsecretaría de Redes Asistenciales
+- **Unidad de medida:** Porcentual
+- **Tipo de indicador:** Proceso
+- **Dimensión que aborda:** Eficacia
+- **Fórmula de Cálculo:** (Número de personal de salud de atención clínica directa con capacitación actualizada en reanimación cardiopulmonar / Número total de personal de salud con atención clínica directa) x 100
+- **Fuente de información del Numerador:** SIRH
+- **Fuente de información del Denominador:** SIRH
+- **Número de decimales:** 2 decimales con resultado truncado
+- **Periodicidad de Medición:** Semestral
+- **Nivel de aplicación:** Establecimientos de salud
+- **Definición de términos:**
+    - Capacitación actualizada: curso aprobado con antigüedad menor a 5 años
+    - Reanimación cardiopulmonar: adquisición de conocimientos y habilidades técnicas para la identificación y manejo básico o avanzado de paro cardiorespiratorio
+    - Personal de salud de atención clínica directa: funcionarios que realizan atención práctica; excluye administrativos y actividades de apoyo sin intervención directa
+- **División que lo monitorea:** DIGEDEP

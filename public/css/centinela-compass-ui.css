@@ -1,0 +1,3748 @@
+/**
+ * Kit Compass Centinela — SDD-101 (admin dashboard + módulos Compass).
+ * Scope: .cen-compass-ui (compartido) y .admin-dashboard-compass (admin /admin).
+ * Complementa public/css/custom.css (SDD-099).
+ */
+.voyager .admin-dashboard-compass {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.voyager .cen-compass-ui,
+.voyager .admin-dashboard-compass,
+.voyager .metas-instrument-ui,
+.voyager .compass.container-fluid {
+    --cen-accent: #62a8ea;
+    --cen-text: #2a3f54;
+    --cen-text-muted: #6b7c93;
+    --cen-meta: #8a9bb0;
+    --cen-border: #e8edf2;
+    --cen-border-light: #f0f3f6;
+    --cen-bg-section-head: #f6f8fa;
+    --cen-shadow-block: 0 2px 10px rgba(0, 0, 0, 0.05);
+    --cen-font-block-title: 21px;
+    --cen-font-section: 13px;
+    --cen-font-meta: 11px;
+    --cen-font-kpi: 24px;
+}
+
+.voyager .cen-dashboard-shell {
+    max-width: 110rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Bloque raíz (sustituye panel-bordered + heading inline) */
+.voyager .cen-compass-ui .cen-dashboard-block,
+.voyager .admin-dashboard-compass .cen-dashboard-block,
+.voyager .metas-instrument-ui .cen-dashboard-block,
+.voyager .compass.container-fluid .cen-dashboard-block {
+    background: #fff;
+    border: 1px solid var(--cen-border);
+    border-radius: 6px;
+    box-shadow: var(--cen-shadow-block);
+    overflow: hidden;
+}
+
+.voyager .cen-compass-ui .cen-dashboard-block__head,
+.voyager .admin-dashboard-compass .cen-dashboard-block__head,
+.voyager .metas-instrument-ui .cen-dashboard-block__head,
+.voyager .compass.container-fluid .cen-dashboard-block__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #f8fbff 0%, #f6f8fa 100%);
+    border-bottom: 1px solid var(--cen-border);
+}
+
+.voyager .cen-compass-ui .cen-dashboard-block__head-main,
+.voyager .admin-dashboard-compass .cen-dashboard-block__head-main,
+.voyager .metas-instrument-ui .cen-dashboard-block__head-main,
+.voyager .compass.container-fluid .cen-dashboard-block__head-main {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.voyager .cen-compass-ui .cen-dashboard-block__title,
+.voyager .admin-dashboard-compass .cen-dashboard-block__title,
+.voyager .metas-instrument-ui .cen-dashboard-block__title,
+.voyager .compass.container-fluid .cen-dashboard-block__title {
+    margin: 0;
+    font-size: var(--cen-font-block-title);
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--cen-text);
+}
+
+.voyager .cen-compass-ui .cen-dashboard-block__description,
+.voyager .admin-dashboard-compass .cen-dashboard-block__description,
+.voyager .metas-instrument-ui .cen-dashboard-block__description,
+.voyager .compass.container-fluid .cen-dashboard-block__description {
+    margin: 6px 0 0;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--cen-text-muted, #6b7280);
+    font-weight: 400;
+    max-width: 42rem;
+}
+
+.voyager .cen-compass-ui .cen-dashboard-block__title i,
+.voyager .admin-dashboard-compass .cen-dashboard-block__title i,
+.voyager .metas-instrument-ui .cen-dashboard-block__title i,
+.voyager .compass.container-fluid .cen-dashboard-block__title i {
+    margin-right: 8px;
+    color: var(--cen-accent);
+}
+
+.voyager .cen-compass-ui .cen-dashboard-block__actions,
+.voyager .admin-dashboard-compass .cen-dashboard-block__actions,
+.voyager .metas-instrument-ui .cen-dashboard-block__actions,
+.voyager .compass.container-fluid .cen-dashboard-block__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.voyager .cen-compass-ui .cen-dashboard-block__body,
+.voyager .admin-dashboard-compass .cen-dashboard-block__body,
+.voyager .metas-instrument-ui .cen-dashboard-block__body,
+.voyager .compass.container-fluid .cen-dashboard-block__body {
+    padding: 18px;
+}
+
+/* Tabs Compass */
+.voyager .cen-compass-ui .nav-tabs,
+.voyager .admin-dashboard-compass .nav-tabs {
+    background: none;
+    border-bottom: 0;
+    margin-bottom: 0;
+}
+
+.voyager .cen-compass-ui .nav-tabs > li,
+.voyager .admin-dashboard-compass .nav-tabs > li {
+    margin-bottom: -1px !important;
+}
+
+.voyager .cen-compass-ui .nav-tabs a,
+.voyager .admin-dashboard-compass .nav-tabs a {
+    text-align: center;
+    font-size: 10px;
+    font-weight: normal;
+    color: var(--cen-text-muted);
+    background: #f8f8f8;
+    border: 1px solid #f1f1f1;
+    position: relative;
+    top: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    text-decoration: none;
+}
+
+.voyager .cen-compass-ui .nav-tabs a i,
+.voyager .admin-dashboard-compass .nav-tabs a i {
+    display: block;
+    font-size: 22px;
+}
+
+.voyager .cen-compass-ui .tab-content,
+.voyager .admin-dashboard-compass .tab-content {
+    background: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    padding-top: 20px;
+}
+
+.voyager .cen-compass-ui .nav-tabs > li.active > a,
+.voyager .cen-compass-ui .nav-tabs > li.active > a:focus,
+.voyager .cen-compass-ui .nav-tabs > li.active > a:hover,
+.voyager .admin-dashboard-compass .nav-tabs > li.active > a,
+.voyager .admin-dashboard-compass .nav-tabs > li.active > a:focus,
+.voyager .admin-dashboard-compass .nav-tabs > li.active > a:hover {
+    background: #fff !important;
+    color: var(--cen-accent) !important;
+    border-bottom: 1px solid #fff !important;
+    top: -1px !important;
+}
+
+.voyager .cen-compass-ui .nav-tabs > li > a:hover,
+.voyager .admin-dashboard-compass .nav-tabs > li > a:hover {
+    background-color: #fff !important;
+}
+
+/* Sección / card interior (sin panel-default anidado) */
+.voyager .cen-compass-ui .cen-read-section,
+.voyager .admin-dashboard-compass .cen-read-section,
+.voyager .metas-instrument-ui .cen-read-section,
+.voyager .compass.container-fluid .cen-read-section {
+    margin-bottom: 18px;
+    background: #fff;
+    border: 1px solid var(--cen-border);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    height: 100%;
+}
+
+.voyager .cen-compass-ui .cen-read-section__head,
+.voyager .admin-dashboard-compass .cen-read-section__head,
+.voyager .metas-instrument-ui .cen-read-section__head,
+.voyager .compass.container-fluid .cen-read-section__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    background: var(--cen-bg-section-head);
+    border-bottom: 1px solid var(--cen-border);
+}
+
+.voyager .cen-compass-ui .cen-read-section__head i,
+.voyager .admin-dashboard-compass .cen-read-section__head i,
+.voyager .metas-instrument-ui .cen-read-section__head i,
+.voyager .compass.container-fluid .cen-read-section__head i {
+    font-size: 18px;
+    color: var(--cen-accent);
+    width: 22px;
+    text-align: center;
+}
+
+.voyager .cen-compass-ui .cen-read-section__title,
+.voyager .admin-dashboard-compass .cen-read-section__title,
+.voyager .metas-instrument-ui .cen-read-section__title,
+.voyager .compass.container-fluid .cen-read-section__title {
+    margin: 0;
+    font-size: var(--cen-font-section);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #4a5f73;
+}
+
+.voyager .cen-compass-ui .cen-read-section__body,
+.voyager .admin-dashboard-compass .cen-read-section__body,
+.voyager .metas-instrument-ui .cen-read-section__body,
+.voyager .compass.container-fluid .cen-read-section__body {
+    padding: 16px;
+}
+
+.voyager .cen-compass-ui .cen-read-section__body--flush,
+.voyager .admin-dashboard-compass .cen-read-section__body--flush,
+.voyager .metas-instrument-ui .cen-read-section__body--flush,
+.voyager .compass.container-fluid .cen-read-section__body--flush {
+    padding: 0;
+}
+
+.voyager .cen-compass-ui .cen-subsection-title,
+.voyager .admin-dashboard-compass .cen-subsection-title {
+    margin: 0 0 12px;
+    font-size: var(--cen-font-section);
+    font-weight: 600;
+    color: var(--cen-text);
+}
+
+/* KPI */
+.voyager .cen-compass-ui .cen-stat-tile,
+.voyager .admin-dashboard-compass .cen-stat-tile {
+    text-align: center;
+    padding: 16px 12px;
+    background: linear-gradient(135deg, #f8fbff 0%, #fff 100%);
+    border: 1px solid var(--cen-border);
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    height: 100%;
+}
+
+.voyager .cen-compass-ui .cen-stat-tile__value,
+.voyager .admin-dashboard-compass .cen-stat-tile__value {
+    margin: 0 0 6px;
+    font-size: var(--cen-font-kpi);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--cen-text);
+}
+
+.voyager .cen-compass-ui .cen-stat-tile__label,
+.voyager .admin-dashboard-compass .cen-stat-tile__label {
+    margin: 0;
+    font-size: 12px;
+    color: var(--cen-text-muted);
+}
+
+.voyager .cen-compass-ui .cen-stat-tile--accent .cen-stat-tile__value,
+.voyager .admin-dashboard-compass .cen-stat-tile--accent .cen-stat-tile__value {
+    color: var(--cen-accent);
+}
+
+/* Enlaces */
+.voyager .cen-compass-ui a.cen-link,
+.voyager .admin-dashboard-compass a.cen-link,
+.voyager .admin-dashboard-compass--modal a.cen-link {
+    text-decoration: none;
+    color: var(--cen-accent);
+}
+
+.voyager .cen-compass-ui a.cen-link:hover,
+.voyager .cen-compass-ui a.cen-link:focus,
+.voyager .admin-dashboard-compass a.cen-link:hover,
+.voyager .admin-dashboard-compass a.cen-link:focus,
+.voyager .admin-dashboard-compass--modal a.cen-link:hover,
+.voyager .admin-dashboard-compass--modal a.cen-link:focus {
+    text-decoration: none;
+    color: #4a90d9;
+}
+
+.voyager .cen-compass-ui a.cen-link:focus-visible,
+.voyager .admin-dashboard-compass a.cen-link:focus-visible,
+.voyager .admin-dashboard-compass--modal a.cen-link:focus-visible {
+    outline: 2px solid var(--cen-accent);
+    outline-offset: 2px;
+}
+
+.voyager .cen-compass-ui a.cen-link--mono code,
+.voyager .admin-dashboard-compass a.cen-link--mono code,
+.voyager .admin-dashboard-compass--modal a.cen-link--mono code {
+    color: inherit;
+    background: transparent;
+    padding: 0;
+    font-size: 12px;
+}
+
+.voyager .cen-compass-ui a.cen-link--external i,
+.voyager .admin-dashboard-compass a.cen-link--external i,
+.voyager .admin-dashboard-compass--modal a.cen-link--external i {
+    font-size: 11px;
+    margin-left: 4px;
+    vertical-align: middle;
+}
+
+/* Fila de estado (CI, badges) */
+.voyager .cen-compass-ui .cen-status-stack,
+.voyager .admin-dashboard-compass .cen-status-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 1rem;
+    border: 1px solid var(--cen-border, #e8e8e8);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--cen-surface, #fafafa);
+}
+
+.voyager .cen-compass-ui .cen-status-stack .cen-status-row,
+.voyager .admin-dashboard-compass .cen-status-stack .cen-status-row {
+    margin-bottom: 0;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--cen-border, #e8e8e8);
+}
+
+.voyager .cen-compass-ui .cen-status-stack .cen-status-row:last-child,
+.voyager .admin-dashboard-compass .cen-status-stack .cen-status-row:last-child {
+    border-bottom: none;
+}
+
+.voyager .cen-compass-ui .cen-status-row,
+.voyager .admin-dashboard-compass .cen-status-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 12px;
+    margin-bottom: 1rem;
+}
+
+.voyager .cen-compass-ui .cen-status-row__title,
+.voyager .admin-dashboard-compass .cen-status-row__title {
+    margin: 0 0 8px;
+    font-size: var(--cen-font-section);
+    font-weight: 600;
+    color: var(--cen-text);
+    width: 100%;
+}
+
+.voyager .cen-compass-ui .cen-status-row__title i,
+.voyager .admin-dashboard-compass .cen-status-row__title i {
+    margin-right: 6px;
+    color: var(--cen-accent);
+}
+
+.voyager .cen-compass-ui .cen-status-row__title code,
+.voyager .admin-dashboard-compass .cen-status-row__title code {
+    font-size: 12px;
+    font-weight: normal;
+    color: var(--cen-text-muted);
+}
+
+.voyager .cen-compass-ui .cen-meta-line,
+.voyager .admin-dashboard-compass .cen-meta-line {
+    margin: 0 0 12px;
+    font-size: 13px;
+    color: var(--cen-text-muted);
+}
+
+.voyager .cen-compass-ui .cen-meta-line code,
+.voyager .admin-dashboard-compass .cen-meta-line code {
+    font-size: 12px;
+}
+
+/* Tablas */
+.voyager .cen-compass-ui .cen-compass-table,
+.voyager .admin-dashboard-compass .cen-compass-table {
+    margin: 0;
+}
+
+.voyager .cen-compass-ui .cen-compass-table thead th,
+.voyager .admin-dashboard-compass .cen-compass-table thead th {
+    font-size: var(--cen-font-meta);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--cen-meta);
+    border-color: var(--cen-border-light) !important;
+}
+
+.voyager .cen-compass-ui .cen-compass-table tbody td,
+.voyager .admin-dashboard-compass .cen-compass-table tbody td {
+    vertical-align: middle !important;
+    border-color: var(--cen-border-light) !important;
+    font-size: 13px;
+    color: var(--cen-text);
+}
+
+.voyager .cen-compass-ui .cen-compass-table tbody tr:hover,
+.voyager .admin-dashboard-compass .cen-compass-table tbody tr:hover {
+    background: #f8fbff;
+}
+
+.voyager
+    .cen-compass-ui
+    .cen-compass-table
+    tbody
+    tr.cen-compass-table__row--clickable,
+.voyager
+    .admin-dashboard-compass
+    .cen-compass-table
+    tbody
+    tr.cen-compass-table__row--clickable {
+    cursor: pointer;
+}
+
+.voyager
+    .cen-compass-ui
+    .cen-compass-table
+    tbody
+    tr.cen-compass-table__row--clickable:hover
+    td,
+.voyager
+    .admin-dashboard-compass
+    .cen-compass-table
+    tbody
+    tr.cen-compass-table__row--clickable:hover
+    td {
+    background: #f0f7ff;
+}
+
+/* Pre / consola */
+.voyager .cen-compass-ui .cen-console-pre,
+.voyager .admin-dashboard-compass .cen-console-pre {
+    white-space: pre-wrap;
+    margin: 0;
+    padding: 14px 16px;
+    font-size: 12px;
+    line-height: 1.5;
+    background: #f6f8fa;
+    border: 1px solid var(--cen-border);
+    border-radius: 4px;
+    color: var(--cen-text);
+}
+
+/* Alertas dentro del bloque */
+.voyager .cen-compass-ui .alert,
+.voyager .admin-dashboard-compass .alert,
+.voyager .metas-instrument-ui .alert,
+.voyager .compass.container-fluid .alert {
+    font-size: 13px;
+}
+
+.voyager .cen-compass-ui .alert-dismissible,
+.voyager .admin-dashboard-compass .alert-dismissible,
+.voyager .metas-instrument-ui .alert-dismissible,
+.voyager .compass.container-fluid .alert-dismissible {
+    position: relative;
+    padding-right: 44px;
+}
+
+.voyager .cen-compass-ui .alert-dismissible > .close,
+.voyager .admin-dashboard-compass .alert-dismissible > .close,
+.voyager .metas-instrument-ui .alert-dismissible > .close,
+.voyager .compass.container-fluid .alert-dismissible > .close {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    float: none;
+    width: 26px;
+    height: 26px;
+    margin: 0;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    font-size: 20px;
+    font-weight: 300;
+    opacity: 0.6;
+    text-shadow: none;
+}
+
+.voyager .cen-compass-ui .alert-dismissible > .close:hover,
+.voyager .cen-compass-ui .alert-dismissible > .close:focus,
+.voyager .admin-dashboard-compass .alert-dismissible > .close:hover,
+.voyager .admin-dashboard-compass .alert-dismissible > .close:focus,
+.voyager .metas-instrument-ui .alert-dismissible > .close:hover,
+.voyager .metas-instrument-ui .alert-dismissible > .close:focus,
+.voyager .compass.container-fluid .alert-dismissible > .close:hover,
+.voyager .compass.container-fluid .alert-dismissible > .close:focus {
+    opacity: 0.9;
+}
+
+.voyager .cen-compass-ui .alert-dismissible > .close span,
+.voyager .admin-dashboard-compass .alert-dismissible > .close span,
+.voyager .metas-instrument-ui .alert-dismissible > .close span,
+.voyager .compass.container-fluid .alert-dismissible > .close span {
+    display: block;
+    line-height: 1;
+}
+
+/* Modal deploy */
+.voyager .admin-dashboard-compass--modal .modal-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.voyager .admin-dashboard-compass--modal .cen-modal-section-title {
+    margin: 0 0 12px;
+    font-size: var(--cen-font-section);
+    font-weight: 600;
+    color: var(--cen-text);
+}
+
+.voyager .admin-dashboard-compass--modal .table th {
+    font-size: var(--cen-font-meta);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--cen-meta);
+    width: 28%;
+}
+
+/* Gráficos */
+.voyager .cen-compass-ui .cen-chart-host,
+.voyager .admin-dashboard-compass .cen-chart-host {
+    width: 100%;
+    min-height: 320px;
+}
+
+.voyager .cen-compass-ui .cen-chart-empty,
+.voyager .admin-dashboard-compass .cen-chart-empty {
+    padding: 1rem;
+    font-size: 13px;
+    color: var(--cen-text-muted);
+}
+
+/* Listas salud */
+.voyager .cen-compass-ui .cen-bullet-list,
+.voyager .admin-dashboard-compass .cen-bullet-list {
+    margin: 0;
+    padding-left: 1.4rem;
+    font-size: 13px;
+    color: var(--cen-text);
+}
+
+@media (max-width: 768px) {
+    .voyager .cen-compass-ui .cen-dashboard-block__head,
+    .voyager .admin-dashboard-compass .cen-dashboard-block__head,
+    .voyager .metas-instrument-ui .cen-dashboard-block__head,
+    .voyager .compass.container-fluid .cen-dashboard-block__head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .voyager .cen-compass-ui .cen-dashboard-block__actions,
+    .voyager .admin-dashboard-compass .cen-dashboard-block__actions,
+    .voyager .metas-instrument-ui .cen-dashboard-block__actions,
+    .voyager .compass.container-fluid .cen-dashboard-block__actions {
+        width: 100%;
+    }
+}
+
+/* === Establecimientos / lectura (fase B — antes en read-detail-styles) === */
+.voyager .cen-compass-ui .cen-read-detail {
+    padding: 0 15px 20px;
+}
+
+.voyager .cen-compass-ui .cen-read-hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #f8fbff 0%, #eef4fc 100%);
+    border: 1px solid #dce8f5;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(98, 168, 234, 0.08);
+}
+
+.voyager .cen-compass-ui .cen-read-hero__icon {
+    flex: 0 0 auto;
+    width: 56px;
+    height: 56px;
+    line-height: 56px;
+    text-align: center;
+    font-size: 28px;
+    color: var(--cen-accent);
+    background: #fff;
+    border-radius: 50%;
+    border: 1px solid #dce8f5;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.voyager .cen-compass-ui .cen-read-hero__title {
+    margin: 0 0 6px;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--cen-text);
+    line-height: 1.3;
+}
+
+.voyager .cen-compass-ui .cen-read-hero__subtitle {
+    margin: 0 0 10px;
+    font-size: 13px;
+    color: var(--cen-text-muted);
+}
+
+.voyager .cen-compass-ui .cen-read-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0;
+}
+
+.voyager .cen-compass-ui .cen-read-grid--2col {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.voyager .cen-compass-ui .cen-read-item {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--cen-border-light);
+}
+
+.voyager .cen-compass-ui .cen-read-item__label {
+    display: block;
+    margin: 0 0 4px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--cen-meta);
+}
+
+.voyager .cen-compass-ui .cen-read-item__value {
+    margin: 0;
+    font-size: 14px;
+    color: var(--cen-text);
+    line-height: 1.45;
+    word-break: break-word;
+}
+
+.voyager .cen-compass-ui .cen-read-spotlight {
+    padding: 16px 18px;
+    margin-bottom: 18px;
+    background: #fff;
+    border-left: 4px solid var(--cen-accent);
+    border-radius: 0 6px 6px 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+.voyager .cen-compass-ui .cen-browse-header {
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--cen-border);
+}
+
+.voyager .cen-compass-ui .cen-browse-header__title {
+    margin: 0 0 4px;
+    font-size: 26px;
+}
+
+.voyager .cen-compass-ui .cen-browse-header__subtitle {
+    margin: 0;
+    font-size: 13px;
+    color: var(--cen-meta);
+}
+
+.voyager .cen-compass-ui .cen-stat-tile__icon {
+    display: block;
+    font-size: 22px;
+    color: var(--cen-accent);
+    margin-bottom: 8px;
+}
+
+/* Metas instrument — tipografía paridad COMGES (SDD-136)
+ * Referencia: comges/indicadores/read.blade.php (.indicador-*), base Voyager ~14px
+ * --metas-font-base: 14px
+ * --metas-font-nombre: 1.2em (~16.8px) — .indicador-ficha-nombre
+ * --metas-font-value: 0.95em (~13.3px) — .campo-valor
+ * --metas-font-label: 0.78em (~10.9px) — .campo-label
+ * --metas-font-muted: 0.85em (~11.9px)
+ * --metas-font-badge: 0.9em (~12.6px) — .estado-valor
+ * --metas-font-table: 14px — tablas operativas COMGES/Voyager
+ */
+.voyager .metas-instrument-ui {
+    --metas-font-base: 14px;
+    --metas-font-nombre: 1.2em;
+    --metas-font-tab-title: 1.2em;
+    --metas-font-section: 1em;
+    --metas-font-value: 0.95em;
+    --metas-font-label: 0.78em;
+    --metas-font-muted: 0.85em;
+    --metas-font-badge: 0.9em;
+    --metas-font-table: 14px;
+    --metas-font-code: 0.85em;
+    --metas-font-help: 0.78em;
+    --metas-font-kpi-accent: 1.29em;
+    font-size: var(--metas-font-base);
+}
+
+/* Metas instrument — SDD-121 */
+.voyager .metas-nav-tabs {
+    margin-bottom: 0;
+}
+
+.voyager .metas-action-bar {
+    margin-bottom: 1rem;
+}
+
+.voyager .metas-panel-subtitle {
+    font-weight: normal;
+}
+
+.voyager .metas-tab-content {
+    padding-top: 20px;
+}
+
+.voyager .metas-section-spacer {
+    margin-bottom: 16px;
+}
+
+.voyager .metas-section-block {
+    margin-bottom: 14px;
+}
+
+.voyager .metas-section-title {
+    margin-bottom: 10px;
+    color: #31708f;
+}
+
+.voyager .metas-muted-text {
+    margin: 4px 0 0;
+    color: #555;
+}
+
+.voyager .metas-muted-text--light {
+    margin: 4px 0 0;
+    color: #888;
+}
+
+.voyager .metas-meta-value {
+    font-size: var(--metas-font-value, 0.95em);
+    font-weight: bold;
+}
+
+.voyager .metas-instrument-table {
+    font-size: var(--metas-font-table, 14px);
+    margin-bottom: 0;
+}
+
+.voyager .metas-desempeno-table th,
+.voyager .metas-desempeno-table td {
+    vertical-align: middle;
+}
+
+.voyager .metas-establishments-table {
+    margin-bottom: 0;
+}
+
+.voyager .metas-establishments-code {
+    font-size: var(--metas-font-code, 0.85em);
+}
+
+.voyager .metas-hr-compact {
+    margin: 12px 0;
+}
+
+.voyager .metas-indicator-modal-chart {
+    min-height: 260px;
+}
+
+/* Metas — modal visualizar datos (SDD-134) */
+.voyager .metas-indicator-data-modal .modal-content {
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.14);
+}
+
+.voyager .metas-indicator-data-modal__header {
+    background: linear-gradient(135deg, #f4f8fc 0%, #e8f2fb 100%);
+    border-bottom: 1px solid #d6e4f0;
+    padding: 16px 20px;
+}
+
+.voyager .metas-indicator-data-modal__heading {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding-right: 24px;
+}
+
+.voyager .metas-indicator-data-modal__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+    background: #fff;
+    border: 1px solid #d6e4f0;
+    color: #337ab7;
+    font-size: 1.25em;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(51, 122, 183, 0.12);
+}
+
+.voyager .metas-indicator-data-modal__titles {
+    min-width: 0;
+    flex: 1;
+}
+
+.voyager .metas-indicator-data-modal__title-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.voyager .metas-indicator-data-modal__clave {
+    font-size: var(--metas-font-code, 0.85em);
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #fff;
+    border: 1px solid #d6e4f0;
+    color: #337ab7;
+}
+
+.voyager .metas-indicator-data-modal__title {
+    font-size: 1.05em;
+    font-weight: 600;
+    color: #2c3e50;
+    line-height: 1.35;
+}
+
+.voyager .metas-indicator-data-modal__center {
+    display: block;
+    font-size: var(--metas-font-muted, 0.85em);
+    font-weight: normal;
+    margin-top: 6px;
+    line-height: 1.4;
+}
+
+.voyager .metas-indicator-data-modal__center .voyager-shop {
+    margin-right: 4px;
+    opacity: 0.75;
+}
+
+.voyager .metas-indicator-data-modal__body {
+    padding: 18px 20px 20px;
+    background: #fafbfc;
+}
+
+.voyager .metas-indicator-modal-ficha {
+    margin-bottom: 16px;
+    padding: 14px 16px;
+    background: #fff;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.voyager .metas-indicator-modal-ficha__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.voyager .metas-indicator-modal-ficha__stat {
+    padding: 10px 12px;
+    background: #f8fafc;
+    border: 1px solid #e8edf2;
+    border-radius: 6px;
+}
+
+.voyager .metas-indicator-modal-ficha__stat strong {
+    display: block;
+    font-size: var(--metas-font-label, 0.78em);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #6b7c93;
+    margin-bottom: 6px;
+}
+
+.voyager .metas-indicator-modal-ficha__stat--wide {
+    grid-column: 1 / -1;
+}
+
+.voyager .metas-indicator-modal-ficha__meta-value {
+    font-size: 1.05em;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.voyager .metas-indicator-modal-ficha__objetivo,
+.voyager .metas-indicator-modal-ficha__formula {
+    margin: 12px 0 0;
+    padding-top: 12px;
+    border-top: 1px dashed #e0e6ed;
+    font-size: var(--metas-font-muted, 0.85em);
+    color: #4a5568;
+    line-height: 1.45;
+}
+
+.voyager .metas-indicator-modal-ficha__objetivo strong,
+.voyager .metas-indicator-modal-ficha__formula strong {
+    color: #6b7c93;
+    font-size: var(--metas-font-label, 0.78em);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-right: 6px;
+}
+
+.voyager .metas-indicator-data-modal__section {
+    margin-bottom: 18px;
+}
+
+.voyager .metas-indicator-data-modal__section:last-child {
+    margin-bottom: 0;
+}
+
+.voyager .metas-indicator-data-modal__section-heading {
+    margin: 0 0 10px;
+    min-height: 1.4em;
+}
+
+.voyager
+    .metas-indicator-data-modal__section-heading
+    .metas-indicator-data-modal__section-title {
+    margin: 0;
+    display: inline-block;
+}
+
+.voyager .metas-indicator-data-modal__meta-efectiva {
+    margin: 2px 0 0;
+    font-size: 0.92em;
+    line-height: 1.4;
+}
+
+.voyager .metas-indicator-data-modal__meta-efectiva strong {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.voyager .metas-indicator-data-modal__section-title {
+    margin: 0 0 10px;
+    font-size: var(--metas-font-section, 1em);
+    font-weight: 600;
+    color: #3d4f63;
+}
+
+.voyager .metas-indicator-data-modal__section-title .voyager-bar-chart,
+.voyager .metas-indicator-data-modal__section-title .voyager-list {
+    margin-right: 6px;
+    color: #337ab7;
+    opacity: 0.9;
+}
+
+.voyager .metas-indicator-data-modal__chart-panel {
+    padding: 12px 12px 4px;
+    background: #fff;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.voyager .metas-indicator-data-modal__table-wrap {
+    background: #fff;
+    border: 1px solid #e3e8ee;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    margin-bottom: 0;
+}
+
+.voyager .metas-indicator-data-modal__table {
+    margin-bottom: 0;
+    border: none;
+}
+
+.voyager .metas-indicator-data-modal__table > thead > tr > th {
+    background: #f0f5fa;
+    border-bottom-width: 2px;
+    font-size: var(--metas-font-label, 0.78em);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #5a6b7d;
+    vertical-align: middle;
+}
+
+.voyager .metas-indicator-data-modal__table > tbody > tr:nth-child(even) > td {
+    background: #fafcfd;
+}
+
+.voyager .metas-indicator-data-modal__table > tbody > tr:hover > td {
+    background: #f0f7ff;
+}
+
+.voyager .metas-indicator-data-modal__table .metas-modal-period-badge {
+    font-size: var(--metas-font-badge, 0.9em);
+    font-weight: 600;
+    min-width: 3.5em;
+    display: inline-block;
+}
+
+.voyager .metas-indicator-data-modal__footer {
+    background: #f8fafc;
+    border-top: 1px solid #e3e8ee;
+    padding: 12px 20px;
+}
+
+.voyager .metas-indicator-modal-title-wrap {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.voyager .metas-indicator-modal-center {
+    display: block;
+    font-size: 0.78em;
+    font-weight: normal;
+    margin-top: 4px;
+    line-height: 1.3;
+}
+
+.voyager .metas-modal-divider {
+    margin: 12px 0;
+}
+
+.voyager .metas-modal-table {
+    margin-bottom: 0;
+}
+
+.voyager .metas-modal-empty-row {
+    font-style: italic;
+}
+
+.voyager .metas-modal-complex-formula {
+    vertical-align: middle;
+}
+
+.voyager .metas-modal-ficha-meta-row {
+    margin-top: 4px;
+}
+
+.voyager .metas-referente-label {
+    margin: 2px 2px 0 0;
+    display: inline-block;
+}
+
+.voyager .metas-referente-label-link {
+    font-size: var(--metas-font-badge, 0.9em);
+    padding: 5px 10px;
+}
+
+.voyager .metas-ambito-label {
+    margin: 2px 4px 4px 0;
+    display: inline-block;
+    font-size: var(--metas-font-base, 14px);
+    padding: 6px 12px;
+    font-weight: normal;
+}
+
+.voyager .indicator-ambitos-badges .metas-ambito-label {
+    margin-right: 4px;
+    margin-bottom: 4px;
+}
+
+.voyager .metas-ficha-tab-intro {
+    margin-bottom: 16px;
+}
+
+.voyager .metas-ficha-tab-intro__description {
+    margin: 0 0 4px;
+    padding-left: 4px;
+    font-size: var(--metas-font-muted, 0.85em);
+    line-height: 1.5;
+}
+
+.voyager .metas-ficha-tab-intro__actions {
+    flex-shrink: 0;
+}
+
+.voyager .metas-label-compact {
+    font-size: var(--metas-font-badge, 0.9em);
+}
+
+.voyager .metas-label-normal {
+    font-weight: normal;
+    margin-right: 4px;
+}
+
+.voyager .metas-formula-well {
+    margin: 4px 0 0;
+    font-family: monospace;
+    font-size: var(--metas-font-value, 0.95em);
+    background: #f9f9f9;
+}
+
+.voyager .metas-carga-toolbar {
+    margin-bottom: 15px;
+}
+
+.voyager .metas-inline-form {
+    display: inline;
+}
+
+.voyager .metas-variable-code {
+    font-size: var(--metas-font-code, 0.85em);
+}
+
+.voyager .metas-tab-spotlight {
+    margin-bottom: 1.25rem;
+}
+
+.voyager .metas-tab-spotlight__title {
+    margin: 0 0 6px;
+    font-weight: 600;
+    color: #333;
+    font-size: var(--metas-font-tab-title, 1.2em);
+    line-height: 1.4;
+}
+
+.voyager .metas-tab-spotlight__actions {
+    margin-top: 2px;
+}
+
+.voyager .metas-estado-badge {
+    font-size: var(--metas-font-badge, 0.9em);
+    font-weight: 600;
+    padding: 6px 12px;
+    display: inline-block;
+}
+
+.voyager .metas-ficha-indicador-panel {
+    font-size: var(--metas-font-base, 14px);
+    line-height: 1.55;
+}
+
+.voyager .metas-ficha-indicador-panel .metas-section-title {
+    font-size: var(--metas-font-nombre, 1.2em);
+}
+
+.voyager .metas-ficha-indicador-panel strong {
+    font-size: var(--metas-font-base, 14px);
+}
+
+.voyager .metas-tab-spotlight__description {
+    margin: 0;
+    color: #777;
+    font-size: var(--metas-font-muted, 0.85em);
+    line-height: 1.5;
+}
+
+.voyager .metas-carga-btn-spaced {
+    margin-right: 6px;
+}
+
+.voyager .metas-carga-well {
+    margin-bottom: 16px;
+}
+
+.voyager .metas-carga-well__title {
+    margin-top: 0;
+}
+
+.voyager .metas-carga-form-group {
+    margin-bottom: 8px;
+}
+
+.voyager .metas-carga-file-input {
+    padding-bottom: 2.5rem;
+}
+
+.voyager .metas-carga-alert {
+    margin-bottom: 16px;
+}
+
+.voyager .metas-carga-alert--flush {
+    margin-bottom: 0;
+}
+
+.voyager .metas-carga-import-panel {
+    margin-bottom: 16px;
+}
+
+.voyager .metas-carga-import-errors {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.voyager .metas-carga-table th.metas-carga-col--codigo,
+.voyager .metas-carga-table th.metas-carga-col--periodicidad,
+.voyager .metas-carga-table th.metas-carga-col--actualizado,
+.voyager .metas-carga-table th.metas-carga-col--acciones {
+    white-space: nowrap;
+}
+
+.voyager .metas-carga-table th.metas-carga-col--codigo {
+    width: 110px;
+}
+
+.voyager .metas-carga-table th.metas-carga-col--establecimiento {
+    min-width: 200px;
+}
+
+.voyager .metas-carga-table th.metas-carga-col--periodicidad {
+    width: 110px;
+}
+
+.voyager .metas-carga-table th.metas-carga-col--actualizado {
+    width: 130px;
+}
+
+.voyager .metas-carga-table th.metas-carga-col--resultados {
+    width: 170px;
+}
+
+.voyager .metas-carga-table th.metas-carga-col--acciones {
+    width: 140px;
+}
+
+.voyager .metas-carga-table td.metas-carga-cell--nowrap {
+    white-space: nowrap;
+}
+
+.voyager .metas-carga-adosado-meta {
+    margin-top: 4px;
+}
+
+.voyager .metas-units-divider {
+    margin: 24px 0;
+}
+
+/* Metas — tabla unidades de medición (SDD-155) */
+.voyager .metas-units-manager-table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+.voyager .metas-units-manager-table th.metas-units-col--codigo,
+.voyager .metas-units-manager-table td.metas-units-col--codigo {
+    width: 118px;
+}
+
+.voyager .metas-units-manager-table th.metas-units-col--tipo,
+.voyager .metas-units-manager-table td.metas-units-col--tipo {
+    width: 148px;
+}
+
+.voyager .metas-units-manager-table th.metas-units-col--activa,
+.voyager .metas-units-manager-table td.metas-units-col--activa {
+    width: 74px;
+}
+
+.voyager .metas-units-manager-table th.metas-units-col--accion,
+.voyager .metas-units-manager-table td.metas-units-col--accion {
+    width: 152px;
+    white-space: nowrap;
+}
+
+.voyager .metas-units-manager-table td.metas-units-col--codigo code {
+    white-space: nowrap;
+}
+
+.voyager .metas-units-manager-table td.metas-units-col--nombre {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.voyager
+    .metas-units-manager-table
+    td.metas-units-col--nombre:has(.form-control),
+.voyager .metas-units-manager-table td.metas-units-col--tipo:has(.form-control),
+.voyager
+    .metas-units-manager-table
+    td.metas-units-col--codigo:has(.form-control) {
+    overflow: visible;
+    white-space: normal;
+    text-overflow: clip;
+}
+
+.voyager .metas-units-manager-table td.metas-units-col--tipo {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.voyager .metas-units-manager-table td.metas-units-col--accion .btn + .btn {
+    margin-left: 4px;
+}
+
+/* Modal Indicadores — tabs por unidad (20.707, SDD-156) */
+.voyager .metas-instrument-ui .metas-config-unit-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    overflow: visible;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #e8e8e8;
+    gap: 4px 0;
+}
+
+.voyager .metas-instrument-ui .metas-config-unit-tabs > li {
+    float: none;
+    margin-bottom: 0 !important;
+}
+
+.voyager .metas-instrument-ui .metas-config-unit-tabs > li > a {
+    padding: 6px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.voyager .metas-instrument-ui .metas-config-unit-tabs > li > a code {
+    font-size: 12px;
+    background: transparent;
+    color: inherit;
+    padding: 0;
+}
+
+.voyager .metas-instrument-ui .metas-config-unit-tabs .label {
+    font-size: 9px;
+    padding: 2px 5px;
+    vertical-align: middle;
+}
+
+.voyager .metas-units-table th.metas-units-col--accion {
+    width: 160px;
+}
+
+.voyager .metas-instrument-carga-alerta .componente-corte-alerta,
+.voyager .metas-instrument-carga-tabla .componente-corte-alerta {
+    border-left: 4px solid #f0ad4e;
+    padding: 0.35rem 0.35rem 0.35rem 0.5rem;
+    background-color: #fcf8f3;
+    margin-bottom: 0;
+}
+
+.voyager .metas-instrument-carga-alerta .componente-corte-alerta .glyphicon,
+.voyager .metas-instrument-carga-tabla .componente-corte-alerta .glyphicon {
+    margin-right: 0.35rem;
+}
+
+.voyager .metas-carga-import-panel .panel-heading {
+    cursor: default;
+}
+
+.voyager .metas-tab-panel {
+    padding: 0;
+}
+
+.voyager .metas-form-panel-spacer {
+    margin-top: 1rem;
+}
+
+.voyager .metas-form-actions {
+    margin-top: 1rem;
+}
+
+.voyager .metas-catalog-toolbar {
+    margin-bottom: 1rem;
+}
+
+.voyager .metas-catalog-table th.metas-catalog-col--nowrap,
+.voyager .metas-catalog-table td.metas-catalog-col--nowrap,
+.voyager .metas-instrument-indicator-catalog th.metas-catalog-col--nowrap,
+.voyager .metas-instrument-indicator-catalog td.metas-catalog-col--nowrap {
+    white-space: nowrap;
+}
+
+.voyager .metas-catalog-table th.metas-catalog-col--clave,
+.voyager .metas-instrument-indicator-catalog th.metas-catalog-col--clave,
+.voyager .metas-catalog-table td.metas-catalog-col--clave,
+.voyager .metas-instrument-indicator-catalog td.metas-catalog-col--clave {
+    width: 120px;
+}
+
+.voyager .metas-catalog-table th.metas-catalog-col--actualizado,
+.voyager .metas-instrument-indicator-catalog th.metas-catalog-col--actualizado {
+    width: 130px;
+}
+
+.voyager .metas-catalog-table th.metas-catalog-col--acciones,
+.voyager .metas-instrument-indicator-catalog th.metas-catalog-col--acciones,
+.voyager .metas-catalog-table td.metas-catalog-col--acciones,
+.voyager .metas-instrument-indicator-catalog td.metas-catalog-col--acciones {
+    width: 1%;
+}
+
+.voyager .metas-catalog-referentes {
+    margin-top: 0.3rem;
+}
+
+.voyager .metas-catalog-referentes-label {
+    margin-right: 4px;
+}
+
+.voyager .metas-label-spaced {
+    margin-left: 4px;
+}
+
+.voyager .metas-instrument-ui .metas-units-col--activa .switch-toggle {
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+.voyager .metas-instrument-indicator-catalog .label {
+    font-size: var(--metas-font-badge, 0.9em);
+    font-weight: normal;
+    padding: 2px 6px;
+    line-height: 1.42857143;
+    vertical-align: baseline;
+}
+
+.voyager .metas-instrument-table .label strong,
+.voyager .metas-instrument-indicator-catalog .label strong {
+    font-weight: bold;
+}
+
+.voyager #indicatorModalTable .label {
+    font-size: var(--metas-font-badge, 0.9em);
+    font-weight: normal;
+    padding: 2px 6px;
+    line-height: 1.42857143;
+    vertical-align: baseline;
+}
+
+/* Metas — resultados por establecimiento (SDD-121 P3) */
+.voyager .table-results td,
+.voyager .table-results th {
+    vertical-align: middle;
+}
+
+.voyager .metas-results-detail-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    padding-bottom: 14px;
+}
+
+.voyager .metas-results-detail-toolbar__filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 30px;
+}
+
+.voyager .metas-results-detail-toolbar__actions {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.voyager .metas-results-detail-toggle-label {
+    display: inline-block;
+    font-weight: 600;
+    margin: 0;
+}
+
+.voyager .metas-results-detail-empty {
+    margin: 0;
+}
+
+.voyager .metas-results-table th.metas-results-col--codigo {
+    width: 80px;
+}
+
+.voyager .metas-instrument-table th.metas-results-col--nombre,
+.voyager .metas-instrument-table td.metas-results-col--nombre,
+.voyager .metas-results-table th.metas-results-col--nombre,
+.voyager .metas-results-table td.metas-results-col--nombre {
+    text-align: left;
+    vertical-align: middle;
+}
+
+.voyager .metas-results-table th.metas-results-col--comprometido,
+.voyager .metas-results-table th.metas-results-col--meta-efectiva,
+.voyager .metas-results-table th.metas-results-col--resultado {
+    width: 90px;
+}
+
+.voyager .metas-results-table th.metas-results-col--formula {
+    width: 140px;
+}
+
+.voyager .metas-results-table .metas-results-formula-expression {
+    font-size: var(--metas-font-code, 0.85em);
+    white-space: normal;
+    word-break: break-word;
+}
+
+.voyager .metas-results-table th.metas-results-col--datos-al {
+    width: 70px;
+}
+
+.voyager .metas-results-table th.metas-results-col--cumplimiento {
+    width: 100px;
+}
+
+.voyager .metas-results-table th.metas-results-col--ponderacion {
+    width: 80px;
+}
+
+.voyager .metas-results-table th.metas-results-col--cumpl-pond {
+    width: 110px;
+}
+
+.voyager .metas-results-table th.metas-results-col--ver-datos {
+    width: 120px;
+}
+
+.voyager .metas-results-table .metas-results-detail-data-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.voyager .metas-results-table .metas-results-detail-data-actions .btn {
+    white-space: nowrap;
+}
+
+.voyager .metas-results-table td.metas-results-col--nowrap,
+.voyager .metas-results-table th.metas-results-col--nowrap {
+    white-space: nowrap;
+}
+
+.voyager .metas-results-table .metas-results-code {
+    font-size: var(--metas-font-code, 0.85em);
+}
+
+.voyager .metas-results-table .metas-results-complex-formula {
+    vertical-align: middle;
+}
+
+.voyager .metas-results-footer-row {
+    background: #eaf2fb;
+}
+
+/* Metas — resumen resultados (grid de tarjetas) */
+.voyager .metas-instrument-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.voyager a.metas-instrument-result-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 16px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 160px;
+    transition: box-shadow 0.15s ease;
+    border-left: 5px solid #b0b0b0;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+.voyager a.metas-instrument-result-card:hover,
+.voyager a.metas-instrument-result-card:focus {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: inherit;
+}
+
+.voyager a.metas-instrument-result-card .card-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 28px;
+    color: #d0d0d0;
+}
+
+.voyager a.metas-instrument-result-card .card-name {
+    font-weight: 700;
+    font-size: var(--metas-font-base, 14px);
+    line-height: 1.3;
+    max-height: 2.6em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    padding-right: 36px;
+    margin-bottom: 4px;
+}
+
+.voyager a.metas-instrument-result-card .card-code {
+    font-size: var(--metas-font-muted, 0.85em);
+    color: #888;
+    margin-bottom: 12px;
+}
+
+.voyager a.metas-instrument-result-card .card-stage-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.voyager a.metas-instrument-result-card .card-stage-row.card-agreement {
+    margin-bottom: 12px;
+}
+
+.voyager a.metas-instrument-result-card .card-stage-row:last-of-type {
+    margin-bottom: 0;
+}
+
+.voyager a.metas-instrument-result-card .card-stage-label {
+    font-size: var(--metas-font-label, 0.78em);
+    color: #666;
+    flex: 1;
+    min-width: 0;
+}
+
+.voyager a.metas-instrument-result-card .card-stage-value {
+    flex-shrink: 0;
+}
+
+.voyager a.metas-instrument-result-card .card-stage-value .label {
+    font-size: var(--metas-font-value, 0.95em);
+    padding: 4px 8px;
+    display: inline-block;
+    min-width: 64px;
+    text-align: center;
+}
+
+.voyager .metas-result-card-empty {
+    font-size: var(--metas-font-muted, 0.85em);
+}
+
+.voyager .metas-results-centers-by-unit {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.voyager .metas-results-center-section__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 16px 16px 20px;
+    margin-bottom: 12px;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    border-left: 5px solid #b0b0b0;
+}
+
+.voyager .metas-results-center-section__title {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: 220px;
+}
+
+.voyager .metas-results-center-section__icon {
+    font-size: 28px;
+    color: #d0d0d0;
+    margin-top: 2px;
+}
+
+.voyager .metas-results-center-section__name {
+    font-weight: 700;
+    font-size: var(--metas-font-base, 14px);
+    line-height: 1.3;
+}
+
+.voyager .metas-results-center-section__code {
+    font-size: var(--metas-font-muted, 0.85em);
+    color: #888;
+    margin-top: 4px;
+}
+
+.voyager .metas-results-center-section__stages {
+    flex: 1;
+    min-width: 240px;
+    max-width: 420px;
+}
+
+.voyager .metas-results-center-section__stages .card-stage-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.voyager .metas-results-center-section__stages .card-stage-row.card-agreement {
+    margin-bottom: 12px;
+}
+
+.voyager .metas-results-center-section__stages .card-stage-row:last-of-type {
+    margin-bottom: 0;
+}
+
+.voyager .metas-results-center-section__stages .card-stage-label {
+    font-size: var(--metas-font-label, 0.78em);
+    color: #666;
+    flex: 1;
+    min-width: 0;
+}
+
+.voyager .metas-results-center-section__stages .card-stage-value {
+    flex-shrink: 0;
+}
+
+.voyager .metas-results-center-section__stages .card-stage-value .label {
+    font-size: var(--metas-font-value, 0.95em);
+    padding: 4px 8px;
+    display: inline-block;
+    min-width: 64px;
+    text-align: center;
+}
+
+.voyager .metas-results-center-section__empty-units {
+    margin-bottom: 0;
+}
+
+.voyager a.metas-instrument-result-card--unit {
+    min-height: 140px;
+}
+
+.voyager a.metas-instrument-result-card--unit .card-code {
+    margin-bottom: 12px;
+}
+
+.voyager .metas-results-averaged-units-banner {
+    margin-bottom: 16px;
+}
+
+.voyager .metas-results-unit-header-context {
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+/* Metas — configuración instrumento / field SS */
+.voyager .metas-instrument-ui .metas-instrument-settings .cen-read-section {
+    margin-bottom: 0;
+}
+
+.voyager .metas-instrument-ui .metas-settings-flash {
+    margin-bottom: 14px;
+}
+
+.voyager .metas-instrument-ui .metas-settings-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.voyager .metas-instrument-ui .metas-settings-section-wrap--wide {
+    grid-column: 1 / -1;
+}
+
+.voyager .metas-instrument-ui .metas-settings-section__intro {
+    margin: 0 0 14px;
+    line-height: 1.5;
+    font-size: var(--metas-font-muted, 0.85em);
+}
+
+.voyager .metas-instrument-ui .metas-settings-section__note {
+    margin: 10px 0 0;
+    line-height: 1.45;
+}
+
+.voyager .metas-instrument-ui .metas-settings-status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 10px;
+    margin-bottom: 12px;
+}
+
+.voyager .metas-instrument-ui .metas-settings-status__label {
+    font-size: var(--metas-font-base, 14px);
+    font-weight: 600;
+    color: #4a5f73;
+}
+
+.voyager .metas-instrument-ui .metas-settings-status__badge {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 5px 11px;
+    line-height: 1.25;
+}
+
+.voyager .metas-instrument-ui .metas-settings-etapa-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.voyager .metas-instrument-ui .metas-settings-etapa-form__alert {
+    margin-bottom: 0;
+    padding: 10px 14px;
+}
+
+.voyager .metas-instrument-ui .metas-settings-etapa-form__alert-list {
+    margin: 6px 0 0;
+    padding-left: 18px;
+}
+
+.voyager .metas-instrument-ui .metas-settings-etapa-form__alert-list li + li {
+    margin-top: 4px;
+}
+
+.voyager .metas-instrument-ui .metas-settings-etapa-form__main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 10px 12px;
+}
+
+.voyager .metas-instrument-ui .metas-settings-etapa-form__select {
+    flex: 1 1 220px;
+    min-width: 0;
+    margin-bottom: 0;
+}
+
+.voyager .metas-instrument-ui .metas-settings-etapa-form__submit {
+    flex: 0 0 auto;
+    min-width: 10.5rem;
+}
+
+.voyager .metas-instrument-ui .metas-settings-etapa-form__motivo {
+    margin-bottom: 0;
+}
+
+.voyager .metas-instrument-ui .metas-settings-etapa-form__hint {
+    margin-bottom: 0;
+}
+
+.voyager .metas-instrument-ui .metas-settings-etapa-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 10px 12px;
+}
+
+.voyager .metas-instrument-ui .metas-settings-etapa-row__field {
+    flex: 1 1 200px;
+    min-width: 0;
+    margin-bottom: 0;
+}
+
+.voyager .metas-instrument-ui .metas-settings-etapa-row__action {
+    flex: 0 0 auto;
+}
+
+.voyager .metas-instrument-ui .metas-settings-etapa-row__error {
+    flex: 1 1 100%;
+    margin: 0;
+}
+
+.voyager .metas-instrument-ui .metas-settings-recalc-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 14px;
+    width: 100%;
+}
+
+.voyager .metas-instrument-ui .metas-settings-recalc-queue {
+    flex: 1 1 220px;
+    font-size: var(--metas-font-muted, 0.85em);
+    line-height: 1.45;
+}
+
+.voyager .metas-instrument-ui .metas-settings-recalc-queue i {
+    margin-right: 4px;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-modal .modal-dialog {
+    margin: 80px auto;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-modal .modal-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-modal .modal-title i {
+    color: var(--cen-accent, #62a8ea);
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-modal__count {
+    font-size: 12px;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-modal__body {
+    max-height: calc(100vh - 220px);
+    overflow-y: auto;
+    padding-top: 12px;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-modal__intro {
+    margin: 0 0 12px;
+    font-size: var(--metas-font-muted, 0.85em);
+    line-height: 1.45;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-modal__table-wrap {
+    margin-bottom: 0;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-modal__table-wrap--loading {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-modal__summary {
+    margin: 12px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-modal__pagination {
+    margin-top: 12px;
+    margin-bottom: 0;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-table {
+    table-layout: fixed;
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-table thead th {
+    font-size: var(--cen-font-meta, 11px);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--cen-meta, #6b7c93);
+    white-space: nowrap;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-table .label-sm {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 7px;
+    white-space: normal;
+    line-height: 1.25;
+    text-align: left;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-table__col-date {
+    width: 14%;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-table__col-stage {
+    width: 13%;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-table__col-motivo {
+    width: 26%;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-table__col-user {
+    width: 34%;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-table__date {
+    font-size: var(--metas-font-muted, 12px);
+    color: var(--cen-text-muted, #6b7c93);
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-table__motivo {
+    word-break: break-word;
+    line-height: 1.35;
+}
+
+.voyager .metas-instrument-ui .metas-stage-history-table__user {
+    min-width: 11rem;
+    word-break: break-word;
+    line-height: 1.35;
+    font-weight: 500;
+    color: var(--cen-text, #333);
+}
+
+.voyager .metas-complex-formula-variables-modal.modal {
+    z-index: var(--centinela-modal-z, 10050) !important;
+}
+
+.voyager .metas-complex-formula-variables-modal.modal .modal-dialog {
+    margin: 80px auto;
+    position: relative;
+    z-index: 1;
+}
+
+.voyager .metas-complex-formula-variables-modal .modal-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.voyager .metas-complex-formula-variables-modal .modal-title i {
+    color: var(--cen-accent, #62a8ea);
+}
+
+.voyager .metas-instrument-ui .metas-complex-formula-variables-modal__body {
+    max-height: calc(100vh - 220px);
+    overflow-y: auto;
+    padding-top: 12px;
+}
+
+.voyager .metas-instrument-ui .metas-complex-formula-variables-modal__intro,
+.voyager .metas-instrument-ui .metas-complex-formula-variables-modal__meta {
+    margin: 0 0 12px;
+    font-size: var(--metas-font-muted, 0.85em);
+    line-height: 1.45;
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-complex-formula-variables-modal__expression {
+    margin: 0 0 16px;
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-complex-formula-variables-modal__expression-code {
+    display: block;
+    margin-top: 6px;
+    padding: 8px 10px;
+    background: #f7fafc;
+    border: 1px solid #e8edf3;
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--cen-text, #333);
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-complex-formula-variables-modal__table-wrap {
+    margin-bottom: 16px;
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-complex-formula-variables-modal__table-wrap--loading {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.voyager .metas-instrument-ui .metas-complex-formula-variables-table {
+    margin-bottom: 0;
+}
+
+.voyager .metas-instrument-ui .metas-complex-formula-variables-table thead th {
+    width: auto;
+    white-space: nowrap;
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-complex-formula-variables-table__col-variable {
+    width: 90px;
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-complex-formula-variables-table__col-valor {
+    width: 120px;
+}
+
+.voyager .metas-complex-formula-variables-table__valor {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--cen-text, #333);
+}
+
+.voyager .metas-complex-formula-variables-table__unidad {
+    font-weight: 400;
+    margin-left: 4px;
+}
+
+.voyager .metas-complex-formula-variables-table tfoot td {
+    background: #f7fafc;
+    border-top: 2px solid #dce8f5;
+}
+
+.voyager .metas-complex-formula-variables-table__row--resultado td:first-child {
+    color: var(--cen-text, #333);
+}
+
+.voyager .metas-complex-formula-variables-modal__empty-note {
+    margin: 0 0 12px;
+    font-size: var(--metas-font-muted, 0.85em);
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-establishment-timeline-modal
+    .modal-dialog {
+    margin: 80px auto;
+}
+
+.voyager .metas-instrument-ui .metas-establishment-timeline-modal .modal-title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-establishment-timeline-modal
+    .modal-title
+    i {
+    color: var(--cen-accent, #62a8ea);
+}
+
+.voyager .metas-instrument-ui .metas-establishment-timeline-modal__count {
+    font-size: 12px;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.voyager .metas-instrument-ui .metas-establishment-timeline-modal__body {
+    max-height: calc(100vh - 220px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-top: 12px;
+}
+
+.voyager .metas-instrument-ui .metas-establishment-timeline-modal__intro {
+    margin: 0 0 12px;
+    font-size: var(--metas-font-muted, 0.85em);
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.voyager .metas-instrument-ui .metas-establishment-timeline-modal__summary {
+    margin: 12px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.voyager .metas-instrument-ui .metas-establishment-timeline-modal__pagination {
+    margin-top: 12px;
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    .voyager .metas-complex-formula-variables-modal.modal .modal-dialog {
+        margin: 24px auto;
+        width: calc(100% - 24px);
+    }
+
+    .voyager
+        .metas-instrument-ui
+        .metas-establishment-timeline-modal
+        .modal-dialog {
+        margin: 24px auto;
+        width: calc(100% - 24px);
+    }
+
+    .voyager
+        .metas-instrument-ui
+        .metas-establishment-timeline-modal__pagination
+        .metas-bitacora-pagination__summary,
+    .voyager
+        .metas-instrument-ui
+        .metas-establishment-timeline-modal__pagination
+        .metas-bitacora-pagination__pages {
+        float: none;
+        width: 100%;
+    }
+
+    .voyager
+        .metas-instrument-ui
+        .metas-establishment-timeline-modal__pagination
+        .metas-bitacora-pagination__pages {
+        margin-top: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    .voyager .metas-instrument-ui .metas-stage-history-modal .modal-dialog {
+        margin: 24px auto;
+        width: calc(100% - 24px);
+    }
+
+    .voyager
+        .metas-instrument-ui
+        .metas-stage-history-modal__pagination
+        .metas-bitacora-pagination__summary,
+    .voyager
+        .metas-instrument-ui
+        .metas-stage-history-modal__pagination
+        .metas-bitacora-pagination__pages {
+        float: none;
+        width: 100%;
+    }
+
+    .voyager
+        .metas-instrument-ui
+        .metas-stage-history-modal__pagination
+        .metas-bitacora-pagination__pages {
+        justify-content: center;
+        margin-top: 8px;
+    }
+}
+
+.voyager .metas-instrument-ui .metas-settings-params {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px 16px;
+}
+
+.voyager .metas-instrument-ui .metas-settings-params .form-group {
+    margin-bottom: 0;
+}
+
+.voyager .metas-instrument-ui .metas-settings-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--cen-border, #e8edf2);
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-settings-section-wrap--danger
+    .cen-read-section {
+    border-color: #ebccd1;
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-settings-section-wrap--danger
+    .cen-read-section__head {
+    background: #fdf2f4;
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-settings-section-wrap--success
+    .cen-read-section {
+    border-color: #d6e9c6;
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-settings-section-wrap--success
+    .cen-read-section__head {
+    background: #f7fcf5;
+}
+
+@media (max-width: 991px) {
+    .voyager .metas-instrument-ui .metas-settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .voyager .metas-instrument-ui .metas-settings-params {
+        grid-template-columns: 1fr;
+    }
+}
+
+.voyager .metas-field-ss-alert {
+    margin-bottom: 16px;
+}
+
+.voyager .metas-field-ss-intro {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+.voyager .metas-field-ss-empty {
+    margin-bottom: 0;
+}
+
+.voyager .metas-field-ss-table {
+    margin-bottom: 0;
+}
+
+.voyager .metas-field-ss-table th.metas-field-ss-col--variable {
+    width: 90px;
+}
+
+.voyager .metas-field-ss-table th.metas-field-ss-col--tipo {
+    width: 200px;
+}
+
+.voyager .metas-field-ss-hint {
+    margin: 6px 0 0;
+    font-size: var(--metas-font-muted, 0.85em);
+}
+
+.voyager .metas-field-ss-hint--warning {
+    margin: 6px 0 0;
+    font-size: var(--metas-font-muted, 0.85em);
+}
+
+.voyager .metas-field-ss-error {
+    margin-bottom: 0;
+}
+
+.voyager .metas-field-ss-config-alerta {
+    margin-top: 16px;
+}
+
+.voyager .metas-instrument-field-ss-config-alerta .componente-corte-alerta {
+    border-left: 4px solid #f0ad4e;
+    padding: 0.35rem 0.35rem 0.35rem 0.5rem;
+    background-color: #fcf8f3;
+}
+
+.voyager
+    .metas-instrument-field-ss-config-alerta
+    .componente-corte-alerta
+    .glyphicon {
+    margin-right: 0.35rem;
+}
+
+/* Metas — selección de centros */
+.voyager .metas-center-selection-table th.metas-center-col--incluido {
+    width: 60px;
+}
+
+.voyager .metas-center-selection-table th.metas-center-col--codigo {
+    width: 120px;
+}
+
+.voyager .metas-center-selection-table th.metas-center-col--adosados {
+    width: 180px;
+}
+
+.voyager .metas-center-selection-table th.metas-center-col--responsables,
+.voyager .metas-center-selection-table td.metas-center-col--responsables {
+    min-width: 160px;
+    width: 22%;
+    max-width: 320px;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: anywhere;
+    vertical-align: top;
+}
+
+.voyager .metas-center-responsibles-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+.voyager .metas-center-responsibles-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 4px;
+    width: 100%;
+}
+
+.voyager .metas-center-responsible-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    max-width: 100%;
+    white-space: normal;
+    word-break: break-word;
+    text-align: left;
+}
+
+.voyager .metas-center-responsible-remove {
+    float: none;
+    font-size: 14px;
+    line-height: 1;
+    opacity: 0.85;
+}
+
+.voyager .metas-center-responsible-add {
+    flex: 0 0 auto;
+}
+
+.voyager .metas-center-selection-table th.metas-center-col--accion {
+    width: 220px;
+}
+
+.voyager .metas-center-selection-table td.metas-center-col--accion {
+    white-space: nowrap;
+}
+
+.voyager .metas-config-col-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+}
+
+.voyager .metas-config-col-header input[type="checkbox"] {
+    margin: 0;
+}
+
+.voyager .metas-instrument-ui .metas-config-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.voyager .metas-instrument-ui .metas-config-summary__unit {
+    display: inline-flex;
+    align-items: center;
+    align-self: center;
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+
+.voyager .metas-instrument-ui .metas-config-summary__aside {
+    margin-left: auto;
+    text-align: right;
+}
+
+.voyager .metas-instrument-ui .metas-config-summary__stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.voyager .metas-instrument-ui .metas-config-summary__stat {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem 0.4rem;
+    font-size: var(--metas-font-muted, 13px);
+    line-height: 1.4;
+}
+
+.voyager .metas-instrument-ui .metas-config-summary__stat-label {
+    color: var(--cen-text-muted, #6b7c93);
+    font-weight: 600;
+}
+
+.voyager .metas-instrument-ui .metas-config-summary__stat .label {
+    font-size: 12px;
+    font-weight: 600;
+    min-width: 1.75rem;
+    padding: 3px 8px;
+}
+
+.voyager .metas-instrument-ui .metas-config-summary__stat-hint {
+    color: var(--cen-text-muted, #6b7c93);
+    font-size: 12px;
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-config-summary__aside
+    .metas-config-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.35rem;
+}
+
+.voyager .metas-center-adosado-label {
+    margin-top: 2px;
+    display: inline-block;
+}
+
+.voyager .metas-center-remove-warning {
+    display: block;
+    font-size: 0.85em;
+    margin-bottom: 4px;
+}
+
+/* Metas — carga mensual (cabecera compacta SDD-152) */
+.voyager .metas-monthly-context {
+    margin-bottom: 18px;
+}
+
+.voyager .metas-monthly-context__head {
+    margin-bottom: 12px;
+}
+
+.voyager .metas-monthly-context__title-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px 12px;
+    margin-bottom: 6px;
+}
+
+.voyager .metas-monthly-context__title {
+    margin: 0;
+    font-size: 1.05em;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.35;
+}
+
+.voyager .metas-monthly-context__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+}
+
+.voyager .metas-monthly-context__meta {
+    margin: 0;
+    line-height: 1.45;
+}
+
+.voyager .metas-monthly-context__meta-sep {
+    margin: 0 6px;
+    color: #bbb;
+}
+
+.voyager .metas-monthly-stats {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.voyager .metas-monthly-stat {
+    background: #f5f7fa;
+    border: 1px solid #dce1e8;
+    border-radius: 4px;
+    padding: 12px 14px;
+    text-align: center;
+    height: 100%;
+}
+
+.voyager .metas-monthly-stat__label {
+    display: block;
+    font-size: var(--metas-font-label, 0.78em);
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.voyager .metas-monthly-stat__value {
+    display: block;
+    font-size: 1.15em;
+    font-weight: 700;
+    color: #31708f;
+    line-height: 1.25;
+}
+
+.voyager .metas-field-types-flat {
+    margin-bottom: 16px;
+}
+
+.voyager .metas-field-types-flat__intro {
+    margin: 0 0 8px;
+}
+
+.voyager .metas-field-types-flat-table {
+    margin-bottom: 0;
+}
+
+/* Metas — hub carga por indicador (SDD-153) */
+.voyager .metas-carga-hub-action-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 12px;
+}
+
+.voyager .metas-carga-hub-action-bar__primary,
+.voyager .metas-carga-hub-action-bar__secondary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.voyager .metas-carga-hub-alerts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.voyager .metas-carga-hub-alerts__item,
+.voyager .metas-carga-hub-alerts .componente-corte-alerta.metas-alert--compact {
+    border-left: 4px solid #f0ad4e;
+    padding: 0.45rem 0.6rem 0.45rem 0.65rem;
+    background-color: #fcf8f3;
+    margin-bottom: 0;
+}
+
+.voyager .metas-carga-hub-alerts .componente-corte-alerta .glyphicon {
+    margin-right: 0.35rem;
+}
+
+.voyager .metas-calculation-error-banner .componente-corte-alerta {
+    border-left: 4px solid #f0ad4e;
+    padding: 0.45rem 0.6rem 0.45rem 0.65rem;
+    background-color: #fcf8f3;
+    margin-bottom: 0;
+}
+
+.voyager .metas-calculation-error-banner .componente-corte-alerta .glyphicon {
+    margin-right: 0.35rem;
+}
+
+.voyager .metas-bitacora-pagination {
+    margin-top: 1rem;
+}
+
+.voyager .metas-tab-panel .cen-dashboard-block__title {
+    font-size: var(--metas-font-base, 14px);
+    font-weight: 600;
+    color: #31708f;
+}
+
+.voyager .metas-tab-panel .cen-dashboard-block__title i {
+    font-size: var(--metas-font-base, 14px);
+}
+
+.voyager .metas-bitacora-panel .cen-dashboard-block + .cen-dashboard-block {
+    margin-top: 14px;
+}
+
+.voyager .metas-bitacora-alert {
+    margin-bottom: 14px;
+}
+
+.voyager .metas-bitacora-add-note__heading {
+    cursor: pointer;
+}
+
+.voyager .metas-bitacora-add-note__chevron {
+    margin-right: 6px;
+    font-size: 0.85em;
+    color: var(--cen-text-muted, #6b7c93);
+    transition: transform 0.2s ease;
+}
+
+.voyager .metas-bitacora-add-note__chevron--voyager {
+    color: var(--cen-accent, #62a8ea);
+}
+
+.voyager
+    .metas-bitacora-add-note:has(.panel-collapse.in)
+    .metas-bitacora-add-note__chevron {
+    transform: rotate(90deg);
+}
+
+.voyager
+    .metas-bitacora-add-note
+    .cen-dashboard-block__body
+    .form-group:last-of-type,
+.voyager
+    .metas-bitacora-add-note
+    .cen-dashboard-block__body
+    .checkbox:last-of-type {
+    margin-bottom: 12px;
+}
+
+.voyager .indicator-bitacora-entry {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding: 12px 12px 12px 14px;
+    border: 1px solid var(--cen-border, #e8edf2);
+    border-left: 3px solid #e6a817;
+    border-radius: 4px;
+    background: #fff;
+}
+
+.voyager .indicator-bitacora-entry--pinned {
+    border-left-color: #c57c00;
+    background: #fff8e7;
+}
+
+.voyager .indicator-bitacora-entry__icon {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: var(--cen-text-muted, #888);
+}
+
+.voyager .indicator-bitacora-entry__body {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.voyager .indicator-bitacora-entry__row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.voyager .indicator-bitacora-entry__content {
+    flex: 1 1 auto;
+    min-width: 0;
+    color: #333;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.voyager .indicator-bitacora-entry__title-row {
+    margin-bottom: 2px;
+}
+
+.voyager .indicator-bitacora-entry__indicator {
+    margin-top: 4px;
+    line-height: 1.45;
+}
+
+.voyager .indicator-bitacora-entry__detail {
+    margin: 6px 0 0;
+    line-height: 1.45;
+    color: #444;
+}
+
+.voyager .indicator-bitacora-entry__actions {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: flex-start;
+}
+
+.voyager .indicator-bitacora-entry__meta {
+    margin-top: 6px;
+    font-size: var(--metas-font-muted, 12px);
+    color: var(--cen-text-muted, #888);
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.voyager .indicator-bitacora-entry__label {
+    margin-right: 6px;
+    display: inline-block;
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.25;
+    text-align: left;
+}
+
+.voyager .indicator-bitacora-empty {
+    margin: 0;
+    padding: 12px 0;
+    text-align: center;
+}
+
+.voyager .metas-bitacora-pagination__summary {
+    float: left;
+    margin: 8px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.voyager .metas-bitacora-pagination__pages {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    float: right;
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.voyager .metas-bitacora-pagination__pages > li {
+    display: flex;
+}
+
+.voyager .metas-bitacora-pagination__pages > li > span,
+.voyager .metas-bitacora-pagination__pages > li > button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 12px;
+    margin-left: -1px;
+    line-height: 1;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    float: none;
+}
+
+.voyager .metas-bitacora-pagination__pages > li > button {
+    cursor: pointer;
+}
+
+.voyager .metas-bitacora-pagination__pages > li:first-child > span,
+.voyager .metas-bitacora-pagination__pages > li:first-child > button {
+    margin-left: 0;
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+}
+
+.voyager .metas-bitacora-pagination__pages > li:last-child > span,
+.voyager .metas-bitacora-pagination__pages > li:last-child > button {
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.voyager .metas-bitacora-pagination__pages > li.active > span {
+    z-index: 2;
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+}
+
+.voyager .metas-bitacora-pagination__pages > li.disabled > span {
+    color: #777;
+    background-color: #fff;
+    border-color: #ddd;
+    cursor: not-allowed;
+}
+
+.voyager .metas-bitacora-pagination__pages > li > button:hover,
+.voyager .metas-bitacora-pagination__pages > li > button:focus {
+    z-index: 2;
+    color: #23527c;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.voyager .metas-bitacora-pagination__pages > li > button[disabled],
+.voyager .metas-bitacora-pagination__pages > li > button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.voyager .metas-carga-hub-tabs {
+    margin-top: 4px;
+}
+
+.voyager .metas-carga-hub-tab-content {
+    padding-top: 16px;
+}
+
+.voyager .metas-carga-hub-tab-pane {
+    padding-top: 4px;
+}
+
+.voyager .metas-carga-hub-access-notice {
+    margin: 0 0 12px;
+    padding: 8px 10px;
+    background: #fcf8e3;
+    border-left: 3px solid #f0ad4e;
+    font-size: 0.92em;
+    line-height: 1.4;
+}
+
+.voyager .metas-carga-hub-formula {
+    margin-bottom: 16px;
+}
+
+.voyager .metas-carga-hub-formula__text {
+    margin: 0;
+    line-height: 1.45;
+}
+
+.voyager .metas-carga-hub {
+    margin-top: 4px;
+}
+
+.voyager .metas-carga-hub-masiva {
+    margin-bottom: 18px;
+}
+
+.voyager .metas-carga-hub-masiva__controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 8px 10px;
+}
+
+.voyager .metas-carga-hub-masiva__file {
+    flex: 1 1 380px;
+    min-width: 300px;
+    max-width: 560px;
+    width: 100%;
+    height: auto;
+    min-height: 34px;
+    padding: 5px 10px 9px;
+    line-height: 1.4;
+}
+
+@media (min-width: 992px) {
+    .voyager .metas-carga-hub-masiva__file {
+        max-width: 680px;
+    }
+}
+
+.voyager .metas-carga-hub-masiva__file::file-selector-button {
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.voyager .metas-carga-hub-masiva__error {
+    margin: 4px 0 0;
+}
+
+.voyager .metas-carga-hub-manual {
+    margin-top: 4px;
+}
+
+.voyager .metas-carga-hub-import-notice {
+    margin: 0;
+    line-height: 1.45;
+}
+
+.voyager .metas-carga-hub-import-errors {
+    margin-bottom: 14px;
+}
+
+.voyager .metas-carga-hub-import-errors__list {
+    margin: 8px 0 0;
+    padding-left: 18px;
+}
+
+.voyager .metas-carga-hub-empty {
+    margin-bottom: 0;
+}
+
+.voyager .metas-carga-hub-table-wrap {
+    margin-bottom: 8px;
+}
+
+.voyager .metas-carga-hub-table {
+    margin-bottom: 0;
+}
+
+.voyager .metas-field-types-readonly-wrap {
+    margin-bottom: 15px;
+}
+
+.voyager .metas-field-types-readonly-intro {
+    margin: 0 0 10px;
+}
+
+.voyager .metas-field-types-readonly-col--variable {
+    width: 70px;
+}
+
+.voyager .metas-field-types-readonly-col--tipo {
+    width: 130px;
+}
+
+.voyager .metas-monthly-access-notice {
+    margin: 0 0 14px;
+    padding: 8px 10px;
+    background: #fcf8e3;
+    border-left: 3px solid #f0ad4e;
+    font-size: 0.92em;
+    line-height: 1.4;
+}
+
+.voyager .metas-monthly-access-notice i {
+    margin-right: 4px;
+}
+
+.voyager .metas-monthly-section-title {
+    margin-top: 18px;
+}
+
+.voyager .metas-monthly-section-title--first {
+    margin-top: 0;
+}
+
+.voyager .metas-monthly-component-block {
+    margin-bottom: 18px;
+}
+
+.voyager .metas-monthly-component-heading {
+    margin-bottom: 6px;
+}
+
+.voyager .metas-component-badge {
+    font-size: var(--metas-font-badge, 0.9em);
+    padding: 3px 8px;
+}
+
+.voyager .metas-component-badge--numerador {
+    background-color: #2196a6;
+}
+
+.voyager .metas-component-badge--denominador {
+    background-color: #5b6e8b;
+}
+
+.voyager .metas-monthly-field-label {
+    margin: 0 0 4px 2px;
+}
+
+.voyager .metas-monthly-field-sublabel {
+    font-size: var(--metas-font-muted, 0.85em);
+}
+
+.voyager .metas-monthly-field-table-wrap {
+    margin-bottom: 14px;
+}
+
+.voyager .metas-monthly-field-table-wrap--last {
+    margin-bottom: 0;
+}
+
+.voyager .metas-instrument-periodic-entry .metas-instrument-periodic-grid {
+    width: auto;
+    table-layout: fixed;
+}
+
+.voyager
+    .metas-instrument-periodic-entry
+    .metas-instrument-periodic-grid--wide {
+    min-width: 850px;
+}
+
+.voyager
+    .metas-instrument-periodic-entry
+    .metas-instrument-periodic-grid
+    th.metas-instrument-period-col,
+.voyager
+    .metas-instrument-periodic-entry
+    .metas-instrument-periodic-grid
+    td.metas-instrument-period-col {
+    width: 88px;
+    max-width: 88px;
+}
+
+.voyager
+    .metas-instrument-periodic-entry
+    .metas-instrument-periodic-grid
+    input.metas-instrument-period-input {
+    width: 100%;
+    min-width: 9ch;
+    max-width: 100%;
+    padding: 3px 5px;
+    box-sizing: border-box;
+}
+
+.voyager .metas-instrument-periodic-grid th.metas-monthly-col--total {
+    width: 62px;
+    background: #f5f5f5;
+}
+
+.voyager .metas-instrument-periodic-grid th.metas-monthly-col--accion {
+    width: 80px;
+}
+
+.voyager .metas-instrument-periodic-grid td.metas-monthly-period-cell {
+    padding: 3px 4px;
+}
+
+.voyager .metas-instrument-periodic-grid td.metas-monthly-total-cell {
+    background: #f9f9f9;
+    font-weight: 600;
+    vertical-align: middle;
+}
+
+.voyager .metas-instrument-periodic-grid td.metas-monthly-action-cell {
+    padding: 4px;
+    vertical-align: middle;
+}
+
+.voyager .metas-monthly-field-error {
+    font-size: 10px;
+}
+
+.voyager .metas-monthly-baseline-col--accion {
+    width: 110px;
+}
+
+.voyager .metas-monthly-baseline-error {
+    font-size: 11px;
+}
+
+.voyager .metas-monthly-save-notice {
+    margin-bottom: 12px;
+}
+
+.voyager .metas-monthly-capture-hint {
+    margin: 0 0 12px;
+    padding: 0;
+    font-size: 12px;
+    line-height: 1.45;
+    border: none;
+    background: transparent;
+}
+
+.voyager .metas-monthly-capture-hint__badge {
+    font-size: 10px;
+    vertical-align: baseline;
+}
+
+.voyager .metas-monthly-period-table-wrap {
+    margin-bottom: 18px;
+}
+
+.voyager .metas-monthly-period-table {
+    width: auto;
+    max-width: 100%;
+    table-layout: auto;
+}
+
+.voyager .metas-monthly-period-table th.metas-monthly-col--mes,
+.voyager .metas-monthly-period-table td.metas-monthly-col--mes {
+    width: 3.5rem;
+    min-width: 3.5rem;
+    vertical-align: middle !important;
+    text-align: center;
+}
+
+.voyager .metas-monthly-period-table th.metas-monthly-col--estado,
+.voyager .metas-monthly-period-table td.metas-monthly-col--estado {
+    width: 7.5rem;
+    min-width: 7.5rem;
+    vertical-align: middle !important;
+}
+
+.voyager .metas-monthly-period-table th.metas-monthly-col--variable,
+.voyager .metas-monthly-period-table td.metas-monthly-period-cell {
+    min-width: 6.5rem;
+    width: 6.5rem;
+    vertical-align: middle !important;
+}
+
+.voyager .metas-monthly-period-table th.metas-monthly-col--accion,
+.voyager .metas-monthly-period-table td.metas-monthly-action-cell {
+    min-width: 8.75rem;
+    width: 8.75rem;
+    vertical-align: middle !important;
+    white-space: nowrap;
+}
+
+.voyager .metas-monthly-period-table td.metas-monthly-period-cell {
+    padding: 3px 4px;
+}
+
+.voyager
+    .metas-monthly-period-table
+    td.metas-monthly-period-cell
+    input.metas-instrument-period-input {
+    width: 100%;
+    min-width: 6ch;
+    max-width: 100%;
+    padding: 3px 5px;
+    box-sizing: border-box;
+}
+
+.voyager .metas-monthly-period-table td.metas-monthly-action-cell {
+    padding: 4px 6px;
+}
+
+.voyager .metas-monthly-period-table td.metas-monthly-action-cell .btn {
+    white-space: nowrap;
+}
+
+.voyager .metas-monthly-period-row--draft-incomplete {
+    background-color: #fffbf0;
+}
+
+.voyager .metas-monthly-period-row--persisted-incomplete {
+    background-color: #fffbf0;
+}
+
+.voyager .metas-monthly-period-row--calc-error {
+    background-color: #fdf2f2;
+}
+
+.voyager .metas-monthly-period-row--error {
+    background-color: #fdf2f2;
+}
+
+.voyager .metas-period-row-status {
+    display: inline-block;
+    max-width: 100%;
+}
+
+.voyager .metas-monthly-row-error {
+    margin-top: 4px;
+    max-width: 140px;
+    line-height: 1.25;
+}
+
+.voyager .metas-month-draft-badge {
+    font-size: 10px;
+    display: inline-block;
+}
+
+/* Dashboard operativo — leyenda semáforo ámbitos (inferior izquierda) */
+.voyager .admin-dashboard-compass--ambito-legend .cen-dashboard-shell {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 10rem);
+}
+
+.voyager .dashboard-ambito-semaforo-legend {
+    margin-top: auto;
+    padding-top: 1.25rem;
+    align-self: flex-start;
+    width: 100%;
+    max-width: 42rem;
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.voyager
+    .dashboard-ambito-semaforo-legend
+    .dashboard-ambito-semaforo-legend__items {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0.35rem;
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
+}
+
+.voyager .dashboard-ambito-semaforo-legend .semaforo-legend__item {
+    white-space: normal;
+}
+
+.voyager
+    .admin-dashboard-compass
+    .cen-dashboard-metric-table
+    td.cen-dashboard-metric-table__value {
+    width: 5.5rem;
+    text-align: right;
+    white-space: nowrap;
+    vertical-align: middle !important;
+}
+
+.voyager
+    .admin-dashboard-compass
+    .cen-dashboard-metric-table
+    td.cen-dashboard-metric-table__action {
+    width: 3rem;
+    text-align: right;
+    white-space: nowrap;
+    vertical-align: middle !important;
+    padding-left: 0.25rem;
+}
+
+.voyager
+    .admin-dashboard-compass
+    .cen-dashboard-metric-table
+    .dashboard-ambito-semaforo {
+    display: inline-flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.voyager
+    .admin-dashboard-compass
+    .cen-dashboard-metric-table
+    .dashboard-ambito-semaforo
+    .semaforo {
+    margin: 0;
+    display: inline-block;
+    float: none;
+}
+
+/* ========================================================================
+   Ficha de indicador (show) — UI/UX mejorada
+   ======================================================================== */
+
+/* KPI summary bar */
+.voyager .metas-ficha-kpi-bar {
+    background: #f5f7fa;
+    border: 1px solid #dce1e8;
+    border-radius: 4px;
+    padding: 12px 8px;
+    margin-bottom: 18px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.voyager .metas-ficha-kpi {
+    display: block;
+    text-align: center;
+}
+
+.voyager .metas-ficha-kpi__icon {
+    font-size: 20px;
+    display: block;
+    margin-bottom: 4px;
+    color: #31708f;
+}
+
+.voyager .metas-ficha-kpi__label {
+    display: block;
+    font-size: var(--metas-font-label, 0.78em);
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.voyager .metas-ficha-kpi__value {
+    display: block;
+    margin-top: 2px;
+    font-size: var(--metas-font-value, 0.95em);
+    font-weight: 600;
+    color: #333;
+}
+
+.voyager .metas-ficha-kpi__value--dark {
+    font-weight: 700;
+    color: #222;
+}
+
+.voyager .metas-monthly-context__badges--solo {
+    margin-left: auto;
+}
+
+.voyager .metas-monthly-formula-block {
+    margin-top: 12px;
+}
+
+.voyager .metas-monthly-formula-block__text {
+    margin: 0;
+    word-break: break-word;
+}
+
+.voyager .metas-monthly-capture-section {
+    margin-top: 16px;
+    margin-bottom: 12px;
+}
+
+.voyager .metas-monthly-capture-section .metas-monthly-capture-hint {
+    margin-bottom: 0;
+}
+
+/* Section blocks */
+.voyager .metas-ficha-section {
+    margin-bottom: 18px;
+}
+
+.voyager .metas-ficha-section__heading {
+    margin: 0 0 8px;
+    font-size: var(--metas-font-base, 14px);
+    font-weight: 600;
+    color: #31708f;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #dce1e8;
+}
+
+.voyager .metas-ficha-section__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px 12px;
+    margin: 0 0 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #dce1e8;
+}
+
+.voyager .metas-ficha-section__heading--toolbar {
+    margin: 0;
+    padding: 0;
+    border-bottom: none;
+    flex: 1 1 auto;
+}
+
+.voyager .metas-ficha-section__head .btn {
+    flex-shrink: 0;
+}
+
+.voyager .metas-ficha-section__heading i {
+    margin-right: 5px;
+    font-size: var(--metas-font-base, 14px);
+}
+
+.voyager .metas-ficha-section__body {
+    padding-left: 4px;
+}
+
+.voyager .metas-ficha-subsection__heading {
+    margin: 0 0 6px;
+    font-size: var(--metas-font-value, 0.95em);
+    font-weight: 600;
+    color: #555;
+}
+
+.voyager .metas-ficha-legend {
+    margin-top: 10px;
+    padding: 10px 12px;
+    font-size: 12px;
+    line-height: 1.45;
+    color: #666;
+    background: #f9f9f9;
+    border: 1px solid #e8e8e8;
+    border-radius: 3px;
+}
+
+.voyager .metas-ficha-legend p {
+    margin: 0 0 6px;
+}
+
+.voyager .metas-ficha-legend ul.metas-ficha-legend__list {
+    margin: 0 0 8px 18px;
+    padding: 0;
+    font-size: 12px;
+    line-height: 1.45;
+    color: #666;
+}
+
+.voyager .metas-ficha-legend__footnote {
+    margin-bottom: 0 !important;
+}
+
+.voyager .metas-etapas-legend__list {
+    margin: 0 0 0 18px;
+    padding: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--cen-text-muted, #666);
+}
+
+.voyager .metas-etapas-legend__list li + li {
+    margin-top: 8px;
+}
+
+.voyager .metas-etapas-legend__item--active {
+    color: var(--cen-text, #333);
+}
+
+.voyager .metas-etapas-legend__item--active strong {
+    color: var(--cen-accent, #31708f);
+}
+
+/* Meta nacional card */
+.voyager .metas-ficha-meta-card {
+    background: linear-gradient(135deg, #f0f7ff 0%, #f8fafd 100%);
+    border: 1px solid #c8d8eb;
+    border-left: 4px solid #31708f;
+    border-radius: 4px;
+    padding: 14px 16px;
+    margin-bottom: 4px;
+}
+
+.voyager .metas-ficha-meta-card__label {
+    display: block;
+    font-size: var(--metas-font-label, 0.78em);
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.voyager .metas-ficha-meta-card__value {
+    display: block;
+    font-size: var(--metas-font-kpi-accent, 1.29em);
+    font-weight: 700;
+    color: #222;
+}
+
+.voyager .metas-ficha-meta-card__value--dark {
+    color: #31708f;
+}
+
+.voyager .metas-ficha-meta-card__operator {
+    display: inline-block;
+    background: #31708f;
+    color: #fff;
+    padding: 2px 10px;
+    border-radius: 3px;
+    font-size: var(--metas-font-kpi-accent, 1.29em);
+    font-weight: 700;
+}
+
+.voyager .metas-ficha-meta-card__desc {
+    display: block;
+    margin-top: 2px;
+    font-size: var(--metas-font-value, 0.95em);
+    color: #555;
+    line-height: 1.5;
+}
+
+/* Tech grid — mini cards */
+.voyager .metas-ficha-tech-grid {
+    margin-bottom: 4px;
+}
+
+.voyager .metas-ficha-tech-card {
+    background: #fff;
+    border: 1px solid #dce1e8;
+    border-radius: 4px;
+    padding: 0;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.voyager .metas-ficha-tech-card__header {
+    background: #f5f7fa;
+    padding: 8px 12px;
+    font-size: var(--metas-font-badge, 0.9em);
+    font-weight: 600;
+    color: #555;
+    border-bottom: 1px solid #dce1e8;
+}
+
+.voyager .metas-ficha-tech-card__header i {
+    margin-right: 4px;
+    color: #31708f;
+}
+
+.voyager .metas-ficha-tech-card__body {
+    padding: 10px 12px;
+}
+
+.voyager .metas-ficha-tech-card__value {
+    font-size: 20px;
+    font-weight: 700;
+    color: #222;
+}
+
+.voyager .metas-ficha-tech-card__label {
+    display: block;
+    font-size: var(--metas-font-label, 0.78em);
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.voyager .metas-ficha-tech-card__help {
+    margin: 8px 0 0;
+    font-size: var(--metas-font-muted, 0.85em);
+    color: #777;
+    line-height: 1.4;
+}
+
+.voyager .metas-ficha-umbrales-row {
+    display: flex;
+    align-items: flex-start;
+}
+
+.voyager .metas-ficha-umbrales-col {
+    padding-bottom: 4px;
+}
+
+.voyager .metas-ficha-umbrales-col--right {
+    text-align: right;
+    border-left: 1px solid #dce1e8;
+}
+
+.voyager .metas-ficha-umbral-bar--full {
+    border-radius: 4px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Umbral visual bar */
+.voyager .metas-ficha-umbral-bar {
+    border-radius: 3px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Formula expression (ficha) */
+.voyager .metas-ficha-formula-expression {
+    margin: 0;
+    color: #555;
+    font-size: var(--metas-font-base, 14px);
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+/* Data table within ficha */
+.voyager .metas-ficha-data-table {
+    font-size: var(--metas-font-table, 14px);
+    margin-bottom: 0;
+    border-color: #dce1e8;
+}
+
+.voyager .metas-ficha-data-table > thead > tr > th {
+    background: #f5f7fa;
+    border-color: #dce1e8;
+    font-size: var(--metas-font-label, 0.78em);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #666;
+}
+
+.voyager .metas-datos-al-legend-wrap {
+    margin-top: 10px;
+}
+
+.voyager .metas-datos-al-legend__sample {
+    font-size: var(--metas-font-label, 0.78em);
+    font-weight: 600;
+    margin-right: 4px;
+    vertical-align: middle;
+}
+
+.voyager .metas-datos-al-badge__suffix {
+    font-weight: 600;
+}
+
+.voyager .metas-instrument-ui .metas-hub-compass-block {
+    margin: 0;
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-hub-tab-content
+    > .metas-tab-panel
+    > .metas-hub-compass-block:last-child {
+    margin-bottom: 1rem;
+}
+
+.voyager .metas-instrument-ui .metas-hub-tab-content {
+    padding: 0;
+    background: transparent;
+    border: 0;
+}
+
+.voyager .metas-instrument-ui .metas-hub-nav-tabs > li {
+    margin-bottom: -1px !important;
+}
+
+.voyager .metas-instrument-ui .metas-hub-nav-tabs > li.active > a,
+.voyager .metas-instrument-ui .metas-hub-nav-tabs > li.active > a:focus,
+.voyager .metas-instrument-ui .metas-hub-nav-tabs > li.active > a:hover {
+    background: #fff !important;
+    border-bottom-color: #fff !important;
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-hub-tab-content
+    > .metas-tab-panel
+    > .metas-hub-compass-block {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.voyager .metas-instrument-ui .metas-catalog-ambitos {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 0.35rem;
+}
+
+.voyager .metas-instrument-ui .metas-catalog-ambitos__label {
+    margin-right: 0.15rem;
+}
+
+.voyager .metas-instrument-ui .metas-establishments-intro {
+    margin-bottom: 1rem;
+}
+
+.voyager .metas-instrument-ui .metas-indicator-config-legend {
+    margin-bottom: 0;
+    font-size: var(--metas-font-base, 14px);
+    line-height: 1.5;
+    color: var(--cen-text, #444);
+}
+
+.voyager .metas-instrument-ui .metas-indicator-config-legend p {
+    font-size: var(--metas-font-base, 14px);
+    font-weight: 600;
+    color: var(--cen-text, #333);
+}
+
+.voyager
+    .metas-instrument-ui
+    .metas-indicator-config-legend
+    ul.metas-ficha-legend__list {
+    font-size: var(--metas-font-base, 14px);
+    line-height: 1.5;
+    color: var(--cen-text, #444);
+}
+
+.voyager .metas-instrument-ui .metas-config-help {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--cen-border, #e8edf2);
+}
+
+.voyager .metas-instrument-ui .metas-config-help__title {
+    margin: 0 0 0.75rem;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--cen-text, #333);
+}
+
+.voyager .metas-instrument-ui .metas-config-help__title i {
+    margin-right: 0.35rem;
+    color: var(--cen-accent, #62a8ea);
+}
+
+.voyager .metas-instrument-ui .metas-config-help__body > p.text-muted {
+    margin-bottom: 0.75rem;
+    font-size: var(--metas-font-base, 14px);
+    line-height: 1.5;
+}

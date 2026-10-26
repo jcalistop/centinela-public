@@ -1,0 +1,21 @@
+flowchart TD
+    subgraph comges ["COMGES — ciclo por Servicio de Salud"]
+        OOTT[OOTT — fuera de plataforma] --> ParamGlobalC[Parametrizacion global]
+        ParamGlobalC --> ConfSS[Configuracion por SS]
+        ConfSS --> AutoC[Autoevaluacion — cortes]
+        AutoC --> PrelC[Evaluacion preliminar]
+        PrelC --> ApelC[Apelacion]
+        ApelC --> FinalC[Evaluacion final]
+        FinalC --> CerradoC[Cerrado]
+    end
+
+    subgraph metas ["Metas — ciclo de vida por SS"]
+        OOTTM[OOTT — fuera de plataforma] --> ParamGlobalM[Parametrizacion global]
+        ParamGlobalM --> NoIni[No iniciado]
+        NoIni --> Form[Formulacion]
+        Form --> AutoM[Autoevaluacion]
+        AutoM --> PrelM[Evaluacion preliminar]
+        PrelM --> ApelM[Apelacion]
+        ApelM --> FinalM[Evaluacion final]
+        FinalM --> CerradoM[Cerrado]
+    end

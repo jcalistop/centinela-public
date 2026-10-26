@@ -1,0 +1,9 @@
+version: 1
+defaults:
+  fallback_id: general
+
+# Ordered rules, first match wins.
+rules:
+  - match: { type: route_exact, value: voyager.dashboard }
+    target: { id: centinela-dashboard }
+

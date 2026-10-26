@@ -1,0 +1,29 @@
+%%{init: {'flowchart': {'nodeSpacing': 44, 'rankSpacing': 56, 'padding': 20}}}%%
+flowchart TB
+    Auth(["Autenticación"])
+    subgraph dash ["Dashboard Centinela"]
+        direction LR
+        Menu(["Menú lateral"])
+        CambiaAno(["Cambiar año"])
+        Perfil(["Perfil del usuario"])
+    end
+
+    subgraph admin ["Módulos de administración"]
+        direction LR
+        Usuarios["Usuarios"]
+        Establecimientos["Establecimientos"]
+        Configuracion["Configuración"]
+        Herramientas["Herramientas"]
+    end
+
+    subgraph negocio ["Módulos de negocio"]
+        direction LR
+        Metas["Metas"]
+        Comges["COMGES"]
+        Adp["ADP"]
+    end
+
+    Auth --> dash
+    Menu --> admin
+    Menu --> negocio
+    CambiaAno -->|Afecta contexto y datos| negocio

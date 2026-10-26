@@ -1,0 +1,13 @@
+---
+description: Impide comandos Artisan destructivos contra MySQL local sin autorización.
+alwaysApply: true
+---
+
+## Migraciones destructivas (`migrate:fresh`, `migrate:refresh`, `db:wipe`)
+
+**Regla obligatoria para el agente:** Antes de proponer o ejecutar estos comandos vía Shell (o cualquier terminal):
+
+1. Confirmar **`DB_CONNECTION` / driver de la conexión por defecto** leyendo `.env` o ejecutando comandos solo para inspeccionar configuración (`php artisan about`, etc.) — **no asumir** SQLite solo porque PHPUnit usa SQLite (`phpunit.xml` no aplica por defecto a Artisan).
+2. Para **verificar solo que las migraciones corren**, usar **`composer run test:migrate:fresh`** (`--env=testing` + `../../.env.testing` con SQLite `:memory:`) o **`php artisan test`**.
+3. Para **`migrate:fresh` contra MySQL** de desarrollo: **no ejecutar desde el agente** sin instrucción explícita escrita del responsable que acepte riesgo (backup antes). Bypass humano solo con `CENTINELA_ALLOW_DESTRUCTIVE_DATABASE_COMMANDS=true` en `.env` (ver `../../.env.example`).
+4. **`migrate:status`**, **`migrate`** (solo subir pendientes), consultas SQL y tests **no** requieren este flujo especial.

@@ -1,0 +1,24 @@
+# Indicador 7 (texto definitivo)
+
+- **Año de aplicación:** 2025
+- **Instrumento de evaluación:** Metas sanitarias Ley 18.834
+- **Nombre del Indicador:** Reducción de los casos en Lista de espera con antigüedad sobre el percentil 75, para Consulta Nueva de Especialidad Odontológica
+- **Objetivo del indicador:** Disminuir la LE para Consultas Nuevas de Especialidad Odontológica, con mayor antigüedad
+- **Meta anual:** > 80,00% de casos con antigüedad calculados sobre el P.75
+- **Responsable de medición:** Establecimientos de salud
+- **Prioridad:** Alta
+- **Objetivo estratégico asociado:** Objetivo 2 y 5 del Formulario A1 de la Subsecretaria de Redes Asistenciales
+- **Unidad de medida:** Porcentaje
+- **Tipo de indicador:** Producto
+- **Dimensión que aborda:** Eficiencia
+- **Fórmula de Cálculo:** (Número de casos disminuidos de la Lista de Espera de Consulta Nueva de Especialidad Odontológica sobre el percentil 75 al corte del 31 de diciembre 2024 / Total de casos en la Lista de Espera de Consulta Nueva de Especialidad Odontológica sobre el percentil 75 al corte del 31 de diciembre 2024) x 100
+- **Fuente de información del Numerador:** SIGTE
+- **Fuente de información del Denominador:** SIGTE
+- **Número de decimales:** 1 decimal aproximado
+- **Periodicidad de Medición:** Trimestral
+- **Nivel de aplicación:** Establecimientos
+- **Definición de términos:**
+    - Percentil 75: Corresponde al punto en el cual el 25% de casos son más antiguos de la lista de espera.
+    - Consulta Nueva Especialidad odontológica: corresponde a la primera atención de especialidad realizada por odontólogo(a) habilitado(a) según normativa sanitaria vigente, generada por un episodio de una enfermedad u otro requerimiento clínico, mediante la cual se puede o no resolver el motivo de consulta. Siempre debe ser gestionada a través de una Solicitud de Interconsulta.
+    - Lista de Espera: registro de casos que han recibido indicación de atención ambulatoria médica/odontológica especializada, procedimientos, o intervenciones quirúrgicas programadas. Incluye todos los casos, aun cuando el servicio no esté en la cartera del establecimiento, debiendo el gestor resolver a través de la red u otras redes.
+- **División que lo monitorea:** DIGERA

@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "diagram_id": "centinela-flujo-entrega-produccion",
+  "domain": "platform",
+  "slug": "flujo-entrega-produccion",
+  "lens": "delivery-governance",
+  "diagram_revision": 11,
+  "app_version": "v4.12.0",
+  "delivered_at": "2026-09-08",
+  "quality_profile": "showcase",
+  "visual_preset": "classic",
+  "files": {
+    "spec": "centinela-flujo-entrega-produccion.workflow.json",
+    "html": "centinela-flujo-entrega-produccion.html"
+  },
+  "receipt": {
+    "specification_sha256": "d9a219788c8f21194dba4439a023021fbab7622b59ae03e2bfd323b214adb6b7",
+    "specification_bytes": 4480,
+    "artifact_sha256": "9fd27ceddcbd260b7304bc2070cf0a2c40864090118e3314f8340cd7588fcfc3",
+    "artifact_bytes": 710267
+  },
+  "source": {
+    "document": "docs/ss_reloncavi/2026-08-27-solicitud-cambio-deploy-automatico-produccion/solicitud-cambio-deploy-automatico-produccion-2026-08-27.md",
+    "section": "Controles previos / Flujo de entrega (PDF §4.1)",
+    "sdd_kit": ".github/docs/sdd-kit/core/workflow.md",
+    "runbook": ".github/docs/sdd/releases/RUNBOOK.md"
+  },
+  "visual_check": {
+    "status": "pass",
+    "checked_at": "2026-09-08"
+  },
+  "artifact": {
+    "sha256": "ef298bb9c9cf9bc4c814831ad4089d7bbd607b69b0e54461ecab3b591c441e70",
+    "bytes": 710814
+  },
+  "specification": {
+    "sha256": "f8496f6acb9c037c677fd1aed15cd3428ca04d5a132c9b1cf2edb8538ec5ee7e",
+    "bytes": 4605
+  },
+  "updatedAt": "2026-09-08T13:46:58.261Z"
+}

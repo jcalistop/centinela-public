@@ -1,0 +1,327 @@
+{
+    "schema_version": 1,
+    "diagram_type": "architecture",
+    "meta": {
+        "title": "Centinela — visión técnica",
+        "output": "centinela-vision-tecnica.html",
+        "quality_profile": "showcase"
+    },
+    "components": [
+        {
+            "id": "browser",
+            "type": "external",
+            "label": "Usuarios por SS",
+            "sublabel": "Navegador",
+            "pos": [
+                40,
+                280
+            ],
+            "size": [
+                110,
+                60
+            ]
+        },
+        {
+            "id": "auth",
+            "type": "security",
+            "label": "Autenticación y roles",
+            "sublabel": "Sesión · Sanctum",
+            "pos": [
+                200,
+                280
+            ],
+            "size": [
+                140,
+                60
+            ]
+        },
+        {
+            "id": "voyager",
+            "type": "frontend",
+            "label": "Voyager Admin",
+            "sublabel": "/admin · BREAD",
+            "pos": [
+                200,
+                40
+            ],
+            "size": [
+                140,
+                60
+            ]
+        },
+        {
+            "id": "web",
+            "type": "frontend",
+            "label": "Vistas Blade",
+            "sublabel": "Bootstrap 5 · Vite",
+            "pos": [
+                380,
+                280
+            ],
+            "size": [
+                140,
+                60
+            ]
+        },
+        {
+            "id": "api",
+            "type": "backend",
+            "label": "API interna",
+            "sublabel": "/api · Sanctum",
+            "pos": [
+                380,
+                140
+            ],
+            "size": [
+                140,
+                60
+            ]
+        },
+        {
+            "id": "livewire",
+            "type": "frontend",
+            "label": "Livewire 3",
+            "sublabel": "server-side",
+            "pos": [
+                380,
+                500
+            ],
+            "size": [
+                140,
+                60
+            ]
+        },
+        {
+            "id": "services",
+            "type": "backend",
+            "label": "Controllers + Services",
+            "sublabel": "Services · policies",
+            "pos": [
+                600,
+                280
+            ],
+            "size": [
+                150,
+                60
+            ]
+        },
+        {
+            "id": "cache",
+            "type": "database",
+            "label": "Cache + Sesión",
+            "sublabel": "indicator_year",
+            "pos": [
+                800,
+                60
+            ],
+            "size": [
+                140,
+                60
+            ]
+        },
+        {
+            "id": "mysql",
+            "type": "database",
+            "label": "MySQL",
+            "sublabel": "Eloquent",
+            "pos": [
+                800,
+                280
+            ],
+            "size": [
+                130,
+                60
+            ]
+        },
+        {
+            "id": "queue",
+            "type": "messagebus",
+            "label": "Cola de trabajos",
+            "sublabel": "queue database",
+            "pos": [
+                800,
+                500
+            ],
+            "size": [
+                140,
+                60
+            ]
+        },
+        {
+            "id": "worker",
+            "type": "backend",
+            "label": "Worker",
+            "sublabel": "queue:work",
+            "pos": [
+                980,
+                500
+            ],
+            "size": [
+                140,
+                60
+            ]
+        }
+    ],
+    "boundaries": [
+        {
+            "kind": "region",
+            "label": "Aplicación Laravel 10 (PHP 8.3)",
+            "wraps": [
+                "auth",
+                "web",
+                "voyager",
+                "api",
+                "livewire",
+                "services",
+                "cache",
+                "mysql",
+                "queue",
+                "worker"
+            ],
+            "pad": 28
+        }
+    ],
+    "connections": [
+        {
+            "id": "browser-to-auth",
+            "from": "browser",
+            "to": "auth",
+            "label": "inicia sesión",
+            "variant": "emphasis",
+            "labelDy": 56
+        },
+        {
+            "id": "auth-to-web",
+            "from": "auth",
+            "to": "web"
+        },
+        {
+            "id": "auth-to-voyager",
+            "from": "auth",
+            "to": "voyager"
+        },
+        {
+            "id": "voyager-to-services",
+            "from": "voyager",
+            "to": "services",
+            "fromSide": "right",
+            "toSide": "top",
+            "via": [
+                [
+                    675,
+                    70
+                ]
+            ]
+        },
+        {
+            "id": "web-to-livewire",
+            "from": "web",
+            "to": "livewire"
+        },
+        {
+            "id": "web-to-api",
+            "from": "web",
+            "to": "api"
+        },
+        {
+            "id": "livewire-to-services",
+            "from": "livewire",
+            "to": "services",
+            "fromSide": "right",
+            "toSide": "bottom"
+        },
+        {
+            "id": "api-to-services",
+            "from": "api",
+            "to": "services",
+            "fromSide": "right",
+            "toSide": "top",
+            "via": [
+                [
+                    675,
+                    170
+                ]
+            ]
+        },
+        {
+            "id": "web-to-services",
+            "from": "web",
+            "to": "services",
+            "route": "straight",
+            "fromSide": "right",
+            "toSide": "left"
+        },
+        {
+            "id": "services-to-web",
+            "from": "services",
+            "to": "web",
+            "route": "straight",
+            "fromSide": "left",
+            "toSide": "right"
+        },
+        {
+            "id": "services-to-mysql",
+            "from": "services",
+            "to": "mysql",
+            "route": "straight",
+            "fromSide": "right",
+            "toSide": "left"
+        },
+        {
+            "id": "mysql-to-services",
+            "from": "mysql",
+            "to": "services",
+            "route": "straight",
+            "fromSide": "left",
+            "toSide": "right"
+        },
+        {
+            "id": "services-to-cache",
+            "from": "services",
+            "to": "cache",
+            "label": "año y sesión"
+        },
+        {
+            "id": "services-to-queue",
+            "from": "services",
+            "to": "queue",
+            "label": "encolar"
+        },
+        {
+            "id": "queue-to-worker",
+            "from": "queue",
+            "to": "worker"
+        },
+        {
+            "id": "worker-to-mysql",
+            "from": "worker",
+            "to": "mysql"
+        }
+    ],
+    "cards": [
+        {
+            "dot": "cyan",
+            "title": "Año + Servicio de Salud",
+            "items": [
+                "indicator_year en sesión condiciona los datos",
+                "Filtro por cen_hie_dependency_id (multi-SS)"
+            ]
+        },
+        {
+            "dot": "emerald",
+            "title": "Bifurcación 2025",
+            "items": [
+                "Lectura COMGES: año < 2025 vía Voyager",
+                "Año ≥ 2025 por rutas centinela.comges.*"
+            ]
+        },
+        {
+            "dot": "rose",
+            "title": "Auditoría",
+            "items": [
+                "Trait Auditable sobre modelos operativos",
+                "Registros en tabla audits, retención 6 meses"
+            ]
+        }
+    ]
+}
