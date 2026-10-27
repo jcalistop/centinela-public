@@ -27,8 +27,10 @@ Plataforma web institucional para el **seguimiento, consolidación y rendición 
 | **Metas**                   | Instrumentos 18.834, 19.664 y 20.707: indicadores, carga de datos, importación cuando aplique, vistas por establecimiento o unidad. |
 | **COMGES**                  | Compromisos de gestión, cortes, medios verificables, evaluaciones y descargas.                                                      |
 | **ADP**                     | Convenios, carga mensual, etapas de evaluación, preliminar, apelaciones y cierre.                                                   |
-| **Establecimientos (SNSS)** | Visualización y apoyo operativo del universo de establecimientos según la instancia desplegada.                                     |
-| **Administración**          | Usuarios, perfiles, catálogos y soporte diario (panel bajo `/admin`, Voyager + extensiones).                                        |
+| **Establecimientos (SNSS)** | Visualización del universo de establecimientos; exploración por Servicio de Salud (solo lectura).                                   |
+| **Dashboard público**       | Landing guest, paneles curados, preview y reporte de inconsistencias.                                                               |
+| **Mensajería**              | Correos institucionales desde el panel `/admin`.                                                                                    |
+| **Administración**          | Usuarios, perfiles, catálogos y soporte diario (panel Voyager `/admin`).                                                            |
 
 Narrativa ampliada en **Acerca de** del panel (`/admin/acerca-de`).
 
@@ -38,9 +40,16 @@ Narrativa ampliada en **Acerca de** del panel (`/admin/acerca-de`).
 | ---------- | ------------------------------------------------ |
 | PHP        | 8.3 (proyecto alineado con `composer.json` / CI) |
 | Laravel    | 11.x                                             |
-| Voyager    | 1.7 (panel BREAD y menús)                        |
+| Voyager    | 1.8 (panel BREAD y menús)                        |
 | Livewire   | 3.x                                              |
 | Front      | Bootstrap 5, Vite, Blade                         |
+
+## Novedades (v5.7.0–v5.8.0)
+
+- Administración en un único panel `/admin` (Voyager).
+- Curaduría de paneles públicos y envío de mensajería por correo desde Voyager.
+- Publicar o despublicar paneles desde el listado; copiar inventario; explorar establecimientos por Servicio de Salud.
+- El detalle de cada versión está en GitHub Releases (tags SemVer en `main`).
 
 ## Adopción por Servicio de Salud
 
