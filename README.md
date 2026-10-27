@@ -26,7 +26,6 @@ Plataforma web institucional para el **seguimiento, consolidación y rendición 
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | **Metas**                   | Instrumentos 18.834, 19.664 y 20.707: indicadores, carga de datos, importación cuando aplique, vistas por establecimiento o unidad. |
 | **COMGES**                  | Compromisos de gestión, cortes, medios verificables, evaluaciones y descargas.                                                      |
-| **ADP**                     | Convenios, carga mensual, etapas de evaluación, preliminar, apelaciones y cierre.                                                   |
 | **Establecimientos (SNSS)** | Visualización del universo de establecimientos; exploración por Servicio de Salud (solo lectura).                                   |
 | **Dashboard público**       | Landing guest, paneles curados, preview y reporte de inconsistencias.                                                               |
 | **Mensajería**              | Correos institucionales desde el panel `/admin`.                                                                                    |
@@ -50,14 +49,6 @@ Narrativa ampliada en **Acerca de** del panel (`/admin/acerca-de`).
 - Curaduría de paneles públicos y envío de mensajería por correo desde Voyager.
 - Publicar o despublicar paneles desde el listado; copiar inventario; explorar establecimientos por Servicio de Salud.
 - El detalle de cada versión está en GitHub Releases (tags SemVer en `main`).
-
-## Adopción por Servicio de Salud
-
-Implementaciones de referencia (fechas indicativas):
-
-- [Servicio de Salud del Reloncaví](https://www.ssdr.gob.cl) — desde 04/2023.
-- [Servicio de Salud Araucanía Sur](https://www.araucaniasur.cl) — desde 06/2024.
-- [Servicio de Salud Arauco](https://ssarauco.cl/) — desde 05/2025.
 
 ## Versiones y documentación de producto
 
