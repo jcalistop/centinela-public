@@ -257,7 +257,7 @@ class ManageSystemSettings extends Page
             $buckets[$label][] = $setting;
         }
 
-        return array_filter($buckets, fn(array $items): bool => $items !== []);
+        return array_filter($buckets, fn (array $items): bool => $items !== []);
     }
 
     private function isPilotGroup(string $group): bool

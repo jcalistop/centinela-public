@@ -4,15 +4,20 @@ namespace Tests\Unit\Support\Database;
 
 use App\Support\Database\DatabaseBackupSkipGuard;
 use Illuminate\Support\Facades\Artisan;
+use Tests\Support\IsolatesBackupStorage;
 use Tests\TestCase;
 
 class DatabaseBackupSkipGuardTest extends TestCase
 {
+    use IsolatesBackupStorage;
+
     private string $backupDir;
 
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->isolateBackupStorage();
 
         $this->backupDir = storage_path('app/backups');
         if (! is_dir($this->backupDir)) {
@@ -24,9 +29,7 @@ class DatabaseBackupSkipGuardTest extends TestCase
 
     protected function tearDown(): void
     {
-        foreach (glob($this->backupDir.'/backup_test_*') ?: [] as $file) {
-            @unlink($file);
-        }
+        $this->cleanupIsolatedBackupStorage();
 
         parent::tearDown();
     }
