@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SDD-240 / SDD-241: export allow-list fixtures from minsal_centinela_ref_prod.
+ * SDD-240 / SDD-241: export allow-list fixtures from the reference database.
  * Incluye COMGES+CEN+plataforma (240) y catálogo Metas maestra (241).
  *
  * Usage: php database/seeders/bin/export-usable-catalog-from-ref-prod.php
@@ -15,7 +15,7 @@ $root = dirname(__DIR__, 3);
 $outDir = $root.'/database/seeders/fixtures/usable-catalog';
 
 $host = getenv('REF_PROD_HOST') ?: '127.0.0.1';
-$db = getenv('REF_PROD_DB') ?: 'minsal_centinela_ref_prod';
+$db = getenv('REF_PROD_DB') ?: 'centinela_ref_prod';
 $user = getenv('REF_PROD_USER') ?: 'root';
 $pass = getenv('REF_PROD_PASS') !== false ? (string) getenv('REF_PROD_PASS') : '';
 
@@ -146,7 +146,7 @@ foreach ($loadOrder as $table) {
 }
 
 $manifest = [
-    'source' => 'minsal_centinela_ref_prod (SDD-240+241; allow-list 2026-10-06)',
+    'source' => 'centinela_ref_prod (SDD-240+241; allow-list 2026-10-06)',
     'generated_at' => gmdate('c'),
     'ref_database' => $db,
     'load_order' => $loadOrder,

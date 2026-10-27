@@ -97,7 +97,7 @@ class SettingsManager extends Component
 
         $available = [];
         foreach (array_keys($this->settingsByGroup) as $groupName) {
-            if ($groupName === 'Admin') {
+            if (in_array($groupName, ['Admin', 'Site'], true)) {
                 continue;
             }
             $available[$groupName] = Str::slug($groupName, '-');
@@ -286,20 +286,36 @@ class SettingsManager extends Component
     }
 
     /**
+     * Placeholder de inputs de texto. Git y mysqldump quedan vacíos (usar PATH).
+     *
+     * @param  array<string, mixed>|null  $details
+     */
+    public function textPlaceholder(string $dbKey, ?array $details): string
+    {
+        if (in_array($dbKey, ['services.git_binary_path', 'services.db_dump_path'], true)) {
+            return '';
+        }
+
+        $placeholder = $details['placeholder'] ?? '';
+
+        return is_string($placeholder) ? $placeholder : '';
+    }
+
+    /**
      * Guía de tamaño según uso real en la UI (Voyager / custom.css), no el peso del archivo en disco.
      */
     public function mediaFieldHint(string $dbKey): ?string
     {
         return match ($dbKey) {
             'admin.icon_image' => 'Uso: logo en la cabecera del menú lateral. En pantalla se ve ~30×30 px (dentro de un recuadro de 60×60 px). '
-                .'Recomendado: PNG cuadrado 64×64 px (o 128×128 px para pantallas retina), fondo transparente.',
+                . 'Recomendado: PNG cuadrado 64×64 px (o 128×128 px para pantallas retina), fondo transparente.',
             'admin.bg_image' => 'Uso: franja decorativa superior en páginas tipo Compass (`#gradient_bg`: ancho completo × 220 px de alto, `background-size: cover`) '
-                .'y fondo del panel de usuario en el sidebar (ancho del menú, recorte `cover`). '
-                .'Recomendado: imagen horizontal ancha, mín. 1920×400 px; evita texto o logos en los bordes porque se recorta.',
+                . 'y fondo del panel de usuario en el sidebar (ancho del menú, recorte `cover`). '
+                . 'Recomendado: imagen horizontal ancha, mín. 1920×400 px; evita texto o logos en los bordes porque se recorta.',
             'admin.favicon_image' => 'Uso: icono de la pestaña del navegador (típicamente 16–32 px). '
-                .'Recomendado: PNG cuadrado 32×32 px o 64×64 px, diseño simple y legible a tamaño pequeño.',
+                . 'Recomendado: PNG cuadrado 32×32 px o 64×64 px, diseño simple y legible a tamaño pequeño.',
             'admin.loader' => 'Uso: animación/spinner al cargar el panel (`#voyager-loader`, centrado a 100×100 px). '
-                .'Recomendado: PNG o GIF cuadrado 100×100 px (o 200×200 px retina). GIF animado solo si se necesita movimiento.',
+                . 'Recomendado: PNG o GIF cuadrado 100×100 px (o 200×200 px retina). GIF animado solo si se necesita movimiento.',
             default => null,
         };
     }
@@ -332,8 +348,8 @@ class SettingsManager extends Component
 
                 $flatKey = $setting['flat_key'];
                 $rules["mediaUploads.{$flatKey}"] = $setting['type'] === 'image'
-                    ? 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:'.UploadSizeLimit::settingsImageMaxKilobytes()
-                    : 'nullable|file|mimes:jpeg,jpg,png,gif,webp,svg|max:'.UploadSizeLimit::settingsFileMaxKilobytes();
+                    ? 'nullable|image|mimes:jpeg,jpg,png,gif,webp|max:' . UploadSizeLimit::settingsImageMaxKilobytes()
+                    : 'nullable|file|mimes:jpeg,jpg,png,gif,webp,svg|max:' . UploadSizeLimit::settingsFileMaxKilobytes();
             }
         }
 
@@ -358,6 +374,9 @@ class SettingsManager extends Component
             }
 
             $groupName = $setting->group ?? 'General';
+            if ($groupName === 'Site') {
+                continue;
+            }
             $flatKey = str_replace('.', '_', $setting->key);
 
             $this->keyMap[$flatKey] = $setting->key;

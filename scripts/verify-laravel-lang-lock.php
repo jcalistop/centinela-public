@@ -7,6 +7,7 @@
  * Uso: php scripts/verify-laravel-lang-lock.php [--lock=path] [--skip-api] [--json]
  * Exit 0 = OK, 1 = hallazgo crítico, 2 = error de ejecución.
  */
+
 declare(strict_types=1);
 
 const ATTACK_WINDOW_START = '2026-05-22T22:32:00+00:00';
@@ -146,8 +147,10 @@ foreach (PACKAGE_REPOS as $packageName => $repoSlug) {
             $authorEmail = (string) ($commitMeta['author_email'] ?? '');
             $committedAt = (string) ($commitMeta['committed_at'] ?? '');
 
-            if (in_array($authorName, MALICIOUS_AUTHOR_NAMES, true)
-                || in_array(strtolower($authorEmail), MALICIOUS_AUTHOR_EMAILS, true)) {
+            if (
+                in_array($authorName, MALICIOUS_AUTHOR_NAMES, true)
+                || in_array(strtolower($authorEmail), MALICIOUS_AUTHOR_EMAILS, true)
+            ) {
                 $packageIssues[] = [
                     'code' => 'malicious_author',
                     'message' => "Autor sospechoso: {$authorName} <{$authorEmail}>",
@@ -157,9 +160,11 @@ foreach (PACKAGE_REPOS as $packageName => $repoSlug) {
             if ($committedAt !== '') {
                 $committedTs = strtotime($committedAt);
                 $windowStartTs = strtotime(ATTACK_WINDOW_START);
-                if ($committedTs !== false && $windowStartTs !== false
+                if (
+                    $committedTs !== false && $windowStartTs !== false
                     && $committedTs >= $windowStartTs
-                    && in_array($authorName, MALICIOUS_AUTHOR_NAMES, true)) {
+                    && in_array($authorName, MALICIOUS_AUTHOR_NAMES, true)
+                ) {
                     $packageIssues[] = [
                         'code' => 'attack_window_commit',
                         'message' => "Commit dentro de ventana de ataque con autor malicioso: {$committedAt}",
@@ -225,7 +230,7 @@ function fetchCommitMeta(string $repoSlug, string $sha): ?array
         'http' => [
             'method' => 'GET',
             'header' => implode("\r\n", [
-                'User-Agent: minsal-centinela-sdd-104',
+                'User-Agent: centinela-public-sdd-104',
                 'Accept: application/vnd.github+json',
             ]),
             'timeout' => 15,

@@ -38,6 +38,7 @@ class MinimalPlatformSeeder extends Seeder
         $this->seedPlaceholderDependency();
         $this->seedDefaultYear();
         $this->seedBrowseAdminPermission();
+        $this->seedPublicInfoPanelsPermission();
         $this->seedCoreBreads();
         $this->seedAdminMenu();
         $this->seedMinimalSettings();
@@ -152,6 +153,131 @@ class MinimalPlatformSeeder extends Seeder
                 'role_id' => 1,
             ]);
         }
+    }
+
+    /**
+     * SDD-282 / SDD-306: curaduría Voyager `/admin/paneles-publicos`.
+     * El fixture usable-catalog (export 2026-10-06) no incluye ítem ni permiso;
+     * db:seed borra menu_items y dejaría el gap de la migración.
+     */
+    private function seedPublicInfoPanelsPermission(): void
+    {
+        if (! Schema::hasTable('permissions') || ! Schema::hasTable('roles')) {
+            return;
+        }
+
+        $now = now();
+        $permissionId = DB::table('permissions')->where('key', 'browse_paneles-publicos')->value('id');
+
+        if ($permissionId === null) {
+            $permissionId = DB::table('permissions')->insertGetId([
+                'key' => 'browse_paneles-publicos',
+                'table_name' => 'paneles-publicos',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+        }
+
+        if (! Schema::hasTable('permission_role')) {
+            return;
+        }
+
+        $roleIds = DB::table('roles')
+            ->whereIn('name', ['admin', 'parametrizador'])
+            ->pluck('id');
+
+        foreach ($roleIds as $roleId) {
+            $exists = DB::table('permission_role')
+                ->where('permission_id', $permissionId)
+                ->where('role_id', (int) $roleId)
+                ->exists();
+
+            if (! $exists) {
+                DB::table('permission_role')->insert([
+                    'permission_id' => (int) $permissionId,
+                    'role_id' => (int) $roleId,
+                ]);
+            }
+        }
+    }
+
+    private function ensurePublicInfoPanelsMenuItem(
+        int $adminMenuId,
+        Carbon $now,
+        bool $hasRoute,
+        bool $hasParameters,
+    ): void {
+        if (! $hasRoute) {
+            return;
+        }
+
+        $parentId = $this->resolvePublicInfoPanelsParentId($adminMenuId);
+        if ($parentId === null) {
+            return;
+        }
+
+        $existingId = DB::table('menu_items')
+            ->where('menu_id', $adminMenuId)
+            ->where('route', 'centinela.admin.paneles-publicos')
+            ->value('id');
+
+        if ($existingId !== null) {
+            DB::table('menu_items')
+                ->where('id', $existingId)
+                ->update([
+                    'parent_id' => $parentId,
+                    'title' => 'Paneles públicos',
+                    'icon_class' => 'voyager-news',
+                    'updated_at' => $now,
+                ]);
+
+            return;
+        }
+
+        $maxOrder = (int) DB::table('menu_items')
+            ->where('menu_id', $adminMenuId)
+            ->where('parent_id', $parentId)
+            ->max('order');
+
+        $row = [
+            'menu_id' => $adminMenuId,
+            'title' => 'Paneles públicos',
+            'url' => '',
+            'target' => '_self',
+            'icon_class' => 'voyager-news',
+            'color' => null,
+            'parent_id' => $parentId,
+            'order' => $maxOrder + 1,
+            'route' => 'centinela.admin.paneles-publicos',
+            'created_at' => $now,
+            'updated_at' => $now,
+        ];
+
+        if ($hasParameters) {
+            $row['parameters'] = null;
+        }
+
+        DB::table('menu_items')->insert($row);
+    }
+
+    private function resolvePublicInfoPanelsParentId(int $adminMenuId): ?int
+    {
+        $viaRoles = DB::table('menu_items')
+            ->where('menu_id', $adminMenuId)
+            ->where('route', 'voyager.roles.index')
+            ->value('parent_id');
+
+        if ($viaRoles !== null) {
+            return (int) $viaRoles;
+        }
+
+        $id = DB::table('menu_items')
+            ->where('menu_id', $adminMenuId)
+            ->whereIn('title', ['Parametrización', 'Configuración'])
+            ->orderByRaw('CASE WHEN title = ? THEN 0 ELSE 1 END', ['Parametrización'])
+            ->value('id');
+
+        return $id !== null ? (int) $id : null;
     }
 
     /**
@@ -275,6 +401,7 @@ class MinimalPlatformSeeder extends Seeder
         // Menú de producto (ref_prod / UsableCatalog): no añadir defaults Voyager.
         if ($this->hasCatalogAdminMenu($adminMenuId)) {
             $this->reconcileCatalogAdminMenu($adminMenuId, $now);
+            $this->ensurePublicInfoPanelsMenuItem($adminMenuId, $now, $hasRoute, $hasParameters);
             Cache::forget('voyager_menu_admin');
             Cache::forget('voyager_menu_inicio');
 
@@ -379,6 +506,8 @@ class MinimalPlatformSeeder extends Seeder
             'order' => 2,
             'route' => 'acerca-de.releases',
         ], $now, $hasRoute, $hasParameters);
+
+        $this->ensurePublicInfoPanelsMenuItem($adminMenuId, $now, $hasRoute, $hasParameters);
 
         // Renombre histórico del ítem de settings bajo Herramientas.
         if ($hasRoute) {
@@ -502,7 +631,7 @@ class MinimalPlatformSeeder extends Seeder
     }
 
     /**
-     * @return array<string, string> title => icon_class (minsal_centinela_ref_prod)
+     * @return array<string, string> title => icon_class (catálogo de referencia)
      */
     private function catalogMenuIconClasses(): array
     {
@@ -533,6 +662,7 @@ class MinimalPlatformSeeder extends Seeder
             'Instrumentos locales' => 'voyager-lab',
             'Pestaña instrumento' => 'voyager-tag',
             'Unidades (metas)' => 'voyager-list',
+            'Paneles públicos' => 'voyager-news',
         ];
     }
 
@@ -650,7 +780,7 @@ class MinimalPlatformSeeder extends Seeder
             [
                 'key' => 'admin.description',
                 'display_name' => 'Descripción del administrador',
-                'value' => 'Entorno limpio (seeders mínimos F1b)',
+                'value' => 'La plataforma de visualización de indicadores para los Servicios de Salud.',
                 'details' => '',
                 'type' => 'text',
                 'order' => 2,
@@ -664,6 +794,42 @@ class MinimalPlatformSeeder extends Seeder
                 'type' => 'radio_btn',
                 'order' => 7,
                 'group' => 'Admin',
+            ],
+            [
+                'key' => 'admin.voyager_compass_enabled',
+                'display_name' => 'Habilitar Compass de Voyager',
+                'value' => 'Off',
+                'details' => '{"default":"Off","options":{"On":"Activado","Off":"Desactivado"},"description":"Permite acceder a /admin/compass fuera del entorno local (herramientas Artisan, logs y caché de Voyager)."}',
+                'type' => 'radio_btn',
+                'order' => 9,
+                'group' => 'Admin',
+            ],
+            [
+                'key' => 'services.github_releases_repo',
+                'display_name' => 'Repositorio GitHub (owner/repo)',
+                'value' => 'jcalistop/centinela-public',
+                'details' => '{"description":"Repositorio en formato owner/repo (ej: jcalistop/centinela-public) usado para consultar releases desde el widget del dashboard."}',
+                'type' => 'text',
+                'order' => 5,
+                'group' => 'Servicios externos',
+            ],
+            [
+                'key' => 'services.git_binary_path',
+                'display_name' => 'Ruta al binario de Git',
+                'value' => '',
+                'details' => '{"description":"Ruta absoluta o comando del binario de Git en el servidor. Por defecto usa git (debe estar en PATH)."}',
+                'type' => 'text',
+                'order' => 4,
+                'group' => 'Deploy',
+            ],
+            [
+                'key' => 'services.db_dump_path',
+                'display_name' => 'Ruta al binario mysqldump',
+                'value' => '',
+                'details' => '{"description":"Ruta absoluta al binario mysqldump para generar respaldos de base de datos. Vacío si está en PATH."}',
+                'type' => 'text',
+                'order' => 5,
+                'group' => 'Sistema',
             ],
         ];
 

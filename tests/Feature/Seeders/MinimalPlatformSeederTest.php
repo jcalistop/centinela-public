@@ -41,6 +41,17 @@ class MinimalPlatformSeederTest extends TestCase
         // Con menú de catálogo (Parametrización), MinimalPlatform no inyecta Media/Config Voyager.
         $this->assertDatabaseHas('menu_items', ['title' => 'Parametrización']);
         $this->assertDatabaseHas('menu_items', [
+            'title' => 'Paneles públicos',
+            'route' => 'centinela.admin.paneles-publicos',
+        ]);
+        $this->assertDatabaseHas('permissions', ['key' => 'browse_paneles-publicos']);
+        $this->assertTrue(
+            DB::table('permission_role')
+                ->where('role_id', 1)
+                ->whereIn('permission_id', DB::table('permissions')->where('key', 'browse_paneles-publicos')->pluck('id'))
+                ->exists()
+        );
+        $this->assertDatabaseHas('menu_items', [
             'title' => 'Configuración',
             'route' => 'voyager.settings.index',
         ]);
@@ -48,6 +59,13 @@ class MinimalPlatformSeederTest extends TestCase
         $this->assertDatabaseMissing('menu_items', ['title' => 'Ajustes del sitio']);
         $this->assertGreaterThanOrEqual(5, DB::table('menu_items')->count());
         $this->assertDatabaseHas('settings', ['key' => 'admin.title', 'value' => 'Centinela']);
+        $this->assertDatabaseHas('settings', ['key' => 'admin.voyager_compass_enabled', 'value' => 'Off']);
+        $this->assertDatabaseHas('settings', [
+            'key' => 'services.github_releases_repo',
+            'value' => 'jcalistop/centinela-public',
+        ]);
+        $this->assertDatabaseHas('settings', ['key' => 'services.git_binary_path', 'value' => '']);
+        $this->assertDatabaseHas('settings', ['key' => 'services.db_dump_path', 'value' => '']);
         $this->assertDatabaseHas('years', [
             'ano' => (int) now()->year,
             'default' => 1,

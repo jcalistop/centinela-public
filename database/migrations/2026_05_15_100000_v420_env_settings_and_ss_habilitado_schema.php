@@ -538,8 +538,8 @@ return new class extends Migration
             [
                 'key' => 'services.github_releases_repo',
                 'display_name' => 'Repositorio GitHub (owner/repo)',
-                'value' => env('GITHUB_RELEASES_REPOSITORY', 'jcalistop/minsal-centinela'),
-                'details' => '{"description":"Repositorio en formato owner/repo (ej: jcalistop/minsal-centinela) usado para consultar releases desde el widget del dashboard."}',
+                'value' => env('GITHUB_RELEASES_REPOSITORY', 'jcalistop/centinela-public'),
+                'details' => '{"description":"Repositorio en formato owner/repo (ej: jcalistop/centinela-public) usado para consultar releases desde el widget del dashboard."}',
                 'type' => 'text',
                 'order' => 5,
                 'group' => 'Servicios externos',

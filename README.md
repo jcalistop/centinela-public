@@ -78,9 +78,12 @@ composer install
 # Si no existe .env aún: cp .env.example .env  (no sobrescribir un .env existente)
 php artisan key:generate
 php artisan migrate
+php artisan db:seed
 npm install && npm run build
 php artisan serve
 ```
+
+`db:seed` carga catálogos, el año default (`Year`) y el admin de demo. Sin ese paso, `/admin` falla con *No query results for model [App\Models\Year]*.
 
 Tras `npm run build` (o `npm run dev`) se sirven los assets Vite. El panel administrativo canónico es Voyager (`/admin`).
 

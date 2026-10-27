@@ -5,6 +5,7 @@ namespace App\Support\Configuration;
 /**
  * Keys de Settings ocultas en el producto cerrado (SDD-308).
  * Filas BD y bridges quedan; no se muestran en SettingsManager / ManageSystemSettings.
+ * Prefijo `site.*` (tab Site de Voyager) no se expone en /admin/settings.
  */
 final class ProductClosedSettings
 {
@@ -22,6 +23,10 @@ final class ProductClosedSettings
     public static function isHiddenKey(string $key): bool
     {
         if (str_starts_with($key, 'module.filament_')) {
+            return true;
+        }
+
+        if (str_starts_with($key, 'site.')) {
             return true;
         }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature\Configuracion;
 
 use App\Providers\SettingsBridgeServiceProvider;
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
@@ -24,6 +25,18 @@ class VoyagerCompassEnabledSettingTest extends TestCase
         $this->assertSame('radio_btn', $row->type);
         $this->assertSame('Off', $row->value);
         $this->assertSame('Habilitar Compass de Voyager', $row->display_name);
+    }
+
+    public function test_database_seeder_keeps_voyager_compass_off(): void
+    {
+        $this->seed(DatabaseSeeder::class);
+
+        $row = DB::table('settings')
+            ->where('key', 'admin.voyager_compass_enabled')
+            ->first();
+
+        $this->assertNotNull($row);
+        $this->assertSame('Off', $row->value);
     }
 
     public function test_settings_bridge_overrides_voyager_compass_in_production(): void

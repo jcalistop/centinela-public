@@ -11,7 +11,7 @@ use Throwable;
 
 /**
  * SDD-240 + SDD-241: catálogos COMGES + CEN + plataforma Voyager + Metas maestra (allow-list).
- * Fixtures: `fixtures/usable-catalog/` exportadas desde `minsal_centinela_ref_prod`
+ * Fixtures: `fixtures/usable-catalog/` exportadas desde BD de referencia (`REF_PROD_DB`)
  * (`bin/export-usable-catalog-from-ref-prod.php`). Sin operación SS.
  *
  * Runbook: `composer run schema:fresh` luego `php artisan db:seed` (BD del `.env`).
