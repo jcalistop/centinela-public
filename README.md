@@ -18,7 +18,7 @@ width="400px">
 
 # Centinela
 
-Plataforma web institucional para el **seguimiento, consolidación y rendición de cuentas** de instrumentos de evaluación en Servicios de Salud y sus establecimientos: criterios homogéneos, **trazabilidad** y evidencia para decisiones basadas en datos. La operación es **multi-Servicio**, con **roles**, **año indicador** en sesión y módulos por instrumento.
+Plataforma web institucional para **seguir, consolidar y controlar instrumentos de evaluación** en Servicios de Salud y sus establecimientos: criterios homogéneos, **trazabilidad** y evidencia para decisiones basadas en datos. La operación es **multi-Servicio**, con **roles**, **año indicador** en sesión y módulos por instrumento.
 
 ## Qué incluye (resumen)
 
@@ -26,9 +26,10 @@ Plataforma web institucional para el **seguimiento, consolidación y rendición 
 | --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | **Metas**                   | Instrumentos 18.834, 19.664 y 20.707: indicadores, carga de datos, importación cuando aplique, vistas por establecimiento o unidad. |
 | **COMGES**                  | Compromisos de gestión, cortes, medios verificables, evaluaciones y descargas.                                                      |
-| **ADP**                     | Convenios, carga mensual, etapas de evaluación, preliminar, apelaciones y cierre.                                                   |
-| **Establecimientos (SNSS)** | Visualización y apoyo operativo del universo de establecimientos según la instancia desplegada.                                     |
-| **Administración**          | Usuarios, perfiles, catálogos y soporte diario (panel bajo `/admin`, Voyager + extensiones).                                        |
+| **Establecimientos (SNSS)** | Visualización del universo de establecimientos; exploración por Servicio de Salud (solo lectura).                                   |
+| **Dashboard público**       | Landing guest, paneles curados, preview y reporte de inconsistencias.                                                               |
+| **Mensajería**              | Correos institucionales desde el panel `/admin`.                                                                                    |
+| **Administración**          | Usuarios, perfiles, catálogos y soporte diario (panel Voyager `/admin`).                                                            |
 
 Narrativa ampliada en **Acerca de** del panel (`/admin/acerca-de`).
 
@@ -38,17 +39,16 @@ Narrativa ampliada en **Acerca de** del panel (`/admin/acerca-de`).
 | ---------- | ------------------------------------------------ |
 | PHP        | 8.3 (proyecto alineado con `composer.json` / CI) |
 | Laravel    | 11.x                                             |
-| Voyager    | 1.7 (panel BREAD y menús)                        |
+| Voyager    | 1.8 (panel BREAD y menús)                        |
 | Livewire   | 3.x                                              |
 | Front      | Bootstrap 5, Vite, Blade                         |
 
-## Adopción por Servicio de Salud
+## Novedades (v5.7.0–v5.8.0)
 
-Implementaciones de referencia (fechas indicativas):
-
-- [Servicio de Salud del Reloncaví](https://www.ssdr.gob.cl) — desde 04/2023.
-- [Servicio de Salud Araucanía Sur](https://www.araucaniasur.cl) — desde 06/2024.
-- [Servicio de Salud Arauco](https://ssarauco.cl/) — desde 05/2025.
+- Administración en un único panel `/admin` (Voyager).
+- Curaduría de paneles públicos y envío de mensajería por correo desde Voyager.
+- Publicar o despublicar paneles desde el listado; copiar inventario; explorar establecimientos por Servicio de Salud.
+- El detalle de cada versión está en GitHub Releases (tags SemVer en `main`).
 
 ## Versiones y documentación de producto
 
@@ -78,9 +78,12 @@ composer install
 # Si no existe .env aún: cp .env.example .env  (no sobrescribir un .env existente)
 php artisan key:generate
 php artisan migrate
+php artisan db:seed
 npm install && npm run build
 php artisan serve
 ```
+
+`db:seed` carga catálogos, el año default (`Year`) y el admin de demo. Sin ese paso, `/admin` falla con *No query results for model [App\Models\Year]*.
 
 Tras `npm run build` (o `npm run dev`) se sirven los assets Vite. El panel administrativo canónico es Voyager (`/admin`).
 

@@ -1,1 +1,562 @@
-[{"id":5,"key":"admin.bg_image","display_name":"Imagen de fondo del administrador","value":"settings\\February2024\\LytKXEAQ1ucHFR0fZRSP.jpg","details":"","type":"image","order":5,"group":"Admin"},{"id":6,"key":"admin.title","display_name":"Título del administrador","value":"Centinela","details":"","type":"text","order":1,"group":"Admin"},{"id":7,"key":"admin.description","display_name":"Descripción del administrador","value":"La plataforma de visualización de indicadores para los Servicios de Salud.","details":"","type":"text","order":2,"group":"Admin"},{"id":8,"key":"admin.loader","display_name":"Imagen de carga del administrador","value":"settings\\February2024\\Zgzb1Gbxa8bua8Qrr3EO.png","details":"","type":"image","order":3,"group":"Admin"},{"id":9,"key":"admin.icon_image","display_name":"Ícono del administrador","value":"settings\\February2024\\yiVBO541TwRla5CLNgIb.png","details":"","type":"image","order":4,"group":"Admin"},{"id":11,"key":"admin.modo_mantenimiento","display_name":"Modo mantenimiento","value":"Off","details":"{\n\"default\":\"Off\",\n\"options\":{\n\"On\" : \"Activado\",\n\"Off\" : \"Desactivado\"\n}}","type":"radio_btn","order":7,"group":"Admin"},{"id":12,"key":"admin.favicon_image","display_name":"Admin Favicon Image","value":"settings\\March2024\\cZVznGLlQmMjsKSNQveK.png","details":null,"type":"image","order":6,"group":"Admin"},{"id":13,"key":"module.usage_tracking_enabled","display_name":"Tracking de uso","value":"On","details":"{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Registra las visitas a las páginas del panel /admin para estadísticas de uso.\"}","type":"radio_btn","order":1,"group":"Modulos"},{"id":14,"key":"module.dashboard_non_admin_enabled","display_name":"Dashboard resumen para usuarios no administradores","value":"On","details":"{\"default\":\"On\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Muestra un dashboard con indicadores resumidos para roles distintos a administrador.\"}","type":"radio_btn","order":2,"group":"Modulos"},{"id":15,"key":"module.soporte_enabled","display_name":"Módulo de Soporte","value":"On","details":"{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Habilita el módulo de tickets internos de soporte en el panel /admin.\"}","type":"radio_btn","order":3,"group":"Modulos"},{"id":16,"key":"module.chat_ia_enabled","display_name":"Chat IA","value":"Off","details":"{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Activa el asistente conversational con IA disponible como drawer global en el panel /admin.\"}","type":"radio_btn","order":4,"group":"Modulos"},{"id":17,"key":"module.user_manual_enabled","display_name":"Manual de usuario contextual","value":"Off","details":"{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Agrega un enlace de Ayuda contextual en el panel /admin que abre el manual de usuario según la página visitada.\"}","type":"radio_btn","order":5,"group":"Modulos"},{"id":18,"key":"module.login_legal_documents_enabled","display_name":"Documentos legales en login","value":"Off","details":"{\"default\":\"On\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Muestra enlaces a términos de uso y política de privacidad en la pantalla de inicio de sesión.\"}","type":"radio_btn","order":6,"group":"Modulos"},{"id":19,"key":"module.github_issues_enabled","display_name":"Promoción a issue GitHub","value":"On","details":"{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Agrega un botón en tickets de soporte para promoverlos a issues en el repositorio GitHub del proyecto.\"}","type":"radio_btn","order":8,"group":"Modulos"},{"id":20,"key":"module.deploy_automatic_enabled","display_name":"Deploy automático (scheduler)","value":"Off","details":"{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Habilita el despliegue automático desde el scheduler. Si falla un deploy, queda bloqueado hasta que un deploy manual sea exitoso.\"}","type":"radio_btn","order":1,"group":"Deploy"},{"id":21,"key":"module.whatsapp_enabled","display_name":"Notificaciones WhatsApp","value":"Off","details":"{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Habilita el envío de notificaciones y alertas a través de WhatsApp.\"}","type":"radio_btn","order":13,"group":"Modulos"},{"id":22,"key":"notifications.contact_mail_to","display_name":"Correo formulario de contacto","value":"centinela-ops@ejemplo.gob.cl","details":"{\"description\":\"Dirección de correo donde se reciben los mensajes enviados desde el formulario de contacto en /admin/acerca-de.\"}","type":"text","order":1,"group":"Notificaciones"},{"id":23,"key":"notifications.backup_email","display_name":"Correo para notificaciones de respaldos","value":"centinela-ops@ejemplo.gob.cl","details":"{\"description\":\"Dirección de correo que recibe notificaciones sobre el estado de los respaldos de base de datos.\"}","type":"text","order":2,"group":"Notificaciones"},{"id":24,"key":"notifications.scheduler_alert_email","display_name":"Correo para alertas del scheduler","value":"centinela-ops@ejemplo.gob.cl","details":"{\"description\":\"Dirección de correo que recibe alertas cuando el scheduler de tareas programadas falls o se detiene.\"}","type":"text","order":3,"group":"Notificaciones"},{"id":25,"key":"notifications.scheduler_report_emails","display_name":"Correos para reporte diario del scheduler","value":"centinela-ops@ejemplo.gob.cl","details":"{\"description\":\"Dirección(es) de correo separadas por coma que reciben el reporte diario de ejecución del scheduler.\"}","type":"text","order":4,"group":"Notificaciones"},{"id":26,"key":"notifications.security_alert_email","display_name":"Correo para alertas de seguridad","value":"centinela-ops@ejemplo.gob.cl","details":"{\"description\":\"Dirección de correo que recibe alertas de seguridad, como intentos de acceso fallidos masivos.\"}","type":"text","order":5,"group":"Notificaciones"},{"id":27,"key":"notifications.whatsapp_alert_to","display_name":"Número WhatsApp para alertas","value":"","details":"{\"description\":\"Número de teléfono con código de país (ej: 569XXXXXXXX) que recibe alertas vía WhatsApp.\"}","type":"text","order":6,"group":"Notificaciones"},{"id":28,"key":"system.dashboard_cache_ttl","display_name":"TTL caché del dashboard","value":"180","details":"{\"min\":30,\"step\":1,\"description\":\"Tiempo en segundos que los datos del dashboard permanecen en caché antes de refrescarse. Mínimo recomendado: 30s.\"}","type":"text","order":1,"group":"Sistema"},{"id":29,"key":"system.usage_tracking_throttle","display_name":"Throttle de tracking de uso","value":"300","details":"{\"min\":10,\"step\":1,\"description\":\"Intervalo mínimo en segundos entre registros de tracking de uso para una misma página. Evita sobrecarga de escritura.\"}","type":"text","order":2,"group":"Sistema"},{"id":30,"key":"system.storage_temp_max_age","display_name":"Edad máxima archivos temporales","value":"48","details":"{\"min\":1,\"step\":1,\"description\":\"Horas máximas que un archivo temporal puede permanecer en storage antes de ser eliminado por la limpieza programada.\"}","type":"text","order":3,"group":"Sistema"},{"id":31,"key":"system.backup_retention_days","display_name":"Retención de respaldos","value":"14","details":"{\"min\":1,\"step\":1,\"description\":\"Días que se conservan los respaldos de base de datos antes de ser eliminados automáticamente.\"}","type":"text","order":4,"group":"Sistema"},{"id":32,"key":"system.backup_max_age_hours","display_name":"Horas máximas sin respaldo para alerta","value":"24","details":"{\"min\":1,\"step\":1,\"description\":\"Si el respaldo más reciente supera esta edad en horas, se dispara una alerta notificando que no se han generado respaldos recientemente.\"}","type":"text","order":5,"group":"Sistema"},{"id":33,"key":"system.audit_retention_months","display_name":"Retención de auditoría","value":"12","details":"{\"min\":1,\"step\":1,\"description\":\"Meses que se conservan los registros de auditoría (logs de acciones de usuarios) antes de ser purgados.\"}","type":"text","order":6,"group":"Sistema"},{"id":34,"key":"system.worker_stale_minutes","display_name":"Tiempo sin procesar jobs (worker caído)","value":"5","details":"{\"min\":1,\"step\":1,\"description\":\"Minutos sin que se procesen jobs en cola para considerar que el worker de colas está caído y disparar una alerta.\"}","type":"text","order":7,"group":"Sistema"},{"id":35,"key":"system.worker_pending_warning_jobs","display_name":"Jobs pendientes antes de alertar","value":"3","details":"{\"min\":1,\"step\":1,\"description\":\"Cantidad de jobs pendientes en la cola a partir de la cual se considera que el worker podría estar rezagado y se dispara una alerta.\"}","type":"text","order":8,"group":"Sistema"},{"id":36,"key":"system.worker_failed_jobs_warning_24h","display_name":"Jobs fallidos en 24h antes de alertar","value":"1","details":"{\"min\":1,\"step\":1,\"description\":\"Cantidad de jobs fallidos en las últimas 24 horas que disparan una alerta de salud del worker.\"}","type":"text","order":9,"group":"Sistema"},{"id":37,"key":"system.failed_login_threshold","display_name":"Intentos de login fallidos por IP (alerta)","value":"6","details":"{\"min\":1,\"step\":1,\"description\":\"Número de intentos fallidos de inicio de sesión desde una misma IP que disparan una alerta de seguridad.\"}","type":"text","order":10,"group":"Sistema"},{"id":38,"key":"system.failed_login_lookback_hours","display_name":"Ventana de horas para intentos fallidos","value":"12","details":"{\"min\":1,\"step\":1,\"description\":\"Ventana de tiempo en horas hacia atrás que se analiza para contar intentos fallidos de login por IP.\"}","type":"text","order":11,"group":"Sistema"},{"id":39,"key":"system.failed_login_retention_days","display_name":"Retención de logs de login fallidos","value":"30","details":"{\"min\":1,\"step\":1,\"description\":\"Días que se conservan los registros de intentos de inicio de sesión fallidos antes de ser eliminados.\"}","type":"text","order":12,"group":"Sistema"},{"id":40,"key":"system.scheduler_heartbeat_threshold","display_name":"Umbral para scheduler caído","value":"60","details":"{\"min\":1,\"step\":1,\"description\":\"Minutos sin heartbeat del scheduler para considerarlo caído y disparar una alerta.\"}","type":"text","order":13,"group":"Sistema"},{"id":41,"key":"system.scheduler_alert_grace_failures","display_name":"Fallos consecutivos scheduler antes de alertar","value":"1","details":"{\"min\":1,\"step\":1,\"description\":\"Número de ejecuciones fallidas consecutivas del scheduler antes de enviar una alerta.\"}","type":"text","order":14,"group":"Sistema"},{"id":42,"key":"system.github_releases_cache_seconds","display_name":"TTL caché releases GitHub","value":"3600","details":"{\"min\":0,\"step\":1,\"description\":\"Tiempo en segundos que se cachean las releases de GitHub en el widget del dashboard. 0 para deshabilitar la caché.\"}","type":"text","order":15,"group":"Sistema"},{"id":43,"key":"services.git_binary_path","display_name":"Ruta al binario de Git","value":"C:\\ruta\\a\\Git\\cmd\\git.exe","details":"{\"description\":\"Ruta absoluta o comando del binario de Git en el servidor. Por defecto usa git (debe estar en PATH).\"}","type":"text","order":4,"group":"Deploy"},{"id":44,"key":"services.deploy_remote","display_name":"Remote Git para despliegue","value":"origin","details":"{\"description\":\"Nombre del remote de Git que se usará como destino para las operaciones de despliegue.\"}","type":"text","order":6,"group":"Deploy"},{"id":45,"key":"services.deploy_branch","display_name":"Rama Git para despliegue","value":"main","details":"{\"description\":\"Nombre de la rama de Git que se desplegará en las operaciones de deploy.\"}","type":"text","order":5,"group":"Deploy"},{"id":46,"key":"services.db_dump_path","display_name":"Ruta al binario mysqldump","value":"C:\\ruta\\a\\mysql\\bin","details":"{\"description\":\"Ruta absoluta al binario mysqldump para generar respaldos de base de datos. Vacío si está en PATH.\"}","type":"text","order":5,"group":"Sistema"},{"id":47,"key":"services.github_releases_repo","display_name":"Repositorio GitHub (owner/repo)","value":"jcalistop/minsal-centinela","details":"{\"description\":\"Repositorio en formato owner/repo (ej: jcalistop/minsal-centinela) usado para consultar releases desde el widget del dashboard.\"}","type":"text","order":8,"group":"Deploy"},{"id":48,"key":"module.national_establishments_enabled","display_name":"Sincronización catálogo nacional de establecimientos","value":"On","details":"{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Habilita la sincronización con datos.gob.cl (CKAN DataStore) y el catálogo de establecimientos en Parametrización.\"}","type":"radio_btn","order":14,"group":"Modulos"},{"id":49,"key":"services.national_establishments_api_base","display_name":"URL base API CKAN establecimientos","value":"https://datos.gob.cl/api/3/action","details":"{\"description\":\"Base URL para datastore_search (sin barra final).\"}","type":"text","order":21,"group":"Servicios externos"},{"id":50,"key":"services.national_establishments_resource_id","display_name":"Resource ID CKAN establecimientos","value":"2c44d782-3365-44e3-aefb-2c8b8363a1bc","details":"{}","type":"text","order":22,"group":"Servicios externos"},{"id":51,"key":"system.national_establishments_page_size","display_name":"Tamaño de página sync establecimientos","value":"500","details":"{\"min\":50,\"max\":1000,\"step\":50}","type":"text","order":25,"group":"Sistema"},{"id":52,"key":"system.national_establishments_timeout","display_name":"Timeout HTTP sync establecimientos (seg)","value":"90","details":"{\"min\":10,\"max\":300,\"step\":5}","type":"text","order":26,"group":"Sistema"},{"id":53,"key":"services.deploy_run_composer","display_name":"Ejecutar composer tras deploy","value":"On","details":"{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Si está activado, el orquestador ejecuta composer install --no-dev tras git pull cuando hay cambio de código.\"}","type":"radio_btn","order":5,"group":"Deploy"},{"id":54,"key":"services.deploy_run_npm_build","display_name":"Ejecutar npm build tras deploy","value":"On","details":"{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Si está activado, el orquestador ejecuta npm ci && npm run build cuando el diff del deploy toca rutas de frontend.\"}","type":"radio_btn","order":6,"group":"Deploy"},{"id":55,"key":"system.deploy_executions_retention_days","display_name":"Retención historial deploy (días)","value":"90","details":"{\"min\":1,\"step\":1,\"description\":\"Días de retención para deploy_executions. El scheduler purga semanalmente los registros más antiguos.\"}","type":"text","order":7,"group":"Deploy"},{"id":56,"key":"module.metas_recalc_scope_enabled","display_name":"Metas — recálculo automático en cola (SDD-109)","value":"On","details":"{\"default\":\"On\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Tras guardar carga o configuración en AUTOEVALUACIÓN, encola recálculo acotado por indicador/centro. Requiere worker de cola activo.\"}","type":"radio_btn","order":15,"group":"Modulos"},{"id":57,"key":"system.metas_recalc_debounce_seconds","display_name":"Metas — debounce recálculo (segundos)","value":"90","details":"{\"min\":10,\"max\":600,\"step\":10,\"description\":\"Ventana de agrupación antes de ejecutar el job de recálculo por indicador/centro.\"}","type":"text","order":27,"group":"Sistema"},{"id":58,"key":"admin.voyager_compass_enabled","display_name":"Habilitar Compass de Voyager","value":"On","details":"{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Permite acceder a /admin/compass fuera del entorno local (herramientas Artisan, logs y caché de Voyager).\"}","type":"radio_btn","order":9,"group":"Admin"},{"id":59,"key":"module.deploy_require_ci_mode","display_name":"Gate CI GitHub (precondición deploy)","value":"Off","details":"{\"default\":\"none\",\"options\":{\"none\":\"Desactivado (solo aviso en panel)\",\"auto\":\"Bloquear solo deploy automático\",\"all\":\"Bloquear automático y manual\"},\"description\":\"Exige que el último workflow push de la rama de deploy esté en success antes de backup/pull. Default none = comportamiento post-v4.4.0.\"}","type":"radio_btn","order":2,"group":"Deploy"},{"id":60,"key":"module.deploy_require_ci_match_sha","display_name":"Gate CI: exigir mismo SHA remoto","value":"Off","details":"{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Además de success, el head_sha del run debe coincidir con origin/{rama de deploy}.\"}","type":"radio_btn","order":3,"group":"Deploy"},{"id":61,"key":"module.deploy_require_ci_block_unknown","display_name":"Gate CI: bloquear si CI desconocido","value":"Off","details":"{\"default\":\"Off\",\"options\":{\"On\":\"Activado (estricto)\",\"Off\":\"Desactivado (aviso)\"},\"description\":\"Si On, unknown (sin token/API caída) también bloquea. Recomendado Off.\"}","type":"radio_btn","order":4,"group":"Deploy"}]
+[
+    {
+        "id": 5,
+        "key": "admin.bg_image",
+        "display_name": "Imagen de fondo del administrador",
+        "value": "settings\\February2024\\LytKXEAQ1ucHFR0fZRSP.jpg",
+        "details": "",
+        "type": "image",
+        "order": 5,
+        "group": "Admin"
+    },
+    {
+        "id": 6,
+        "key": "admin.title",
+        "display_name": "Título del administrador",
+        "value": "Centinela",
+        "details": "",
+        "type": "text",
+        "order": 1,
+        "group": "Admin"
+    },
+    {
+        "id": 7,
+        "key": "admin.description",
+        "display_name": "Descripción del administrador",
+        "value": "La plataforma de visualización de indicadores para los Servicios de Salud.",
+        "details": "",
+        "type": "text",
+        "order": 2,
+        "group": "Admin"
+    },
+    {
+        "id": 8,
+        "key": "admin.loader",
+        "display_name": "Imagen de carga del administrador",
+        "value": "settings\\February2024\\Zgzb1Gbxa8bua8Qrr3EO.png",
+        "details": "",
+        "type": "image",
+        "order": 3,
+        "group": "Admin"
+    },
+    {
+        "id": 9,
+        "key": "admin.icon_image",
+        "display_name": "Ícono del administrador",
+        "value": "settings\\February2024\\yiVBO541TwRla5CLNgIb.png",
+        "details": "",
+        "type": "image",
+        "order": 4,
+        "group": "Admin"
+    },
+    {
+        "id": 11,
+        "key": "admin.modo_mantenimiento",
+        "display_name": "Modo mantenimiento",
+        "value": "Off",
+        "details": "{\n\"default\":\"Off\",\n\"options\":{\n\"On\" : \"Activado\",\n\"Off\" : \"Desactivado\"\n}}",
+        "type": "radio_btn",
+        "order": 7,
+        "group": "Admin"
+    },
+    {
+        "id": 12,
+        "key": "admin.favicon_image",
+        "display_name": "Admin Favicon Image",
+        "value": "settings\\March2024\\cZVznGLlQmMjsKSNQveK.png",
+        "details": null,
+        "type": "image",
+        "order": 6,
+        "group": "Admin"
+    },
+    {
+        "id": 13,
+        "key": "module.usage_tracking_enabled",
+        "display_name": "Tracking de uso",
+        "value": "On",
+        "details": "{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Registra las visitas a las páginas del panel /admin para estadísticas de uso.\"}",
+        "type": "radio_btn",
+        "order": 1,
+        "group": "Modulos"
+    },
+    {
+        "id": 14,
+        "key": "module.dashboard_non_admin_enabled",
+        "display_name": "Dashboard resumen para usuarios no administradores",
+        "value": "On",
+        "details": "{\"default\":\"On\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Muestra un dashboard con indicadores resumidos para roles distintos a administrador.\"}",
+        "type": "radio_btn",
+        "order": 2,
+        "group": "Modulos"
+    },
+    {
+        "id": 15,
+        "key": "module.soporte_enabled",
+        "display_name": "Módulo de Soporte",
+        "value": "On",
+        "details": "{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Habilita el módulo de tickets internos de soporte en el panel /admin.\"}",
+        "type": "radio_btn",
+        "order": 3,
+        "group": "Modulos"
+    },
+    {
+        "id": 16,
+        "key": "module.chat_ia_enabled",
+        "display_name": "Chat IA",
+        "value": "Off",
+        "details": "{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Activa el asistente conversational con IA disponible como drawer global en el panel /admin.\"}",
+        "type": "radio_btn",
+        "order": 4,
+        "group": "Modulos"
+    },
+    {
+        "id": 17,
+        "key": "module.user_manual_enabled",
+        "display_name": "Manual de usuario contextual",
+        "value": "Off",
+        "details": "{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Agrega un enlace de Ayuda contextual en el panel /admin que abre el manual de usuario según la página visitada.\"}",
+        "type": "radio_btn",
+        "order": 5,
+        "group": "Modulos"
+    },
+    {
+        "id": 18,
+        "key": "module.login_legal_documents_enabled",
+        "display_name": "Documentos legales en login",
+        "value": "Off",
+        "details": "{\"default\":\"On\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Muestra enlaces a términos de uso y política de privacidad en la pantalla de inicio de sesión.\"}",
+        "type": "radio_btn",
+        "order": 6,
+        "group": "Modulos"
+    },
+    {
+        "id": 19,
+        "key": "module.github_issues_enabled",
+        "display_name": "Promoción a issue GitHub",
+        "value": "On",
+        "details": "{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Agrega un botón en tickets de soporte para promoverlos a issues en el repositorio GitHub del proyecto.\"}",
+        "type": "radio_btn",
+        "order": 8,
+        "group": "Modulos"
+    },
+    {
+        "id": 20,
+        "key": "module.deploy_automatic_enabled",
+        "display_name": "Deploy automático (scheduler)",
+        "value": "Off",
+        "details": "{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Habilita el despliegue automático desde el scheduler. Si falla un deploy, queda bloqueado hasta que un deploy manual sea exitoso.\"}",
+        "type": "radio_btn",
+        "order": 1,
+        "group": "Deploy"
+    },
+    {
+        "id": 21,
+        "key": "module.whatsapp_enabled",
+        "display_name": "Notificaciones WhatsApp",
+        "value": "Off",
+        "details": "{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Habilita el envío de notificaciones y alertas a través de WhatsApp.\"}",
+        "type": "radio_btn",
+        "order": 13,
+        "group": "Modulos"
+    },
+    {
+        "id": 22,
+        "key": "notifications.contact_mail_to",
+        "display_name": "Correo formulario de contacto",
+        "value": "centinela-ops@ejemplo.gob.cl",
+        "details": "{\"description\":\"Dirección de correo donde se reciben los mensajes enviados desde el formulario de contacto en /admin/acerca-de.\"}",
+        "type": "text",
+        "order": 1,
+        "group": "Notificaciones"
+    },
+    {
+        "id": 23,
+        "key": "notifications.backup_email",
+        "display_name": "Correo para notificaciones de respaldos",
+        "value": "centinela-ops@ejemplo.gob.cl",
+        "details": "{\"description\":\"Dirección de correo que recibe notificaciones sobre el estado de los respaldos de base de datos.\"}",
+        "type": "text",
+        "order": 2,
+        "group": "Notificaciones"
+    },
+    {
+        "id": 24,
+        "key": "notifications.scheduler_alert_email",
+        "display_name": "Correo para alertas del scheduler",
+        "value": "centinela-ops@ejemplo.gob.cl",
+        "details": "{\"description\":\"Dirección de correo que recibe alertas cuando el scheduler de tareas programadas falls o se detiene.\"}",
+        "type": "text",
+        "order": 3,
+        "group": "Notificaciones"
+    },
+    {
+        "id": 25,
+        "key": "notifications.scheduler_report_emails",
+        "display_name": "Correos para reporte diario del scheduler",
+        "value": "centinela-ops@ejemplo.gob.cl",
+        "details": "{\"description\":\"Dirección(es) de correo separadas por coma que reciben el reporte diario de ejecución del scheduler.\"}",
+        "type": "text",
+        "order": 4,
+        "group": "Notificaciones"
+    },
+    {
+        "id": 26,
+        "key": "notifications.security_alert_email",
+        "display_name": "Correo para alertas de seguridad",
+        "value": "centinela-ops@ejemplo.gob.cl",
+        "details": "{\"description\":\"Dirección de correo que recibe alertas de seguridad, como intentos de acceso fallidos masivos.\"}",
+        "type": "text",
+        "order": 5,
+        "group": "Notificaciones"
+    },
+    {
+        "id": 27,
+        "key": "notifications.whatsapp_alert_to",
+        "display_name": "Número WhatsApp para alertas",
+        "value": "",
+        "details": "{\"description\":\"Número de teléfono con código de país (ej: 569XXXXXXXX) que recibe alertas vía WhatsApp.\"}",
+        "type": "text",
+        "order": 6,
+        "group": "Notificaciones"
+    },
+    {
+        "id": 28,
+        "key": "system.dashboard_cache_ttl",
+        "display_name": "TTL caché del dashboard",
+        "value": "180",
+        "details": "{\"min\":30,\"step\":1,\"description\":\"Tiempo en segundos que los datos del dashboard permanecen en caché antes de refrescarse. Mínimo recomendado: 30s.\"}",
+        "type": "text",
+        "order": 1,
+        "group": "Sistema"
+    },
+    {
+        "id": 29,
+        "key": "system.usage_tracking_throttle",
+        "display_name": "Throttle de tracking de uso",
+        "value": "300",
+        "details": "{\"min\":10,\"step\":1,\"description\":\"Intervalo mínimo en segundos entre registros de tracking de uso para una misma página. Evita sobrecarga de escritura.\"}",
+        "type": "text",
+        "order": 2,
+        "group": "Sistema"
+    },
+    {
+        "id": 30,
+        "key": "system.storage_temp_max_age",
+        "display_name": "Edad máxima archivos temporales",
+        "value": "48",
+        "details": "{\"min\":1,\"step\":1,\"description\":\"Horas máximas que un archivo temporal puede permanecer en storage antes de ser eliminado por la limpieza programada.\"}",
+        "type": "text",
+        "order": 3,
+        "group": "Sistema"
+    },
+    {
+        "id": 31,
+        "key": "system.backup_retention_days",
+        "display_name": "Retención de respaldos",
+        "value": "14",
+        "details": "{\"min\":1,\"step\":1,\"description\":\"Días que se conservan los respaldos de base de datos antes de ser eliminados automáticamente.\"}",
+        "type": "text",
+        "order": 4,
+        "group": "Sistema"
+    },
+    {
+        "id": 32,
+        "key": "system.backup_max_age_hours",
+        "display_name": "Horas máximas sin respaldo para alerta",
+        "value": "24",
+        "details": "{\"min\":1,\"step\":1,\"description\":\"Si el respaldo más reciente supera esta edad en horas, se dispara una alerta notificando que no se han generado respaldos recientemente.\"}",
+        "type": "text",
+        "order": 5,
+        "group": "Sistema"
+    },
+    {
+        "id": 33,
+        "key": "system.audit_retention_months",
+        "display_name": "Retención de auditoría",
+        "value": "12",
+        "details": "{\"min\":1,\"step\":1,\"description\":\"Meses que se conservan los registros de auditoría (logs de acciones de usuarios) antes de ser purgados.\"}",
+        "type": "text",
+        "order": 6,
+        "group": "Sistema"
+    },
+    {
+        "id": 34,
+        "key": "system.worker_stale_minutes",
+        "display_name": "Tiempo sin procesar jobs (worker caído)",
+        "value": "5",
+        "details": "{\"min\":1,\"step\":1,\"description\":\"Minutos sin que se procesen jobs en cola para considerar que el worker de colas está caído y disparar una alerta.\"}",
+        "type": "text",
+        "order": 7,
+        "group": "Sistema"
+    },
+    {
+        "id": 35,
+        "key": "system.worker_pending_warning_jobs",
+        "display_name": "Jobs pendientes antes de alertar",
+        "value": "3",
+        "details": "{\"min\":1,\"step\":1,\"description\":\"Cantidad de jobs pendientes en la cola a partir de la cual se considera que el worker podría estar rezagado y se dispara una alerta.\"}",
+        "type": "text",
+        "order": 8,
+        "group": "Sistema"
+    },
+    {
+        "id": 36,
+        "key": "system.worker_failed_jobs_warning_24h",
+        "display_name": "Jobs fallidos en 24h antes de alertar",
+        "value": "1",
+        "details": "{\"min\":1,\"step\":1,\"description\":\"Cantidad de jobs fallidos en las últimas 24 horas que disparan una alerta de salud del worker.\"}",
+        "type": "text",
+        "order": 9,
+        "group": "Sistema"
+    },
+    {
+        "id": 37,
+        "key": "system.failed_login_threshold",
+        "display_name": "Intentos de login fallidos por IP (alerta)",
+        "value": "6",
+        "details": "{\"min\":1,\"step\":1,\"description\":\"Número de intentos fallidos de inicio de sesión desde una misma IP que disparan una alerta de seguridad.\"}",
+        "type": "text",
+        "order": 10,
+        "group": "Sistema"
+    },
+    {
+        "id": 38,
+        "key": "system.failed_login_lookback_hours",
+        "display_name": "Ventana de horas para intentos fallidos",
+        "value": "12",
+        "details": "{\"min\":1,\"step\":1,\"description\":\"Ventana de tiempo en horas hacia atrás que se analiza para contar intentos fallidos de login por IP.\"}",
+        "type": "text",
+        "order": 11,
+        "group": "Sistema"
+    },
+    {
+        "id": 39,
+        "key": "system.failed_login_retention_days",
+        "display_name": "Retención de logs de login fallidos",
+        "value": "30",
+        "details": "{\"min\":1,\"step\":1,\"description\":\"Días que se conservan los registros de intentos de inicio de sesión fallidos antes de ser eliminados.\"}",
+        "type": "text",
+        "order": 12,
+        "group": "Sistema"
+    },
+    {
+        "id": 40,
+        "key": "system.scheduler_heartbeat_threshold",
+        "display_name": "Umbral para scheduler caído",
+        "value": "60",
+        "details": "{\"min\":1,\"step\":1,\"description\":\"Minutos sin heartbeat del scheduler para considerarlo caído y disparar una alerta.\"}",
+        "type": "text",
+        "order": 13,
+        "group": "Sistema"
+    },
+    {
+        "id": 41,
+        "key": "system.scheduler_alert_grace_failures",
+        "display_name": "Fallos consecutivos scheduler antes de alertar",
+        "value": "1",
+        "details": "{\"min\":1,\"step\":1,\"description\":\"Número de ejecuciones fallidas consecutivas del scheduler antes de enviar una alerta.\"}",
+        "type": "text",
+        "order": 14,
+        "group": "Sistema"
+    },
+    {
+        "id": 42,
+        "key": "system.github_releases_cache_seconds",
+        "display_name": "TTL caché releases GitHub",
+        "value": "3600",
+        "details": "{\"min\":0,\"step\":1,\"description\":\"Tiempo en segundos que se cachean las releases de GitHub en el widget del dashboard. 0 para deshabilitar la caché.\"}",
+        "type": "text",
+        "order": 15,
+        "group": "Sistema"
+    },
+    {
+        "id": 43,
+        "key": "services.git_binary_path",
+        "display_name": "Ruta al binario de Git",
+        "value": "",
+        "details": "{\"description\":\"Ruta absoluta o comando del binario de Git en el servidor. Por defecto usa git (debe estar en PATH).\"}",
+        "type": "text",
+        "order": 4,
+        "group": "Deploy"
+    },
+    {
+        "id": 44,
+        "key": "services.deploy_remote",
+        "display_name": "Remote Git para despliegue",
+        "value": "origin",
+        "details": "{\"description\":\"Nombre del remote de Git que se usará como destino para las operaciones de despliegue.\"}",
+        "type": "text",
+        "order": 6,
+        "group": "Deploy"
+    },
+    {
+        "id": 45,
+        "key": "services.deploy_branch",
+        "display_name": "Rama Git para despliegue",
+        "value": "main",
+        "details": "{\"description\":\"Nombre de la rama de Git que se desplegará en las operaciones de deploy.\"}",
+        "type": "text",
+        "order": 5,
+        "group": "Deploy"
+    },
+    {
+        "id": 46,
+        "key": "services.db_dump_path",
+        "display_name": "Ruta al binario mysqldump",
+        "value": "",
+        "details": "{\"description\":\"Ruta absoluta al binario mysqldump para generar respaldos de base de datos. Vacío si está en PATH.\"}",
+        "type": "text",
+        "order": 5,
+        "group": "Sistema"
+    },
+    {
+        "id": 47,
+        "key": "services.github_releases_repo",
+        "display_name": "Repositorio GitHub (owner/repo)",
+        "value": "jcalistop/centinela-public",
+        "details": "{\"description\":\"Repositorio en formato owner/repo (ej: jcalistop/centinela-public) usado para consultar releases desde el widget del dashboard.\"}",
+        "type": "text",
+        "order": 8,
+        "group": "Deploy"
+    },
+    {
+        "id": 48,
+        "key": "module.national_establishments_enabled",
+        "display_name": "Sincronización catálogo nacional de establecimientos",
+        "value": "On",
+        "details": "{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Habilita la sincronización con datos.gob.cl (CKAN DataStore) y el catálogo de establecimientos en Parametrización.\"}",
+        "type": "radio_btn",
+        "order": 14,
+        "group": "Modulos"
+    },
+    {
+        "id": 49,
+        "key": "services.national_establishments_api_base",
+        "display_name": "URL base API CKAN establecimientos",
+        "value": "https://datos.gob.cl/api/3/action",
+        "details": "{\"description\":\"Base URL para datastore_search (sin barra final).\"}",
+        "type": "text",
+        "order": 21,
+        "group": "Servicios externos"
+    },
+    {
+        "id": 50,
+        "key": "services.national_establishments_resource_id",
+        "display_name": "Resource ID CKAN establecimientos",
+        "value": "2c44d782-3365-44e3-aefb-2c8b8363a1bc",
+        "details": "{}",
+        "type": "text",
+        "order": 22,
+        "group": "Servicios externos"
+    },
+    {
+        "id": 51,
+        "key": "system.national_establishments_page_size",
+        "display_name": "Tamaño de página sync establecimientos",
+        "value": "500",
+        "details": "{\"min\":50,\"max\":1000,\"step\":50}",
+        "type": "text",
+        "order": 25,
+        "group": "Sistema"
+    },
+    {
+        "id": 52,
+        "key": "system.national_establishments_timeout",
+        "display_name": "Timeout HTTP sync establecimientos (seg)",
+        "value": "90",
+        "details": "{\"min\":10,\"max\":300,\"step\":5}",
+        "type": "text",
+        "order": 26,
+        "group": "Sistema"
+    },
+    {
+        "id": 53,
+        "key": "services.deploy_run_composer",
+        "display_name": "Ejecutar composer tras deploy",
+        "value": "On",
+        "details": "{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Si está activado, el orquestador ejecuta composer install --no-dev tras git pull cuando hay cambio de código.\"}",
+        "type": "radio_btn",
+        "order": 5,
+        "group": "Deploy"
+    },
+    {
+        "id": 54,
+        "key": "services.deploy_run_npm_build",
+        "display_name": "Ejecutar npm build tras deploy",
+        "value": "On",
+        "details": "{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Si está activado, el orquestador ejecuta npm ci && npm run build cuando el diff del deploy toca rutas de frontend.\"}",
+        "type": "radio_btn",
+        "order": 6,
+        "group": "Deploy"
+    },
+    {
+        "id": 55,
+        "key": "system.deploy_executions_retention_days",
+        "display_name": "Retención historial deploy (días)",
+        "value": "90",
+        "details": "{\"min\":1,\"step\":1,\"description\":\"Días de retención para deploy_executions. El scheduler purga semanalmente los registros más antiguos.\"}",
+        "type": "text",
+        "order": 7,
+        "group": "Deploy"
+    },
+    {
+        "id": 56,
+        "key": "module.metas_recalc_scope_enabled",
+        "display_name": "Metas — recálculo automático en cola (SDD-109)",
+        "value": "On",
+        "details": "{\"default\":\"On\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Tras guardar carga o configuración en AUTOEVALUACIÓN, encola recálculo acotado por indicador/centro. Requiere worker de cola activo.\"}",
+        "type": "radio_btn",
+        "order": 15,
+        "group": "Modulos"
+    },
+    {
+        "id": 57,
+        "key": "system.metas_recalc_debounce_seconds",
+        "display_name": "Metas — debounce recálculo (segundos)",
+        "value": "90",
+        "details": "{\"min\":10,\"max\":600,\"step\":10,\"description\":\"Ventana de agrupación antes de ejecutar el job de recálculo por indicador/centro.\"}",
+        "type": "text",
+        "order": 27,
+        "group": "Sistema"
+    },
+    {
+        "id": 58,
+        "key": "admin.voyager_compass_enabled",
+        "display_name": "Habilitar Compass de Voyager",
+        "value": "Off",
+        "details": "{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Permite acceder a /admin/compass fuera del entorno local (herramientas Artisan, logs y caché de Voyager).\"}",
+        "type": "radio_btn",
+        "order": 9,
+        "group": "Admin"
+    },
+    {
+        "id": 59,
+        "key": "module.deploy_require_ci_mode",
+        "display_name": "Gate CI GitHub (precondición deploy)",
+        "value": "Off",
+        "details": "{\"default\":\"none\",\"options\":{\"none\":\"Desactivado (solo aviso en panel)\",\"auto\":\"Bloquear solo deploy automático\",\"all\":\"Bloquear automático y manual\"},\"description\":\"Exige que el último workflow push de la rama de deploy esté en success antes de backup/pull. Default none = comportamiento post-v4.4.0.\"}",
+        "type": "radio_btn",
+        "order": 2,
+        "group": "Deploy"
+    },
+    {
+        "id": 60,
+        "key": "module.deploy_require_ci_match_sha",
+        "display_name": "Gate CI: exigir mismo SHA remoto",
+        "value": "Off",
+        "details": "{\"default\":\"Off\",\"options\":{\"On\":\"Activado\",\"Off\":\"Desactivado\"},\"description\":\"Además de success, el head_sha del run debe coincidir con origin/{rama de deploy}.\"}",
+        "type": "radio_btn",
+        "order": 3,
+        "group": "Deploy"
+    },
+    {
+        "id": 61,
+        "key": "module.deploy_require_ci_block_unknown",
+        "display_name": "Gate CI: bloquear si CI desconocido",
+        "value": "Off",
+        "details": "{\"default\":\"Off\",\"options\":{\"On\":\"Activado (estricto)\",\"Off\":\"Desactivado (aviso)\"},\"description\":\"Si On, unknown (sin token/API caída) también bloquea. Recomendado Off.\"}",
+        "type": "radio_btn",
+        "order": 4,
+        "group": "Deploy"
+    }
+]

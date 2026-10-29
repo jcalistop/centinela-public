@@ -1,8 +1,8 @@
 # Dependabot: abre PRs de actualización de dependencias en GitHub.
 # No despliega al servidor; tras merge, el despliegue sigue siendo manual según vuestro runbook.
-# Los PRs van contra la rama `deps-integration` (no `dev`) para no saturar la lista de PRs de integración;
-# el equipo fusiona `deps-integration` → `dev` cuando corresponda.
-# La rama `deps-integration` debe existir en el remoto (crearla desde `dev` si aún no está).
+# Los PRs van contra la rama `dep-integration` (no `dev`) para no saturar la lista de PRs de integración;
+# el equipo fusiona `dep-integration` → `dev` cuando corresponda.
+# La rama `dep-integration` debe existir en el remoto (crearla desde `dev` si aún no está).
 # Limitación Git: NO usar la rama `dependabot` como target-branch — choca con las ramas
 # `dependabot/<ecosistema>/...` que crea Dependabot (error file_fetcher_error en la revisión semanal).
 # https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
@@ -13,7 +13,7 @@ version: 2
 updates:
   - package-ecosystem: "composer"
     directory: "/"
-    target-branch: "deps-integration"
+    target-branch: "dep-integration"
     schedule:
       interval: "weekly"
       day: "monday"
@@ -26,7 +26,7 @@ updates:
 
   - package-ecosystem: "npm"
     directory: "/"
-    target-branch: "deps-integration"
+    target-branch: "dep-integration"
     schedule:
       interval: "weekly"
       day: "monday"
@@ -39,7 +39,7 @@ updates:
 
   - package-ecosystem: "github-actions"
     directory: "/"
-    target-branch: "deps-integration"
+    target-branch: "dep-integration"
     schedule:
       interval: "monthly"
       time: "09:00"

@@ -1,7 +1,7 @@
 {
-    "source": "minsal_centinela_ref_prod (SDD-240+241; allow-list 2026-10-06)",
+    "source": "centinela_ref_prod (SDD-240+241; allow-list 2026-10-06)",
     "generated_at": "2026-10-06T14:48:24+00:00",
-    "ref_database": "minsal_centinela_ref_prod",
+    "ref_database": "centinela_ref_prod",
     "load_order": [
         "roles",
         "permissions",

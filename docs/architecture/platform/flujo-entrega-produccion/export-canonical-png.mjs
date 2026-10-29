@@ -13,7 +13,7 @@ import {
 
 const htmlPath = path.resolve(
     process.argv[2] ||
-        "C:/laragon/www/minsal-centinela/docs/architecture/platform/flujo-entrega-produccion/centinela-flujo-entrega-produccion.html",
+        "C:/laragon/www/centinela-public/docs/architecture/platform/flujo-entrega-produccion/centinela-flujo-entrega-produccion.html",
 );
 const outPng = path.resolve(
     process.argv[3] ||

@@ -97,7 +97,7 @@ class SettingsManager extends Component
 
         $available = [];
         foreach (array_keys($this->settingsByGroup) as $groupName) {
-            if ($groupName === 'Admin') {
+            if (in_array($groupName, ['Admin', 'Site'], true)) {
                 continue;
             }
             $available[$groupName] = Str::slug($groupName, '-');
@@ -286,6 +286,22 @@ class SettingsManager extends Component
     }
 
     /**
+     * Placeholder de inputs de texto. Git y mysqldump quedan vacíos (usar PATH).
+     *
+     * @param  array<string, mixed>|null  $details
+     */
+    public function textPlaceholder(string $dbKey, ?array $details): string
+    {
+        if (in_array($dbKey, ['services.git_binary_path', 'services.db_dump_path'], true)) {
+            return '';
+        }
+
+        $placeholder = $details['placeholder'] ?? '';
+
+        return is_string($placeholder) ? $placeholder : '';
+    }
+
+    /**
      * Guía de tamaño según uso real en la UI (Voyager / custom.css), no el peso del archivo en disco.
      */
     public function mediaFieldHint(string $dbKey): ?string
@@ -358,6 +374,9 @@ class SettingsManager extends Component
             }
 
             $groupName = $setting->group ?? 'General';
+            if ($groupName === 'Site') {
+                continue;
+            }
             $flatKey = str_replace('.', '_', $setting->key);
 
             $this->keyMap[$flatKey] = $setting->key;

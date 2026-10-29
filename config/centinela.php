@@ -64,7 +64,7 @@ return [
      */
     'github_issues' => [
         'enabled' => filter_var(env('CENTINELA_GITHUB_ISSUES_ENABLED', false), FILTER_VALIDATE_BOOLEAN),
-        'repo' => env('GITHUB_RELEASES_REPOSITORY', 'jcalistop/minsal-centinela'),
+        'repo' => env('GITHUB_RELEASES_REPOSITORY', 'jcalistop/centinela-public'),
         'token' => env('CENTINELA_GITHUB_TOKEN') ?: env('RELEASES_TOKEN'),
     ],
 

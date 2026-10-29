@@ -38,7 +38,7 @@ return [
          */
         'releases_token' => env('CENTINELA_GITHUB_TOKEN') ?: env('RELEASES_TOKEN'),
         /** Mismo `owner/repo` para API releases y promoción Soporte→issue (`config('centinela.github_issues.repo')`). */
-        'releases_repository' => env('GITHUB_RELEASES_REPOSITORY', 'jcalistop/minsal-centinela'),
+        'releases_repository' => env('GITHUB_RELEASES_REPOSITORY', 'jcalistop/centinela-public'),
         'releases_http_cache_seconds' => (int) env('GITHUB_RELEASES_HTTP_CACHE_SECONDS', 3600),
     ],
 

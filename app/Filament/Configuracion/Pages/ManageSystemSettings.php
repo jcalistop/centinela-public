@@ -189,10 +189,16 @@ class ManageSystemSettings extends Page
                 ->helperText($setting->key);
         }
 
-        return TextInput::make($flatKey)
+        $input = TextInput::make($flatKey)
             ->label($label)
             ->helperText($setting->key)
             ->disabled(in_array($setting->type, ['image', 'file'], true));
+
+        if (in_array($setting->key, ['services.git_binary_path', 'services.db_dump_path'], true)) {
+            $input->placeholder('');
+        }
+
+        return $input;
     }
 
     /**

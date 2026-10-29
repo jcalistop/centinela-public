@@ -110,6 +110,32 @@ class FilamentProductClosedTest extends TestCase
         $this->assertTrue($keys->contains('module.public_dashboard_enabled'));
     }
 
+    public function test_voyager_settings_does_not_show_site_tab(): void
+    {
+        $this->seedSettingsRows();
+        Setting::query()->updateOrCreate(['key' => 'site.title'], [
+            'key' => 'site.title',
+            'display_name' => 'Título',
+            'value' => 'Centinela',
+            'details' => '',
+            'type' => 'text',
+            'order' => 1,
+            'group' => 'Site',
+        ]);
+
+        $component = Livewire::actingAs($this->admin)
+            ->test(SettingsManager::class)
+            ->assertOk();
+
+        $groups = array_keys($component->get('settingsByGroup'));
+        $this->assertNotContains('Site', $groups);
+
+        $tabGroups = collect($component->instance()->orderedSettingsTabSlugs())->pluck('group');
+        $this->assertFalse($tabGroups->contains('Site'));
+        $this->assertTrue(ProductClosedSettings::isHiddenKey('site.title'));
+        $this->assertTrue(ProductClosedSettings::isHiddenKey('site.description'));
+    }
+
     public function test_filament_settings_hides_filament_toggles_when_chasis_forced_on(): void
     {
         config([

@@ -15,7 +15,7 @@ La obra en este repositorio está sujeta a la **EUPL-1.2**; titularidad y autor�
 
 - **`main`:** línea desplegada en producción (según proceso interno del equipo).
 - **`dev`:** integración del trabajo en curso; la mayoría de PRs apuntan aquí.
-- **`deps-integration`:** solo para **actualizaciones automáticas de Dependabot** (Composer, npm, GitHub Actions). Dependabot abre PRs con **base** `deps-integration`, no `dev`, para mantener limpia la cola de revisión en `dev`. Cuando el equipo revisa y prueba, se integra **`deps-integration` → `dev`** con un PR semanal. No usar la rama `dependabot` como línea de integración (conflicto de namespace con refs `dependabot/*`).
+- **`dep-integration`:** solo para **actualizaciones automáticas de Dependabot** (Composer, npm, GitHub Actions). Dependabot abre PRs con **base** `dep-integration`, no `dev`, para mantener limpia la cola de revisión en `dev`. Cuando el equipo revisa y prueba, se integra **`dep-integration` → `dev`** con un PR semanal. No usar la rama `dependabot` como línea de integración (conflicto de namespace con refs `dependabot/*`).
 - Prefijos habituales en nombres de rama: `feature/`, `maintenance/`, `bugfix/` (flujo típico hacia `dev`).
 - **`hotfix/`:** correcciones críticas; solo se fusionan directo a `main` si el equipo acuerda ese atajo (evitar ramas largas fuera de `dev`).
 
@@ -64,7 +64,7 @@ Al cerrar una versión, conviene **etiquetar en el remoto** el commit acordado e
 
 - **License:** EUPL-1.2. See [`LICENSE.md`](LICENSE.md) (ownership: Servicio de Salud del Reloncaví; copyright: José Luis Calisto Peñafiel). Contributions are under the same license.
 - Open PRs against **`dev`** unless the team agrees otherwise.
-- **Git:** `main` is production line; `dev` is integration. **`deps-integration`** is the Dependabot integration branch (PRs from Dependabot target `deps-integration`, not `dev`); merge `deps-integration` → `dev` when ready. Branch prefixes: `feature/`, `bugfix/`, etc.; `hotfix/` toward `main` only by explicit team agreement. Commits: `type(scope): summary` (Conventional Commits); common types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`. SemVer + remote tag on `main`.
+- **Git:** `main` is production line; `dev` is integration. **`dep-integration`** is the Dependabot integration branch (PRs from Dependabot target `dep-integration`, not `dev`); merge `dep-integration` → `dev` when ready. Branch prefixes: `feature/`, `bugfix/`, etc.; `hotfix/` toward `main` only by explicit team agreement. Commits: `type(scope): summary` (Conventional Commits); common types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`. SemVer + remote tag on `main`.
 - Run `php artisan test --compact` and fix style with Pint before requesting review.
 - **There is no automatic deploy** from GitHub to the production server; deployment is manual per internal procedures.
 - Do not commit secrets, `.env`, production logs, or real environment paths; see `SECURITY.md` for vulnerability reporting.

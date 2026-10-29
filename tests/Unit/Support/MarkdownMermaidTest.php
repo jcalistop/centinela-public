@@ -10,7 +10,7 @@ class MarkdownMermaidTest extends TestCase
     /** @test */
     public function to_html_renders_root_relative_image_without_subdirectory(): void
     {
-        config(['app.url' => 'https://minsal-centinela.test']);
+        config(['app.url' => 'https://centinela-public.test']);
 
         $html = MarkdownMermaid::toHtml('![Ciclo](/docs/diagrams/ciclo-comges.svg)');
 

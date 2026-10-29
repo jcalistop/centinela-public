@@ -11,6 +11,7 @@ use App\Support\Deploy\DeployOrchestrator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Livewire\Livewire;
 use Mockery\MockInterface;
 use TCG\Voyager\Models\Role;
@@ -19,6 +20,16 @@ use Tests\TestCase;
 class DeployDashboardTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        Cache::flush();
+        Http::fake([
+            'api.github.com/*' => Http::response('unavailable', 503),
+        ]);
+    }
 
     private function adminUser(): User
     {

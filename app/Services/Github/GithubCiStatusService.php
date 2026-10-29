@@ -144,7 +144,7 @@ class GithubCiStatusService
 
     private function fetchLatestRun(string $branch): ?GithubCiStatus
     {
-        $repository = (string) config('services.github.releases_repository', 'jcalistop/minsal-centinela');
+        $repository = (string) config('services.github.releases_repository', 'jcalistop/centinela-public');
         $url = "https://api.github.com/repos/{$repository}/actions/runs";
 
         try {

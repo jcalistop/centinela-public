@@ -4,10 +4,27 @@ namespace Tests\Unit\Config;
 
 use App\Support\Health\HealthStatusService;
 use ReflectionMethod;
+use Tests\Support\IsolatesBackupStorage;
 use Tests\TestCase;
 
 class RetentionConfigCentinelaReadersTest extends TestCase
 {
+    use IsolatesBackupStorage;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->isolateBackupStorage();
+    }
+
+    protected function tearDown(): void
+    {
+        $this->cleanupIsolatedBackupStorage();
+
+        parent::tearDown();
+    }
+
     /** @test */
     public function retention_keys_resolve_from_centinela_overrides(): void
     {
@@ -101,11 +118,7 @@ class RetentionConfigCentinelaReadersTest extends TestCase
         /** @var array<string, mixed> $status */
         $status = $service->backupStatus();
 
-        if (($status['last_file'] ?? '') !== basename($file)) {
-            @unlink($file);
-            $this->markTestSkipped('Hay otro backup_* más reciente en storage/app/backups');
-        }
-
+        $this->assertSame(basename($file), $status['last_file'] ?? null);
         $this->assertSame('warning', $status['status']);
 
         unlink($file);

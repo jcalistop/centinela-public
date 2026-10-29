@@ -64,7 +64,7 @@ class GithubReleasesService
     public function apiProbeSucceeded(): bool
     {
         return (bool) Cache::remember(self::CACHE_KEY_API_PROBE, self::API_PROBE_TTL_SECONDS, function (): bool {
-            $repository = (string) config('services.github.releases_repository', 'jcalistop/minsal-centinela');
+            $repository = (string) config('services.github.releases_repository', 'jcalistop/centinela-public');
             $url = "https://api.github.com/repos/{$repository}/releases?per_page=1";
 
             try {
@@ -174,7 +174,7 @@ class GithubReleasesService
             }
         }
 
-        $repository = (string) config('services.github.releases_repository', 'jcalistop/minsal-centinela');
+        $repository = (string) config('services.github.releases_repository', 'jcalistop/centinela-public');
         $htmlUrl = $tag !== ''
             ? 'https://github.com/'.$repository.'/releases/tag/'.rawurlencode($tag)
             : null;
@@ -293,7 +293,7 @@ class GithubReleasesService
      */
     private function tryFetchFromApi(): ?array
     {
-        $repository = (string) config('services.github.releases_repository', 'jcalistop/minsal-centinela');
+        $repository = (string) config('services.github.releases_repository', 'jcalistop/centinela-public');
         $url = "https://api.github.com/repos/{$repository}/releases";
 
         try {

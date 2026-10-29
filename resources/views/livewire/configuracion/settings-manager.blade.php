@@ -263,7 +263,9 @@
                                         ])
                                     @else
                                         <input type="text" class="form-control"
-                                            wire:model.lazy="settings.{{ $flatKey }}">
+                                            wire:model.lazy="settings.{{ $flatKey }}"
+                                            placeholder="{{ $this->textPlaceholder($setting['key'], is_array($details) ? $details : null) }}"
+                                            autocomplete="off">
                                     @endif
                                 </div>
                             @endforeach
@@ -294,7 +296,8 @@
                                 @if ($slug === 'deploy')
                                     <div class="alert alert-info" style="margin-top: 0;">
                                         Parámetros del orquestador de deploy y enlaces GitHub/CI en intranet (SDD-097).
-                                        El token de API sigue en <code>.env</code> (<code>CENTINELA_GITHUB_TOKEN</code>).
+                                        El token de API sigue en <code>.env</code>
+                                        (<code>CENTINELA_GITHUB_TOKEN</code>).
                                     </div>
                                 @endif
                                 @foreach ($items as $setting)
@@ -350,6 +353,8 @@
                                             <input
                                                 type="{{ isset($details['min']) && is_numeric($details['min']) ? 'number' : 'text' }}"
                                                 class="form-control" wire:model.lazy="settings.{{ $flatKey }}"
+                                                placeholder="{{ $this->textPlaceholder($setting['key'], is_array($details) ? $details : null) }}"
+                                                autocomplete="off"
                                                 @if (isset($details['min'])) min="{{ $details['min'] }}" @endif
                                                 @if (isset($details['step'])) step="{{ $details['step'] }}" @endif>
                                         @endif

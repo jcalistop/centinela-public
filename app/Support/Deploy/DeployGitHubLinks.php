@@ -14,7 +14,7 @@ final class DeployGitHubLinks
             return $repo;
         }
 
-        return (string) config('centinela.github_issues.repo', 'jcalistop/minsal-centinela');
+        return (string) config('centinela.github_issues.repo', 'jcalistop/centinela-public');
     }
 
     public function commitUrl(?string $sha): ?string
