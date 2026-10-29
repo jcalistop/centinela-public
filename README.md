@@ -18,7 +18,7 @@ width="400px">
 
 # Centinela
 
-Plataforma web institucional para el **seguimiento, consolidación y rendición de cuentas** de instrumentos de evaluación en Servicios de Salud y sus establecimientos: criterios homogéneos, **trazabilidad** y evidencia para decisiones basadas en datos. La operación es **multi-Servicio**, con **roles**, **año indicador** en sesión y módulos por instrumento.
+Plataforma web institucional para **seguir, consolidar y controlar instrumentos de evaluación** en Servicios de Salud y sus establecimientos: criterios homogéneos, **trazabilidad** y evidencia para decisiones basadas en datos. La operación es **multi-Servicio**, con **roles**, **año indicador** en sesión y módulos por instrumento.
 
 ## Qué incluye (resumen)
 

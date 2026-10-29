@@ -9,7 +9,7 @@
 
 ## 1. Objeto y ámbito
 
-Los presentes Términos de uso regulan el acceso y la utilización de la plataforma web **Centinela**, orientada al **seguimiento, consolidación y rendición de cuentas** de instrumentos de evaluación del ámbito del Ministerio de Salud (MINSAL) en Servicios de Salud (SS) y sus establecimientos.
+Los presentes Términos de uso regulan el acceso y la utilización de la plataforma web **Centinela**, orientada a **seguir, consolidar y controlar instrumentos de evaluación** del ámbito del Ministerio de Salud (MINSAL) en Servicios de Salud (SS) y sus establecimientos.
 
 Centinela permite, entre otras funciones, la parametrización, carga, cálculo y revisión de resultados de instrumentos como **COMGES** (Compromisos de Gestión) y **Metas** sanitarias (leyes 18.834, 19.664 y 20.707), según la habilitación de cada SS. El acceso autenticado se realiza principalmente a través del panel administrativo (`/admin`).
 
