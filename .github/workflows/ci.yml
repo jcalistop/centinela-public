@@ -14,7 +14,7 @@ on:
     branches:
       - main
       - dev
-      - deps-integration
+      - dep-integration
     paths-ignore:
       - "**/*.md"
 
