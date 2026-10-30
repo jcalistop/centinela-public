@@ -22,7 +22,7 @@
         "vite": "^8.3.4"
     },
     "dependencies": {
-        "ace-builds": "^1.44.0",
+        "ace-builds": "^1.45.2",
         "html-to-image": "^1.11.13",
         "quill": "2.0.3"
     },
