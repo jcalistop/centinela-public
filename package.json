@@ -17,12 +17,12 @@
         "axios": "^1.20.0",
         "bootstrap": "^5.3.8",
         "laravel-vite-plugin": "^3.2.0",
-        "sass": "^1.105.2",
+        "sass": "^1.106.1",
         "tailwindcss": "^4.3.3",
-        "vite": "^8.3.4"
+        "vite": "^8.3.5"
     },
     "dependencies": {
-        "ace-builds": "^1.44.0",
+        "ace-builds": "^1.45.2",
         "html-to-image": "^1.11.13",
         "quill": "2.0.3"
     },
