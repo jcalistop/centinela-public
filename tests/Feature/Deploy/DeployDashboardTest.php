@@ -300,7 +300,7 @@ class DeployDashboardTest extends TestCase
             ->test(DeployDashboard::class)
             ->call('showExecutionDetail', $execution->id)
             ->assertSet('selectedExecutionId', $execution->id)
-            ->assertSee('Deploy #' . $execution->id)
+            ->assertSee('Deploy #'.$execution->id)
             ->assertSee('Deploy omitido: prueba.')
             ->assertSee('abc123def456')
             ->call('closeExecutionDetail')
@@ -365,7 +365,7 @@ class DeployDashboardTest extends TestCase
             ->assertSee('centinela:deploy:manual')
             ->assertSee('centinela:deploy:status')
             ->assertSee('centinela:deploy:unlock')
-            ->assertSee('--email=' . $admin->email)
+            ->assertSee('--email='.$admin->email)
             ->assertSee('php artisan db:backup');
     }
 
