@@ -93,7 +93,7 @@ Gates Laravel: `current-add-edit`, `current-download` (`CurrentCutoffPolicy`).
 | --- | --------- |
 | **admin**, **control-gestion** | Instrumento habilitado para la SS y etapa vigente (`indicatorTypeSettings`) |
 | **referente** | Además: usuario asignado al indicador, intervalo de fechas (o `mantener_abierto`), corte en `pestanas_editables`, etapa `AUTOEVALUACION` o `APELACION` |
-| **visualizador**, **parametrizador** | Sin edición vía esta policy (salvo excepciones documentadas en spec) |
+| **visualizador**, **parametrizador** | Sin edición vía esta policy (salvo excepciones documentadas por escrito) |
 
 ### Quién puede descargar medios (`current-download`)
 
@@ -133,13 +133,13 @@ Detalle: [modulos-roles.md](modulos-roles.md).
 
 ## 8. Convergencia y restricciones
 
-- **Inmutabilidad:** resultados de cierres COMGES ya publicados no se recalculan sin spec con paridad verificada.
+- **Inmutabilidad:** resultados de cierres COMGES ya publicados no se recalculan sin alcance documentado con paridad verificada.
 - **Mayor acoplamiento Voyager:** COMGES concentra BREAD de compromisos, evaluaciones y carga; la migración a Filament (T2) se coordina con P1.
 - **Granularidad:** evaluación a nivel **Servicio de Salud** (no establecimiento como Metas).
 
 ---
 
-## 9. Checklist rápido para specs COMGES
+## 9. Checklist rápido para cambios COMGES
 
 - [ ] ¿Impacto en `ano < 2025` y `ano >= 2025`?
 - [ ] ¿Afecta `CurrentCutoffPolicy` o gates de corte?

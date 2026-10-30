@@ -8,7 +8,7 @@
 
 _2-4 líneas describiendo qué hace este PR y por qué._
 
-## Definition of Done (marcar antes de mergear)
+## Checklist de calidad (marcar antes de mergear)
 
 ### Calidad técnica
 

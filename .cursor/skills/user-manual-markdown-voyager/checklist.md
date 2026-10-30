@@ -16,7 +16,7 @@
 - [ ] `version` es SemVer (`1.0.0`).
 - [ ] `tags` no son demasiados (3–8) y ayudan a clasificar.
 
-## UX del contenido (SDD-035)
+## UX del contenido
 
 - [ ] Arranca con **Objetivo** (qué resuelve) y **Cuándo usarlo**.
 - [ ] Tiene procedimientos escaneables: listas cortas y subtítulos.

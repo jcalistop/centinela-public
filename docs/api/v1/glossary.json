@@ -47,7 +47,7 @@
     },
     {
       "term": "PII/egreso",
-      "definition": "La API/MCP en intranet no implica egreso seguro hacia el proveedor del modelo LLM. Ver domain-rules (PII y egreso) y ADR-041; activar el flag requiere aceptación institucional."
+      "definition": "La API/MCP en intranet no implica egreso seguro hacia el proveedor del modelo LLM. Ver domain-rules (PII y egreso); activar el flag requiere aceptación institucional."
     },
     {
       "term": "search",

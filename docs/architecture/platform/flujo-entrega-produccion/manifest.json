@@ -22,8 +22,7 @@
   "source": {
     "document": "docs/ss_reloncavi/2026-08-27-solicitud-cambio-deploy-automatico-produccion/solicitud-cambio-deploy-automatico-produccion-2026-08-27.md",
     "section": "Controles previos / Flujo de entrega (PDF §4.1)",
-    "sdd_kit": ".github/docs/sdd-kit/core/workflow.md",
-    "runbook": ".github/docs/sdd/releases/RUNBOOK.md"
+    "contributing": "CONTRIBUTING.md"
   },
   "visual_check": {
     "status": "pass",

@@ -54,7 +54,6 @@ Referencia en Markdown:
 ## Alcance
 
 - **Manual / Acerca de:** SVG precompilado (recomendado para `status: published`).
-- **Specs SDD** (`.github/docs/sdd/`): siguen con fence ` ```mermaid ` para revisión en GitHub.
 - **Archify:** solo a pedido; no forma parte de este pipeline. Diagramas interactivos de referencia interna viven en [`docs/architecture/`](../../../docs/architecture/README.md).
 
 ## Legacy

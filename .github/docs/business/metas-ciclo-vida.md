@@ -198,7 +198,7 @@ Detalle COMGES: [comges-ciclo-vida.md](comges-ciclo-vida.md).
 
 ---
 
-## 6. Checklist rápido para specs Metas (ciclo)
+## 6. Checklist rápido para cambios Metas (ciclo)
 
 - [ ] ¿Afecta parametrización global vs configuración por SS o establecimiento?
 - [ ] ¿Impacta transición de `etapa_vigente` o historial `met_stage_transitions`?

@@ -9,7 +9,7 @@ Usar cuando el humano o el contexto toque: Filament, reconstrucción de platafor
 
 ## Invariante
 
-La administración visible del producto cerrado es **Voyager `/admin`**. Filament permanece en el árbol y está **oculto** (maestro hard-off; rutas 404). No reabrir el chasis Filament ni borrar su código sin spec nuevo.
+La administración visible del producto cerrado es **Voyager `/admin`**. Filament permanece en el árbol y está **oculto** (maestro hard-off; rutas 404). No reabrir el chasis Filament ni borrar su código sin un alcance documentado.
 
 Guest Livewire (dashboard público) y la fachada de lectura para agentes no cambian por esta pausa.
 
