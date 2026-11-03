@@ -296,7 +296,7 @@
 
                 if (!isNaN(numerador) && !isNaN(denominador) && denominador !== 0) {
                     const resultadoPerc = (numerador / denominador) * 100;
-                    resultadoInput.value = resultadoPerc.toFixed(1);
+                    resultadoInput.value = resultadoPerc.toFixed(2);
                 } else {
                     resultadoInput.value = 0;
                 }

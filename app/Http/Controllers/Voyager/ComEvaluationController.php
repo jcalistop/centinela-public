@@ -31,10 +31,9 @@ class ComEvaluationController extends CentinelaVoyagerController
 
     private function authenticatedUser(): User
     {
-        /** @var User|null $user */
-        $user = auth()->user();
+        $user = Auth::user();
         if (! $user instanceof User) {
-            abort(403, 'Unauthenticated.');
+            abort(401);
         }
 
         return $user;
@@ -642,7 +641,7 @@ class ComEvaluationController extends CentinelaVoyagerController
             ]);
         }
 
-        $resultado = round(($numerador / $denominador) * 100, 1);
+        $resultado = round(($numerador / $denominador) * 100, 2);
         $cumplimiento = $comSensitivityTable->resolveCumplimiento($resultado);
 
         if (is_null($cumplimiento)) {

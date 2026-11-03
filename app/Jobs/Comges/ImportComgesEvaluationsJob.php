@@ -227,7 +227,7 @@ class ImportComgesEvaluationsJob implements ShouldQueue
             throw new \RuntimeException('No existe una tabla de sensibilidad seleccionada para su Servicio de Salud');
         }
 
-        $resultado = round(($numerador / $denominador) * 100, 1);
+        $resultado = round(($numerador / $denominador) * 100, 2);
         $cumplimiento = $comSensitivityTable->resolveCumplimiento($resultado);
 
         if (is_null($cumplimiento)) {
