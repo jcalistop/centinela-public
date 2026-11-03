@@ -34,7 +34,7 @@ Plantillas de onboarding: [agent-system-prompt.md](./agent-system-prompt.md) · 
 
 - Solo ability **`read`**. Sin escritura. Sin `set_context`.
 - Flag `CENTINELA_AGENT_API_ENABLED` apagado por defecto.
-- **PII/egreso:** intranet no implica egreso seguro al proveedor LLM. Activar el flag en datos reales requiere aceptación institucional (ADR-041 / domain-rules).
+- **PII/egreso:** intranet no implica egreso seguro al proveedor LLM. Activar el flag en datos reales requiere aceptación institucional (`domain-rules`).
 
 ## Enlaces lógicos
 

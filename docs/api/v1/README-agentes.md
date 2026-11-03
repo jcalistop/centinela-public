@@ -6,7 +6,7 @@ Guía operativa corta. Contrato de máquina: OpenAPI y glosario en este mismo di
 
 - Variable: `CENTINELA_AGENT_API_ENABLED` (vía `config/centinela.php` → `agent_api.enabled`).
 - **Default: apagado (`false`).** Con flag off, `api/v1` y `/mcp` responden denegado.
-- Activar en un entorno con datos reales requiere aceptación institucional del riesgo de egreso a proveedores LLM (`domain-rules` § PII/egreso; ADR-041).
+- Activar en un entorno con datos reales requiere aceptación institucional del riesgo de egreso a proveedores LLM (`domain-rules` § PII/egreso).
 
 ## Token Sanctum (rol `agente`)
 

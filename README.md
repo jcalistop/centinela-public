@@ -31,6 +31,10 @@ Plataforma web institucional para **seguir, consolidar y controlar instrumentos 
 | **Mensajería**              | Correos institucionales desde el panel `/admin`.                                                                                    |
 | **Administración**          | Usuarios, perfiles, catálogos y soporte diario (panel Voyager `/admin`).                                                            |
 
+![Dashboard público de Centinela](docs/screenshots/dashboard-publico.png)
+
+_Recortes de interfaz (sin datos personales)._ [Ver capturas por módulo](docs/screenshots/README.md)
+
 Narrativa ampliada en **Acerca de** del panel (`/admin/acerca-de`).
 
 ## Stack (referencia técnica)

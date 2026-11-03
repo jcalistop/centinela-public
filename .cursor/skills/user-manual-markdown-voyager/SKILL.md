@@ -1,6 +1,6 @@
 ---
 name: user-manual-markdown-voyager
-description: Creates and updates Centinela user manual pages in Markdown with YAML front-matter, following SDD-035 (contextual help for Voyager /admin). Use when the user asks to write “manual de usuario”, “ayuda contextual”, “Voyager”, “/admin”, “drawer”, or to add/update `resources/user-manual/pages/*.md` and `resources/user-manual/index.yaml`.
+description: Creates and updates Centinela user manual pages in Markdown with YAML front-matter (ayuda contextual para Voyager /admin). Use when the user asks to write “manual de usuario”, “ayuda contextual”, “Voyager”, “/admin”, “drawer”, or to add/update `resources/user-manual/pages/*.md` and `resources/user-manual/index.yaml`.
 ---
 
 # Manual de usuario (Markdown) para Voyager
@@ -44,7 +44,7 @@ Campos recomendados cuando aporten valor:
 - `applies_to.routes` (array de route names)
 - `anchors` (array opcional)
 
-Tolerancia (requisito SDD-035):
+Tolerancia (YAML inválido no bloquea):
 
 - Si el YAML es inválido o falta front‑matter, **no bloquear** el documento. Mantener contenido útil igual.
 
@@ -96,7 +96,7 @@ Buenas prácticas:
 - Para rutas dinámicas por DB (ej. `metas-2026`), usar `route_regex` (ej. `'^metas-\\d+$'`) apuntando a un manual base.
 - Mantener reglas específicas antes que reglas amplias.
 
-Ejemplo (patrón del spec):
+Ejemplo (patrón del índice):
 
 ```yaml
 version: 1
@@ -123,7 +123,7 @@ rules:
 - [ ] `index.yaml` tiene una regla que resuelve al documento (exact/prefix/regex), y no rompe el `fallback_id`.
 - [ ] Diagramas en páginas `published`: SVG precompilado (ver § Diagramas abajo), no fence `mermaid` live.
 
-## Diagramas (SDD-212)
+## Diagramas
 
 Para contenido **`published`** en el manual o reutilizado en «Acerca de»:
 
@@ -140,7 +140,7 @@ Convenciones: ver `resources/docs/diagrams/README.md`.
 
 - **No usar** fence ` ```mermaid ` en páginas publicadas (layout pobre en drawer ~560px).
 - **Legacy:** fence `mermaid` solo en borradores (`status: draft`); el drawer aún lo renderiza client-side.
-- **Specs SDD:** siguen con Mermaid inline; Archify solo a pedido, fuera de este flujo.
+- **Archify:** solo a pedido, fuera de este flujo.
 
 ## Artefactos soportados (convenciones)
 

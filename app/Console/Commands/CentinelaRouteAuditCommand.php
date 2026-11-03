@@ -10,8 +10,8 @@ use Illuminate\Support\Str;
 class CentinelaRouteAuditCommand extends Command
 {
     protected $signature = 'centinela:route-audit
-                            {--write-inventory : Escribe inventario en .github/docs/sdd/audits/route_inventory/YYYY-MM-DD_route-inventory.json (mismo formato que `php artisan route:list --json`).}
-                            {--inventory-out= : Ruta explícita del JSON (p. ej. tests); anula la ruta SDD fechada.}
+                            {--write-inventory : Escribe inventario en storage/app/private/route-inventory/YYYY-MM-DD_route-inventory.json (mismo formato que `php artisan route:list --json`).}
+                            {--inventory-out= : Ruta explícita del JSON (p. ej. tests); anula la ruta fechada.}
                             {--markdown : Imprime tabla markdown en stdout}
                             {--fail-on-high-gaps : Código de salida 1 si alguna ruta de riesgo alto carece de evidencia en tests/}';
 
@@ -23,7 +23,7 @@ class CentinelaRouteAuditCommand extends Command
         if (is_string($inventoryOut) && $inventoryOut !== '') {
             $this->writeRouteListJson($inventoryOut);
         } elseif ($this->option('write-inventory')) {
-            $this->writeRouteListJson($this->sddDatedRouteInventoryPath());
+            $this->writeRouteListJson($this->datedRouteInventoryPath());
         }
 
         $testBlob = $this->aggregateTestSource();
@@ -82,11 +82,11 @@ class CentinelaRouteAuditCommand extends Command
     }
 
     /**
-     * Convención SDD: un archivo por fecha bajo `audits/route_inventory/`.
+     * Un archivo por fecha bajo storage (no se versiona).
      */
-    private function sddDatedRouteInventoryPath(): string
+    private function datedRouteInventoryPath(): string
     {
-        return base_path('.github/docs/sdd/audits/route_inventory/'.now()->format('Y-m-d').'_route-inventory.json');
+        return storage_path('app/private/route-inventory/'.now()->format('Y-m-d').'_route-inventory.json');
     }
 
     private function aggregateTestSource(): string

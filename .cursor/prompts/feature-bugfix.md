@@ -4,10 +4,9 @@ Copia/pega y completa lo mínimo. La idea es forzar el análisis de **año/instr
 
 ## Contexto
 
-- **Spec ID**: SDD-??? (ruta activa: `.github/docs/sdd/specs/<dominio>/SDD-???-...md`; si está Released, en `archive/<año>/<dominio>/`)
-- **Dominio**: metas | adp | comges | chat-ia | supervision | auth | ux | infra | docs
-- **Tipo**: feature | bugfix | refactor | performance | db-change (si aplica)
+- **Alcance documentado**: (qué cambia y qué no)
 - **Módulo**: COMGES | SNSS | Admin(Voyager) | Otro
+- **Tipo**: feature | bugfix | refactor | performance | db-change (si aplica)
 
 ## Reglas críticas a respetar
 
@@ -25,15 +24,15 @@ Quiero implementar:
 
 ## Preguntas que debes responder antes de cambiar código
 
-1. ¿Qué rutas/vistas/componentes se afectan para `ano < 2025`?\n
-2. ¿Qué rutas/vistas/componentes se afectan para `ano >= 2025` (comges-2025)?\n
-3. ¿Depende de `indicatorType`? ¿Cuál(es)?\n
-4. ¿Dónde se debe aplicar/validar el filtro `cen_hie_dependency_id`?\n
+1. ¿Qué rutas/vistas/componentes se afectan para `ano < 2025`?
+2. ¿Qué rutas/vistas/componentes se afectan para `ano >= 2025` (comges-2025)?
+3. ¿Depende de `indicatorType`? ¿Cuál(es)?
+4. ¿Dónde se debe aplicar/validar el filtro `cen_hie_dependency_id`?
 5. ¿Qué evidencia mínima confirma que no hay regresión?
 
 ## Entregable esperado
 
-- Plan de cambios por archivos (lista de archivos y por qué)\n
-- Cambios incrementales (PR pequeño)\n
-- **Test plan**: `php artisan test` + verificación manual específica\n
+- Plan de cambios por archivos (lista de archivos y por qué)
+- Cambios incrementales (PR pequeño)
+- **Test plan**: `php artisan test` + verificación manual específica
 - **Formato**: `vendor/bin/pint --dirty`

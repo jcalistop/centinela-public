@@ -3,7 +3,7 @@
   "info": {
     "title": "Centinela Agent API v1",
     "version": "1.0.0",
-    "description": "Fachada de lectura P3a (ADR-041 / SDD-249). Solo GET. Contrato neutral: instrumento como atributo."
+    "description": "Fachada de lectura P3a. Solo GET. Contrato neutral: instrumento como atributo."
   },
   "servers": [
     {

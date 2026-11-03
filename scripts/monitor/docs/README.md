@@ -150,7 +150,7 @@ Lectura (internamente el monitor usa `Get-Content secrets/smtpPassword.sec | Con
 | **TS-Externo** (este monitor) | PC monitoreo | Cada 5 min               | Health; `queue/process` **default** (salvo 00:00–00:45); `schedule/run` horario **excepto 00:00**; backup recovery **nunca** 08:00–20:00 ni 00:00–00:45 |
 | **TS-Producción**             | Servidor IIS | 1×/día **00:00** (`cron_mail.bat`, usuario Git) | `schedule:run` (lote Kernel + dump) + `queue:work --queue=releases` (único drenaje de deploys) |
 
-El monitor **nunca** drena la cola `releases` (deploy). Esa cola la procesa **solo** [`cron_mail.bat`](../../../cron_mail.bat) a las **00:00**, con el usuario Windows que tiene credenciales Git (SDD-196). Un deploy encolado de día espera esa ventana.
+El monitor **nunca** drena la cola `releases` (deploy). Esa cola la procesa **solo** [`cron_mail.bat`](../../../cron_mail.bat) a las **00:00**, con el usuario Windows que tiene credenciales Git. Un deploy encolado de día espera esa ventana.
 
 ## Endpoints consumidos
 
@@ -187,7 +187,7 @@ El monitor **nunca** drena la cola `releases` (deploy). Esa cola la procesa **so
 | Backup desactualizado                         | Recuperar dump **solo** fuera de 08:00–20:00 y fuera de 00:00–00:45 |
 | Muchos intentos de login fallidos             | Advertencia en reporte diario                |
 
-## Reportes (SDD-243)
+## Reportes
 
 **Un solo correo diario ops** sale de este Monitor (~`reporting.dailyAt`, default 07:00). INTRA ya **no** envia `schedule:daily-report` por SMTP.
 
@@ -216,9 +216,4 @@ Para usar el VBS (ventana oculta):
 
 ## Propuestas de mejora para endpoints (roadmap)
 
-Ver [SDD-061](../../../.github/docs/sdd/archive/2026/supervision/SDD-061b-monitoreo-v2.md) para las propuestas de simplificacion de autenticacion y nuevos endpoints.
-
-## Spec
-
-- [SDD-061 - Monitor V2](../../../.github/docs/sdd/archive/2026/supervision/SDD-061b-monitoreo-v2.md)
-- [SDD-044 - Monitor legacy (deprecado)](../../../.github/docs/sdd/archive/2026/supervision/SDD-044-supervision-01-runtime-api-monitor.md)
+Simplificación de autenticación y nuevos endpoints: decisión del desarrollador (documentada fuera de este repo).

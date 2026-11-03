@@ -1,6 +1,6 @@
 # Arquitectura — Centinela (Archify)
 
-Diagramas de arquitectura generados con [Archify], como artefactos de referencia interna. Son **independientes** del pipeline Mermaid/SVG del manual (`resources/docs/diagrams/`, ver SDD-212).
+Diagramas de arquitectura generados con [Archify], como artefactos de referencia interna. Son **independientes** del pipeline Mermaid/SVG del manual (`resources/docs/diagrams/`).
 
 ## Convención de carpetas
 
@@ -55,7 +55,7 @@ OOTT → Parametrización global → Configuración SS → Autoevaluación → �
 ```
 
 - 11 nodos, tarjetas Roles / Cortes (OOTT) / Escala de cumplimiento.
-- Companion SVG para Acerca de: export Archify Light/classic → `/docs/diagrams/ciclo-comges.svg` (`npm run diagrams:export-ciclo-comges`, SDD-215).
+- Companion SVG para Acerca de: export Archify Light/classic → `/docs/diagrams/ciclo-comges.svg` (`npm run diagrams:export-ciclo-comges`).
 
 ### Ciclo Metas (workflow)
 

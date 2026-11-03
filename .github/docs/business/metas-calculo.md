@@ -397,11 +397,11 @@ Servicios: `MetIndicatorIncompletePeriodService`, `MetPeriodCaptureCompletenessV
 | 2026-08-13 | Separación de los dos semáforos: la fila comunica el aporte ponderado y pierde el piso de 75 % (propio del global); leyenda `indicator` por ambos umbrales; modal «Ver datos» sin corte propio de 80 % | enmienda 2026-08-13; este documento §7.1, §7.4 |
 | 2026-08-12 | Umbrales solo en el ponderado; cumplimiento visible lineal con tope 100 %; semáforo híbrido por fila | (enmienda parcial a); este documento §6.1–6.3, §7.1 |
 | 2026-07-03 | Alineación Desempeño: `estado_carga` y cumplimiento con universo `agrupa_ss` |; este documento §4.1.1 |
-| 2026-07-03 | Documentación `agrupa_ss` (agrupación SS en cálculo) |, ADR 2026-04-21; este documento §4.1.1 |
+| 2026-07-03 | Documentación `agrupa_ss` (agrupación SS en cálculo) | Decisión 2026-04-21; este documento §4.1.1 |
 | 2026-06-10 | Fórmula sobre componentes agregados; fin de factor inferido en sumatoria/último dato | Enmienda §2026-06-10; este documento §5.2 |
 | 2026-06-10 | Footer cumplimiento global calculado en vivo | Enmienda; este documento §7 |
 | 2026-06-10 | Semáforos unificados por `umbral_superior` en filas; leyendas `indicator`/`global`/`mixed` | Enmienda; este documento §7.1–7.4 |
 | 2026-06-10 | Recálculo configuración por etapa; «Guardar y recalcular» preliminar/final | Enmienda |
-| 2026-06-04 | Divisor cero contextual ratio 1:1 |, ADR-036 |
+| 2026-06-04 | Divisor cero contextual ratio 1:1 | Decisión de cálculo |
 | 2026-04-22 | Umbrales y cumplimiento escalado en global | |
-| 2026-05-11 | Tipos y agregación por SS |, ADR-027 |
+| 2026-05-11 | Tipos y agregación por SS | Decisión de cálculo |

@@ -89,8 +89,8 @@ Todos los modelos COMGES usan el trait `Auditable` (owen-it/laravel-auditing). V
 
 - **Origen del esquema**: la base de datos no fue creada mediante migraciones de Laravel; la mayor parte de la estructura se generó con herramientas de tablas/BREAD de Voyager.
 - **Fuente de verdad del esquema**: no asumir que `database/migrations/` refleja el estado real. Para conocer estructura, relaciones e índices, consultar directamente la base de datos usando los MCP disponibles.
-- **Intervenciones de datos/esquema**: cualquier cambio de base de datos debe definirse primero de forma documentada (ADR + spec-driven development), para su ejecución manual posterior en producción.
-- **Ubicación de ADRs**: registrar decisiones de base de datos de forma documentada (decisión + alcance + rollback) antes de ejecutar DDL.
+- **Intervenciones de datos/esquema**: cualquier cambio de base de datos debe definirse primero de forma documentada (decisión del desarrollador + alcance + rollback), para su ejecución manual posterior en producción.
+- **Registro de decisiones de BD**: documentar decisión, alcance y rollback antes de ejecutar DDL.
 - **Plantilla mínima obligatoria para cambios de BD**: contexto/problema, decisión propuesta, alcance técnico (tablas/columnas/índices/constraints), riesgos, plan de rollback, plan de validación funcional y técnica post-implementación, y pasos de ejecución manual en producción.
 - **Propuesta técnica del agente**: para cambios de esquema, el agente debe priorizar especificación y checklist operativo; no entregar ni ejecutar SQL DDL directo (`ALTER`, `DROP`, `CREATE`) salvo solicitud explícita del usuario.
 - **Trazabilidad**: registrar siempre el objetivo, riesgo, plan de rollback y validaciones esperadas antes de proponer o ejecutar cambios sobre base de datos.

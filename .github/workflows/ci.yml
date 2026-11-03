@@ -185,7 +185,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: route-inventory-json
-          path: .github/docs/sdd/audits/route_inventory/*_route-inventory.json
+          path: storage/app/private/route-inventory/*_route-inventory.json
 
       - name: Route vs tests gap report (strict high)
         run: php artisan centinela:route-audit --fail-on-high-gaps

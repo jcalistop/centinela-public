@@ -127,7 +127,7 @@ El CG **registra la evaluación final** del período, incorporando las resolucio
 
 El ciclo del año indicador para ese SS **concluye**. El sistema permanece en **solo lectura** para todos los roles en ese instrumento-año-SS.
 
-Los resultados publicados en cierre son **inmutables** salvo spec con paridad verificada ([domain-rules.md](domain-rules.md) · [comges-calculo.md](comges-calculo.md) §8).
+Los resultados publicados en cierre son **inmutables** salvo alcance documentado con paridad verificada ([domain-rules.md](domain-rules.md) · [comges-calculo.md](comges-calculo.md) §8).
 
 ---
 
@@ -175,7 +175,7 @@ Detalle Metas: [metas-ciclo-vida.md](metas-ciclo-vida.md).
 
 ---
 
-## 6. Checklist rápido para specs COMGES (ciclo)
+## 6. Checklist rápido para cambios COMGES (ciclo)
 
 - [ ] ¿Afecta parametrización global vs configuración por SS?
 - [ ] ¿Impacta transición de `etapa_vigente`?

@@ -1,6 +1,6 @@
 # Módulos y roles — matriz de acceso
 
-Matriz de referencia **módulo × rol** para specs, PRs y validación funcional. Deriva de policies, middleware y flujos Livewire vigentes.
+Matriz de referencia **módulo × rol** para cambios, PRs y validación funcional. Deriva de policies, middleware y flujos Livewire vigentes.
 
 **Último refresh:** **2026-10-07** (paridad Metas; ADP en pausa).
 
@@ -82,13 +82,13 @@ Detalle: [adp-operativo.md](adp-operativo.md). Validar con CG al reactivar el m�
 | ------ | ----- | -------------- | --------------- | --------- | ------------ |
 | Usuarios y roles | T (E) | T | — | — | — |
 | `indicator_types` / habilitación SS | T | T | O | — | — |
-| Settings plataforma (ADR-032) | T | T | — | — | — |
+| Settings plataforma | T | T | — | — | — |
 | Documentos normativos | T | — | T | L | L (solo `documentos`) |
 | Actividades / timeline indicador | T | — | T | L | L |
 | BREAD Voyager legacy | T | T | O | O | L |
 | Panel Filament (objetivo v5.0.0) | T | T | O | O | L |
 
-Durante transición ADR-039 pueden coexistir filas Voyager y Filament; el spec debe indicar cuál capa toca.
+Durante la transición de plataforma pueden coexistir filas Voyager y Filament; el alcance documentado debe indicar cuál capa toca.
 
 ---
 
@@ -112,7 +112,7 @@ Fuente: `SupportTicketPolicy`, `BrowseSoporteVoyagerMenu`.
 | ------ | ----- | -------------- | --------------- | --------- | ------------ |
 | Uso del chat | T | T | T | T | T |
 
-Integración en layout admin; sin restricción por rol distinta a acceso `/admin` (validar en spec Chat IA si cambia).
+Integración en layout admin; sin restricción por rol distinta a acceso `/admin` (validar en el alcance de Chat IA si cambia).
 
 ### Manual contextual
 
@@ -184,11 +184,11 @@ Fuente: `MessagingAudienceResolver`, `MessagingComposeScope`. Entrada por botón
 
 ---
 
-## 5. Uso en specs
+## 5. Uso en cambios documentados
 
 Al documentar impacto en roles:
 
-- [ ] ¿Cambia la matriz de este documento? Si sí, actualizar `modulos-roles.md` en el mismo PR o spec.
+- [ ] ¿Cambia la matriz de este documento? Si sí, actualizar `modulos-roles.md` en el mismo PR o alcance.
 - [ ] ¿Afecta solo Voyager, solo Filament o ambos durante transición?
 - [ ] ¿Requiere validación con CG/Referentes para el rol afectado?
 

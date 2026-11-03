@@ -127,16 +127,16 @@ Reutiliza componentes del chasis (convergencia iniciada):
 | Catálogo global / maqueta | Sí | Sí | No | No | Lectura |
 | Catálogo por SS | Sí | No | Sí | No | Lectura |
 | Carga mensual / autoevaluación | Sí | No | Sí | En su SS | No |
-| Apelaciones / final | Según spec | No | Sí | Según etapa | No |
+| Apelaciones / final | Según alcance documentado | No | Sí | Según etapa | No |
 
 Detalle: [modulos-roles.md](modulos-roles.md). Validar con CG cuando el módulo entre en producción.
 
 ---
 
-## 9. Checklist rápido para specs ADP
+## 9. Checklist rápido para cambios ADP
 
 - [ ] ¿Segmentación por `cen_hie_dependency_id`?
 - [ ] ¿Ponderaciones 10 % mínimo y suma 100 %?
 - [ ] ¿Método de cálculo (porcentual / sensibilidad / dicotómico) documentado?
 - [ ] ¿Trazabilidad de overrides en etapa final?
-- [ ] Marcar borrador si la regla aún no está Released.
+- [ ] Marcar borrador si la regla aún no está publicada.

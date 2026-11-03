@@ -64,7 +64,7 @@ Los usuarios con rol **admin** pueden ver, debajo del contenido principal del in
 - **Uso de la plataforma (estadística):** pestañas con gráficos, tablas y salud del sistema (si el seguimiento de uso está activo).
 - **Deploy:** historial y controles de despliegue en intranet.
 
-Ambos bloques comparten el mismo estilo visual **Compass** de Centinela (misma línea que módulos como Establecimientos): un marco por bloque, títulos y etiquetas con tamaño uniforme, y enlaces a GitHub sin mezclar subrayado con badges de estado. Si notas paneles duplicados o texto difícil de leer, reporta al equipo — el pulido visual se rige por la spec interna **SDD-101**.
+Ambos bloques comparten el mismo estilo visual **Compass** de Centinela (misma línea que módulos como Establecimientos): un marco por bloque, títulos y etiquetas con tamaño uniforme, y enlaces a GitHub sin mezclar subrayado con badges de estado. Si notas paneles duplicados o texto difícil de leer, reporta al equipo.
 
 ## Panel Deploy (solo administradores)
 
