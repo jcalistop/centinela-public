@@ -67,7 +67,7 @@ return [
         | TOOL dump/paridad (SDD-219 / ADR-040) — NO es la BD de la aplicación.
         | Solo para regenerar/auditar mysql-schema.sql vía schema:parity.
         | Tras usarla: DROP DATABASE y quitar DB_SCHEMA_PARITY_* del .env.
-        | Guía: .github/docs/sdd/guides/schema-dump-parity-tool.md
+        | Guía: documentación operativa schema-dump-parity-tool (repo SDD, no en este árbol).
         | Instalación limpia de Centinela: conexión default + schema:fresh (SDD-240).
         */
         'mysql_schema_parity' => [
