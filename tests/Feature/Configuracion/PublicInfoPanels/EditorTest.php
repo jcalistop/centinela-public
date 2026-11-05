@@ -178,7 +178,74 @@ class EditorTest extends TestCase
             ->assertSet('titulo', 'Título previo')
             ->assertSet('html_path', null)
             ->assertSet('zip_precarga', null)
+            ->assertHasErrors(['zip_precarga'])
+            ->assertNotSet('uploadBlockers', [])
             ->assertDispatched('toast', type: 'danger');
+    }
+
+    public function test_upload_blocker_prevents_save_after_failed_zip(): void
+    {
+        Livewire::actingAs($this->admin)
+            ->test(PublicInfoPanelEditor::class)
+            ->set('titulo', 'Tras ZIP malo')
+            ->set('descripcion', 'No debe persistir con bloqueo de ZIP.')
+            ->set('zip_precarga', $this->zipUpload([
+                'manifest.json' => json_encode(['titulo' => 'Malo', 'descripcion' => 'Traversal.']),
+                '../evil.html' => '<html></html>',
+                'preview.png' => $this->pngBytes(),
+            ]))
+            ->call('save')
+            ->assertHasErrors(['zip_precarga'])
+            ->assertDispatched('toast', type: 'danger')
+            ->assertNoRedirect();
+
+        $this->assertNull(PublicInfoPanel::query()->where('slug', 'tras-zip-malo')->first());
+    }
+
+    public function test_failed_csv_upload_blocks_save_and_keeps_previous_paths(): void
+    {
+        $panel = $this->createBundlePanel('mixto', ['publicado' => false]);
+        $disk = Storage::disk(config('voyager.storage.disk', 'private'));
+        $originalHtml = $disk->get($panel->html_path);
+        $originalCsv = $disk->get($panel->csv_path);
+
+        $errorsJson = json_encode([
+            'message' => 'Subir files.0 ha fallado.',
+            'errors' => ['files.0' => ['Subir files.0 ha fallado.']],
+        ], JSON_THROW_ON_ERROR);
+
+        Livewire::actingAs($this->admin)
+            ->test(PublicInfoPanelEditor::class, ['panel' => $panel])
+            ->set('htmlUpload', UploadedFile::fake()->createWithContent('panel.html', '<html><body>nuevo</body></html>'))
+            ->call('_uploadErrored', 'csvUpload', $errorsJson, false)
+            ->assertHasErrors(['csvUpload'])
+            ->call('save')
+            ->assertHasErrors(['csvUpload'])
+            ->assertDispatched('toast', type: 'danger')
+            ->assertNoRedirect();
+
+        $fresh = $panel->fresh();
+        $this->assertSame($panel->html_path, $fresh->html_path);
+        $this->assertSame($panel->csv_path, $fresh->csv_path);
+        $this->assertSame($originalHtml, $disk->get($panel->html_path));
+        $this->assertSame($originalCsv, $disk->get($panel->csv_path));
+    }
+
+    public function test_oversized_csv_sets_blocker_and_blocks_atomic_save_with_html(): void
+    {
+        $panel = $this->createBundlePanel('csv-grande', ['publicado' => false]);
+        $originalHtmlPath = $panel->html_path;
+
+        Livewire::actingAs($this->admin)
+            ->test(PublicInfoPanelEditor::class, ['panel' => $panel])
+            ->set('htmlUpload', UploadedFile::fake()->createWithContent('panel.html', '<html><body>nuevo</body></html>'))
+            ->set('csvUpload', UploadedFile::fake()->create('datos.csv', 51201, 'text/csv'))
+            ->assertHasErrors(['csvUpload'])
+            ->call('save')
+            ->assertHasErrors(['csvUpload'])
+            ->assertNoRedirect();
+
+        $this->assertSame($originalHtmlPath, $panel->fresh()->html_path);
     }
 
     public function test_client_cannot_tamper_with_persisted_asset_paths(): void
