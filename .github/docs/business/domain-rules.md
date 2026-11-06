@@ -5,7 +5,7 @@
 
 **Visión de plataforma (hoy en pausa):** [instrumentos-plataforma.md](instrumentos-plataforma.md).
 
-Última formalización: **2026-10-25** (ocultar Filament; pausa de evolución de plataforma / producto cerrado / admin Voyager). Antes: **2026-10-15** (paneles Filament multi-audiencia); **2026-10-07**.
+Última formalización: **2026-11-06** (higiene: chasis Filament fuera de la guía de implementación; producto cerrado / admin Voyager). Antes: **2026-10-25** (ocultar Filament); **2026-10-15** (paneles Filament multi-audiencia); **2026-10-07**.
 
 **Ritual periódico:** ver [README.md](README.md) § Ritual de alineamiento.
 
@@ -97,40 +97,23 @@ Aplican a la campaña **v5.0.0** y convergencia de instrumentos. Detalle en [ins
 
 - [ ] Si toca rutas dinámicas (`routes/web.php` aprox. líneas 43–51 o registro por `IndicatorType`): documentar y evaluar invalidación de caché `indicator_type_routes`.
 
-### UI administrativa (transición Voyager → Filament)
+### UI administrativa (producto cerrado = Voyager)
 
-> **Pausa operativa 2026-10-24 (producto cerrado / admin Voyager):** no se abren cambios de plataforma Filament (T2d+, T3, C1b, P1/P2/P3). El **producto cerrado** cuya administración se traspasa opera con **Voyager `/admin` como único shell administrativo visible**. Paneles públicos (curaduría) y mensajería viven en Voyager. Filament permanece en el árbol y está **oculto** (maestro hard-off, rutas 404, toggles Settings ocultos, keys fuera de `.env.example`); no se desmantela (`config`/gates/BD quedan). Guest Livewire y MCP/P3a no cambian. El chasis de cuatro paneles abajo es **histórico** (código en árbol / tests); no autorizan reabrir la evolución de plataforma.
+> **Pausa operativa (producto cerrado / admin Voyager):** no se abren cambios de plataforma Filament (T2d+, T3, C1b, P1/P2/P3). El **producto cerrado** opera con **Voyager `/admin` como único shell administrativo visible**. Paneles públicos (curaduría) y mensajería viven en Voyager. Filament permanece en el árbol y está **oculto** (maestro hard-off, rutas 404, toggles Settings ocultos, keys fuera de `.env.example`); **no se desmantela** (`config`/gates/BD quedan). Guest Livewire y MCP/P3a no cambian. El chasis de cuatro paneles Filament es **histórico** (código en árbol / tests); detalle en [instrumentos-plataforma.md](instrumentos-plataforma.md) § «Paneles Filament (histórico)». No autoriza reabrir la evolución de plataforma ni mezclar audiencias en un shell nuevo.
 
-- [ ] Identificar capa afectada: **Voyager BREAD** (legacy), **Filament Resource** (objetivo) o **Livewire custom** en panel Filament.
-- [ ] **¿En qué panel Filament vive?** (`servicio-salud` / `catalogo` / `pais` / `configuracion`) — ver [Paneles Filament](#paneles-filament-chasis-multi-audiencia).
-- [ ] Si retira funcionalidad Voyager: exigir paridad validada con CG/Referentes antes del retiro.
-- [ ] Cambios de plataforma Filament: citar evolución de plataforma / admin Voyager en impacto técnico.
+**Hechos operativos vigentes:**
 
-#### Paneles Filament (chasis multi-audiencia)
+- **Login canónico:** Voyager `/admin/login` (`GET /login` redirige ahí). Login Filament `/servicio-salud/login` → **404**.
+- **Mensajería manual (canónica: Voyager `/admin/mensajeria`):** emiten solo `admin` (alcance global) y `control-gestion` (su `cen_hie_dependency_id`; no bypasea SS ajena). Entrada: botón a la derecha del browse Usuarios (no ítem de menú). Paths Filament de mensajería ocultos.
+- **Paneles públicos (canónica: Voyager `/admin/paneles-publicos`):** curaduría en Voyager; path Filament de configuración oculto.
+- **Maestro Filament:** hard-off en runtime (`FilamentChasisGate::runtimeEnabled()` siempre `false`). Env `CENTINELA_FILAMENT_*` y BD `module.filament_enabled` se ignoran. URLs de paneles y legado `/filament/*` → **404**. Reabrir exige un alcance documentado. En PHPUnit el OR inclusivo legado sigue (solo tests).
+- Guest/público (`module.public_dashboard_*`) **no** es el panel Filament `pais`.
 
-La UI Filament se organiza en **cuatro paneles** (paths URL), cada uno con audiencia y gate de rol propios. No sustituyen Voyager `/admin` hasta un alcance de retiro documentado (T3). Decisión de chasis: evolución de plataforma / admin Voyager §2.2. El path `/filament` se **retira** (no alias permanente; sin uso en producción con flags on).
+**Checklist UI (default):**
 
-| Panel | Path | Roles de entrada | Contenido típico |
-| ----- | ---- | ---------------- | ---------------- |
-| Operación SS | `/servicio-salud` | visualizador, referente, control-gestion (+ admin soporte) | Trabajo diario por SS + año (p. ej. browse COMGES C1a, contexto año/SS) |
-| Catálogo | `/catalogo` | parametrizador, admin | Parametrización global infrecuente (alto blast radius: afecta a todos los SS) |
-| País | `/pais` | parametrizador, admin | Trabajo diario autenticado nivel país; **no** es el dashboard guest |
-| Configuración | `/configuracion` | admin | Plataforma: settings, flags, deploy UI. Curaduría paneles públicos **canónica: Voyager `/admin/paneles-publicos`**. Path Filament oculto. |
-
-**Reglas:**
-
-1. Un panel = una audiencia / riesgo principal (no mezclar operación SS con catálogo global en el mismo shell; catálogo y país se separan aunque compartan roles: blast radius vs frecuencia de uso).
-2. Tenancy y año siguen vigentes en paneles operativos (`YearContext`, `cen_hie_dependency_id`); el contexto año/SS en UI solo en `servicio-salud`.
-3. **Tres capas de acceso** (ninguna sustituye a otra). Producto cerrado:
- - **Maestro:** hard-off en runtime (`FilamentChasisGate::runtimeEnabled()` siempre `false`). Env `CENTINELA_FILAMENT_*` y BD `module.filament_enabled` se ignoran. URLs de paneles, login `/servicio-salud/login` y legado `/filament/*` → **404**. Toggles `module.filament_*` ocultos en Settings; keys fuera de `.env.example`. `config`/gates/filas BD quedan. Reabrir exige un alcance documentado. En PHPUnit el OR inclusivo legado sigue (solo tests).
- - **Panel / superficie (histórico, tests):** matriz de rol (`canAccessPanel`); flags por Resource/Page. Encender el maestro en test no enciende todas las superficies.
- - **Ids/paths:** `Panel::id()` = `path` = kebab-case (`servicio-salud`, `catalogo`, `pais`, `configuracion`).
-4. Guest/público (`module.public_dashboard_*`) **no** es el panel Filament `pais`.
-5. Cambios de path, id de panel o matriz rol→panel requieren alcance documentado (y enmienda de la decisión de chasis §2.2 si cambia el chasis).
-6. Si el usuario tiene acceso a **más de un** panel, la UI ofrece **«Cambiar panel»** (menú de usuario): solo destinos permitidos por su rol; no deep-link a la página actual en otro shell.
-7. **Login canónico:** Voyager `/admin/login` (`GET /login` redirige ahí). `/servicio-salud/login` → **404**. Home post-login Filament por rol es histórico (solo tests con override).
-8. **parametrizador** no entra a `/servicio-salud`. Trabajo diario: `/pais`; parametrización global: `/catalogo`. Operación SS queda en visualizador, referente, control-gestion (+ admin soporte). Decisión de producto 2026-10-20 (sin alcance documentado formal).
-9. **Mensajería manual (superficie canónica: Voyager `/admin/mensajeria`):** emiten solo `admin` (alcance global) y `control-gestion` (su `cen_hie_dependency_id`; no bypasea SS ajena). Entrada: botón a la derecha del browse Usuarios (no ítem de menú). Paths Filament `/configuracion/mensajeria` y `/servicio-salud/mensajeria` ocultos. Voyager **no** usa `FilamentMessagingGate`.
+- [ ] Capa afectada por defecto: **Voyager `/admin`** (BREAD o Livewire bajo Voyager). **No aplica — Filament oculto** para cambios nuevos.
+- [ ] Solo si el cambio toca código Filament **ya existente** (tests / árbol): no ampliar superficie; no mezclar audiencias; ver chasis histórico en [instrumentos-plataforma.md](instrumentos-plataforma.md).
+- [ ] Si retira funcionalidad Voyager: exigir paridad validada con CG/Referentes antes del retiro (alcance documentado; no es trabajo activo de plataforma).
 
 ### Cortes y políticas de edición (COMGES)
 
@@ -187,7 +170,7 @@ La UI Filament se organiza en **cuatro paneles** (paths URL), cada uno con audie
 | **BelongsToHealthService** | Trait Eloquent con GlobalScope de tenancy por SS |
 | **Escala puntaje** | COMGES `ano ≥ 2025`: cumplimiento como puntaje 0–4, no porcentaje |
 | **Escala porcentaje** | COMGES `ano < 2025` y Metas: cumplimiento en % |
-| **Panel Filament** | Instancia Panel Builder con path URL y auth propios (`servicio-salud`, `catalogo`, `pais`, `configuracion`). Matriz rol→panel en [Paneles Filament](#paneles-filament-chasis-multi-audiencia). |
+| **Panel Filament** | Instancia Panel Builder con path URL y auth propios (`servicio-salud`, `catalogo`, `pais`, `configuracion`). **Histórico / oculto** en producto cerrado; matriz rol→panel en [instrumentos-plataforma.md](instrumentos-plataforma.md) § «Paneles Filament (histórico)». |
 
 ---
 
@@ -204,10 +187,10 @@ Al documentar el impacto técnico de un cambio, responder (o «No aplica — raz
 | ¿Lee o escribe el año activo (`YearContext` / `FiltersByActiveYear`)? | Entidades y períodos activos |
 | ¿Toca rutas dinámicas? | Rutas y caché |
 | ¿Requiere invalidar caché `indicator_type_routes`? | Rutas y caché |
-| ¿Es visible en admin (Voyager / Filament / Livewire)? | UI administrativa |
-| ¿En qué panel Filament vive (`servicio-salud` / `catalogo` / `pais` / `configuracion`)? | Paneles Filament |
+| ¿Es visible en admin (Voyager / Filament / Livewire)? | UI administrativa — default Voyager `/admin` |
+| ¿Toca código Filament ya existente (tests / árbol)? | UI administrativa — default **No aplica — Filament oculto**; si sí: no ampliar superficie ([instrumentos-plataforma.md](instrumentos-plataforma.md)) |
 | ¿Afecta `CurrentCutoffPolicy`? | Cortes COMGES |
 | ¿Afecta convergencia P1/P2/P3? | Invariantes de visión de plataforma |
 | ¿Requiere paridad histórica de resultados? | Inmutabilidad histórica |
 
-Completar además la tabla de **impacto stack** Laravel/Voyager (hasta retiro Voyager, fase T3). Cambios de plataforma v5.0.0 deben citar la visión de plataforma (hoy en pausa).
+Completar además la tabla de **impacto stack** Laravel/Voyager. Cambios de plataforma deben citar la visión de plataforma (**hoy en pausa**; admin visible = Voyager).

@@ -5,7 +5,7 @@ Contexto de producto MINSAL (Servicios de Salud, instrumentos de evaluación, ro
 Contexto de negocio del producto (separado de la metodología de implementación).
 
 **Formalización de visión de plataforma:** 2026-07-09 · **Aprobada** por responsable técnico (misma fecha).
-**Última pasada de alineamiento `domain-rules`:** 2026-10-07.
+**Última pasada de alineamiento `domain-rules`:** 2026-11-06 (chasis Filament → histórico en `instrumentos-plataforma`; admin = Voyager).
 
 ---
 
@@ -60,7 +60,7 @@ Criterio: *obsoleto = contradice lo publicado, o duplica sin valor y nadie lo ci
 | `metas-calculo.md` | **mantener** | Fuente de cálculo Metas; citado ampliamente. |
 | `comges-ciclo-vida.md` | **mantener** | Fuente ciclo COMGES; citado. |
 | `comges-calculo.md` | **mantener** (higiene fecha) | Fuente cálculo COMGES; fecha alineada 2026-10-07 sin cambio de reglas. |
-| `instrumentos-plataforma.md` | **mantener** (parches) | Visión P1–P3; drift F2 cerrado 2026-10-07 (`YearContext` / `BelongsToHealthService` vigentes; P1–P3 siguen pendientes). |
+| `instrumentos-plataforma.md` | **mantener** (parches) | Visión P1–P3 en pausa; chasis paneles Filament histórico (2026-11-06); F2 vigente. |
 | `modulos-roles.md` | **mantener** (refresh) | Matriz Metas alineada al ciclo vigente; ADP marcada en pausa (2026-10-07). |
 | `adp-operativo.md` | **mantener** (parche banner/enlaces) | Suite ADP en pausa; banner e hipervínculos corregidos 2026-10-07. Contenido operativo sigue siendo borrador. |
 
@@ -70,7 +70,7 @@ Criterio: *obsoleto = contradice lo publicado, o duplica sin valor y nadie lo ci
 
 ## Jerarquía de lectura
 
-1. **Nuevo en el proyecto:** [instrumentos-plataforma.md](instrumentos-plataforma.md) → [domain-rules.md](domain-rules.md).
+1. **Nuevo en el proyecto:** [domain-rules.md](domain-rules.md) (invariantes vigentes; admin = Voyager). Visión de plataforma en pausa: [instrumentos-plataforma.md](instrumentos-plataforma.md) (histórico; no guía de implementación activa).
 2. **Cambio de instrumento:** [domain-rules.md](domain-rules.md) + doc del instrumento (`comges-ciclo-vida`, `comges-calculo`, `metas-ciclo-vida`, `metas-calculo`, `adp-operativo`).
 3. **Permisos / UX por rol:** [modulos-roles.md](modulos-roles.md).
 
@@ -80,6 +80,6 @@ Criterio: *obsoleto = contradice lo publicado, o duplica sin valor y nadie lo ci
 
 - ~~Inventario de indicadores replicados COMGES↔Metas~~ — **cerrado**; decisión: **diferir solución a `v5.0.0` (P2)**. Sin alcance de convergencia en v4.x.
 - Actualizar matriz ADP en [modulos-roles.md](modulos-roles.md) cuando el módulo entre en producción.
-- Refinar permisos Filament tras fase T1 (piloto panel).
+- ~~Refinar permisos Filament tras fase T1 (piloto panel)~~ — **en pausa (producto cerrado / admin Voyager)**; no es trabajo activo.
 - ~~Recorte F2 «futuro» en instrumentos-plataforma~~ — **cerrado** 2026-10-07.
 - ~~Refresh `modulos-roles` / fecha `comges-calculo`~~ — **cerrado** 2026-10-07.

@@ -2,9 +2,11 @@
 
 Documento de **negocio** que define la identidad de producto de Centinela y el marco de convergencia entre instrumentos. Complementa [domain-rules.md](domain-rules.md) (reglas transversales) y los documentos por instrumento.
 
-**Contexto arquitectónico:** evolución de plataforma / admin Voyager.
+> **Pausa operativa (producto cerrado):** no implementar Filament «de paso». Admin visible = Voyager `/admin`. Filament en el árbol está **oculto** (hard-off); no se desmantela. Este documento conserva la visión histórica P1–P3 y el chasis de paneles; no autoriza reabrir plataforma.
 
-Última formalización: **2026-10-07** (alineamiento con F2 publicado; visión P1–P3 sin cambio de alcance).
+**Contexto arquitectónico:** evolución de plataforma / admin Voyager (en pausa).
+
+Última formalización: **2026-11-06** (chasis de paneles Filament documentado aquí como histórico). Antes: **2026-10-07** (alineamiento con F2 publicado; visión P1–P3 sin cambio de alcance).
 
 ---
 
@@ -110,7 +112,7 @@ Estas reglas gobiernan los cambios de las fases P1–P3 y la visión de platafor
 
 ## 6. Transición del shell administrativo
 
-La decisión de evolución de plataforma adopta **Filament v5** como panel admin objetivo, reemplazando progresivamente **Voyager** y el kit **Compass**.
+La decisión de evolución de plataforma adopta **Filament v5** como panel admin objetivo, reemplazando progresivamente **Voyager** y el kit **Compass**. **Estado actual:** producto cerrado con Voyager `/admin` único visible; Filament oculto (ver banner al inicio).
 
 | Aspecto | Regla de negocio |
 | ------- | ---------------- |
@@ -118,6 +120,29 @@ La decisión de evolución de plataforma adopta **Filament v5** como panel admin
 | **Qué no cambia** | Reglas de dominio en este directorio; servicios de cálculo; segmentación SS; roles (5 invariantes). |
 | **Flujos operativos** | Carga, cálculo y resultados de instrumentos siguen en **Livewire a medida**, integrados en páginas custom del panel Filament — no como CRUD genérico. |
 | **Convivencia** | Durante la transición pueden coexistir Voyager, Compass y Filament; usar feature flags por módulo. |
+
+### Paneles Filament (histórico)
+
+Chasis multi-audiencia **histórico** (código en árbol / tests). **No** es guía de implementación para cambios nuevos: admin canónico = Voyager `/admin`. El path `/filament` se retiró (no alias permanente).
+
+| Panel | Path | Roles de entrada | Contenido típico |
+| ----- | ---- | ---------------- | ---------------- |
+| Operación SS | `/servicio-salud` | visualizador, referente, control-gestion (+ admin soporte) | Trabajo diario por SS + año (p. ej. browse COMGES C1a, contexto año/SS) |
+| Catálogo | `/catalogo` | parametrizador, admin | Parametrización global infrecuente (alto blast radius: afecta a todos los SS) |
+| País | `/pais` | parametrizador, admin | Trabajo diario autenticado nivel país; **no** es el dashboard guest |
+| Configuración | `/configuracion` | admin | Plataforma: settings, flags, deploy UI. Curaduría paneles públicos **canónica: Voyager `/admin/paneles-publicos`**. Path Filament oculto. |
+
+**Reglas históricas (referencia; no implementar de paso):**
+
+1. Un panel = una audiencia / riesgo principal (no mezclar operación SS con catálogo global en el mismo shell; catálogo y país se separan aunque compartan roles: blast radius vs frecuencia de uso).
+2. Tenancy y año siguen vigentes en paneles operativos (`YearContext`, `cen_hie_dependency_id`); el contexto año/SS en UI solo en `servicio-salud`.
+3. **Tres capas de acceso** (ninguna sustituye a otra). Producto cerrado: maestro hard-off en runtime; env/`module.filament_enabled` se ignoran; URLs de paneles → **404**; config/gates/BD quedan. En PHPUnit el OR inclusivo legado sigue (solo tests). Capas panel/superficie e ids/paths kebab-case siguen en código de tests.
+4. Guest/público (`module.public_dashboard_*`) **no** es el panel Filament `pais`.
+5. Cambios de path, id de panel o matriz rol→panel requieren alcance documentado.
+6. Si el usuario tiene acceso a **más de un** panel, la UI ofrece **«Cambiar panel»** (menú de usuario): solo destinos permitidos por su rol.
+7. **Login canónico vigente:** Voyager `/admin/login`. `/servicio-salud/login` → **404**.
+8. **parametrizador** no entra a `/servicio-salud`. Trabajo diario histórico: `/pais`; parametrización global: `/catalogo`.
+9. **Mensajería canónica vigente:** Voyager `/admin/mensajeria` (`admin` global; `control-gestion` su SS). Paths Filament de mensajería ocultos.
 
 ---
 
