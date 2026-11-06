@@ -429,6 +429,9 @@
                         <h4 class="modal-title">Responsable — {{ $responsibleCenterName }}</h4>
                     </div>
                     <div class="modal-body">
+                        @if ($responsibleModalError)
+                            <div class="alert alert-danger" role="alert">{{ $responsibleModalError }}</div>
+                        @endif
                         <div class="form-group" wire:ignore>
                             <label>Usuario referente</label>
                             <select id="responsible-user-select" class="form-control" style="width:100%">

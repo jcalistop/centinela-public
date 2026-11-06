@@ -215,12 +215,42 @@ class MetEstablishmentResponsibleAccess
         int $indicatorTypeId,
         int $cenHieDependencyId,
     ): bool {
-        return MetEstablishmentResponsible::query()
+        return $this->otherResponsibleCenter($userId, $centerId, $yearId, $indicatorTypeId, $cenHieDependencyId) !== null;
+    }
+
+    /**
+     * Centro donde el usuario ya es responsable (distinto del centro objetivo), o null.
+     *
+     * @return array{id: int, name: string}|null
+     */
+    public function otherResponsibleCenter(
+        int $userId,
+        int $centerId,
+        int $yearId,
+        int $indicatorTypeId,
+        int $cenHieDependencyId,
+    ): ?array {
+        $row = MetEstablishmentResponsible::query()
             ->where('user_id', $userId)
             ->where('year_id', $yearId)
             ->where('indicator_type_id', $indicatorTypeId)
             ->where('cen_hie_dependency_id', $cenHieDependencyId)
             ->where('cen_center_id', '!=', $centerId)
-            ->exists();
+            ->with('center')
+            ->first();
+
+        if ($row === null) {
+            return null;
+        }
+
+        $name = trim((string) ($row->center?->nombre_corto ?: $row->center?->nombre_oficial ?: ''));
+        if ($name === '') {
+            $name = 'establecimiento #' . (int) $row->cen_center_id;
+        }
+
+        return [
+            'id' => (int) $row->cen_center_id,
+            'name' => $name,
+        ];
     }
 }

@@ -20,6 +20,8 @@ trait ManagesEstablishmentResponsibles
 
     public ?int $selectedResponsibleUserId = null;
 
+    public ?string $responsibleModalError = null;
+
     /** @var array<int, list<array{id: int, name: string}>> */
     public array $designeesByCenter = [];
 
@@ -68,6 +70,7 @@ trait ManagesEstablishmentResponsibles
         $this->responsibleCenterId = $centerId;
         $this->responsibleCenterName = (string) $center->nombre_corto;
         $this->selectedResponsibleUserId = null;
+        $this->responsibleModalError = null;
         $this->showResponsibleModal = true;
         $this->dispatch('open-responsible-select2', centerId: $centerId);
     }
@@ -77,6 +80,7 @@ trait ManagesEstablishmentResponsibles
         $this->showResponsibleModal = false;
         $this->responsibleCenterId = null;
         $this->selectedResponsibleUserId = null;
+        $this->responsibleModalError = null;
     }
 
     public function saveDesignation(?int $userId = null): void
@@ -91,7 +95,7 @@ trait ManagesEstablishmentResponsibles
 
         $userId = $userId ?? $this->selectedResponsibleUserId;
         if ($userId === null) {
-            session()->flash('stage_designee_error', 'Debe seleccionar un usuario responsable.');
+            $this->responsibleModalError = 'Debe seleccionar un usuario responsable.';
 
             return;
         }
@@ -100,10 +104,18 @@ trait ManagesEstablishmentResponsibles
         $depId = (int) $this->authenticatedUser()->cen_hie_dependency_id;
         $access = app(MetEstablishmentResponsibleAccess::class);
 
-        if ($access->userAlreadyResponsibleElsewhere($userId, $this->responsibleCenterId, $yearId, $this->indicatorTypeId, $depId)) {
-            session()->flash(
-                'stage_designee_error',
-                'Ese usuario ya es responsable de otro establecimiento para este instrumento y año.',
+        $otherCenter = $access->otherResponsibleCenter(
+            $userId,
+            $this->responsibleCenterId,
+            $yearId,
+            $this->indicatorTypeId,
+            $depId,
+        );
+
+        if ($otherCenter !== null) {
+            $this->responsibleModalError = sprintf(
+                'Ese usuario ya es responsable de «%s» para este instrumento y año.',
+                $otherCenter['name'],
             );
 
             return;
@@ -117,7 +129,7 @@ trait ManagesEstablishmentResponsibles
             ->exists();
 
         if ($alreadyOnCenter) {
-            session()->flash('stage_designee_error', 'Ese usuario ya está designado en este establecimiento.');
+            $this->responsibleModalError = 'Ese usuario ya está designado en este establecimiento.';
 
             return;
         }
@@ -132,10 +144,7 @@ trait ManagesEstablishmentResponsibles
                 'assigned_by' => $this->authenticatedUser()->id,
             ]);
         } catch (QueryException) {
-            session()->flash(
-                'stage_designee_error',
-                'No se pudo designar al usuario. Verifique que no esté asignado a otro establecimiento.',
-            );
+            $this->responsibleModalError = 'No se pudo designar al usuario. Verifique que no esté asignado a otro establecimiento.';
 
             return;
         }
@@ -173,7 +182,7 @@ trait ManagesEstablishmentResponsibles
     {
         return User::query()
             ->where('cen_hie_dependency_id', $this->authenticatedUser()->cen_hie_dependency_id)
-            ->whereHas('role', fn ($q) => $q->where('name', 'referente'))
+            ->whereHas('role', fn($q) => $q->where('name', 'referente'))
             ->orderBy('name')
             ->get(['id', 'name']);
     }
