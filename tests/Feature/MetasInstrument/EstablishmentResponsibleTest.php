@@ -146,7 +146,13 @@ class EstablishmentResponsibleTest extends TestCase
             ->call('openDesignateModal', $this->centerA->id)
             ->call('saveDesignation', $this->responsibleA->id)
             ->call('openDesignateModal', $this->centerB->id)
-            ->call('saveDesignation', $this->responsibleA->id);
+            ->call('saveDesignation', $this->responsibleA->id)
+            ->assertSet(
+                'responsibleModalError',
+                'Ese usuario ya es responsable de «Hospital A» para este instrumento y año.',
+            )
+            ->assertSee('Hospital A', false)
+            ->assertSee('ya es responsable', false);
 
         $this->assertDatabaseMissing('met_establishment_responsibles', [
             'cen_center_id' => $this->centerB->id,

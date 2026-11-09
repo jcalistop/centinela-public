@@ -24,12 +24,12 @@
             }
 
             var script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/apexcharts/dist/apexcharts.min.js';
+            script.src = @json(asset('vendor/apexcharts/apexcharts.min.js'));
             script.onload = callback;
             script.onerror = function() {
                 show(document.getElementById('chart-usage-30d-error'));
                 show(document.getElementById('chart-area-stack-7d-error'));
-                console.error('[Centinela] No se pudo cargar ApexCharts desde CDN.');
+                console.error('[Centinela] No se pudo cargar ApexCharts (self-host).');
             };
             document.head.appendChild(script);
         }

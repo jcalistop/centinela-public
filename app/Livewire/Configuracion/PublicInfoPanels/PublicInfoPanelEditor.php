@@ -24,15 +24,31 @@ use Livewire\WithFileUploads;
 class PublicInfoPanelEditor extends Component
 {
     use InteractsWithPublicInfoPanelModals;
-    use WithFileUploads;
+    use WithFileUploads {
+        _uploadErrored as private livewireUploadErrored;
+    }
 
     /** Campos que puede escribir la precarga ZIP (whitelist). */
     private const ZIP_STATE_FIELDS = [
-        'titulo', 'descripcion', 'tipo', 'publicado', 'slug', 'autor', 'autor_email',
-        'institucion', 'version_panel', 'embed_url', 'html_path', 'csv_path', 'preview_png_path',
+        'titulo',
+        'descripcion',
+        'tipo',
+        'publicado',
+        'slug',
+        'autor',
+        'autor_email',
+        'institucion',
+        'version_panel',
+        'embed_url',
+        'html_path',
+        'csv_path',
+        'preview_png_path',
     ];
 
     private const PATH_FIELDS = ['html_path', 'csv_path', 'preview_png_path'];
+
+    /** Props de archivo cuyo fallo de subida bloquea Guardar (SDD-320). */
+    private const UPLOAD_FIELDS = ['zip_precarga', 'htmlUpload', 'csvUpload', 'previewUpload'];
 
     #[Locked]
     public ?int $panelId = null;
@@ -82,6 +98,13 @@ class PublicInfoPanelEditor extends Component
     /** @var TemporaryUploadedFile|null */
     public $previewUpload = null;
 
+    /**
+     * Errores de subida pendientes entre requests Livewire (sobreviven a validate()/resetErrorBag).
+     *
+     * @var array<string, string>
+     */
+    public array $uploadBlockers = [];
+
     public function mount(?PublicInfoPanel $panel = null): void
     {
         $this->requireAdmin();
@@ -119,6 +142,39 @@ class PublicInfoPanelEditor extends Component
         $this->preloadZip();
     }
 
+    public function updatedHtmlUpload(): void
+    {
+        $this->assertAssetUpload('htmlUpload');
+    }
+
+    public function updatedCsvUpload(): void
+    {
+        $this->assertAssetUpload('csvUpload');
+    }
+
+    public function updatedPreviewUpload(): void
+    {
+        $this->assertAssetUpload('previewUpload');
+    }
+
+    /**
+     * Livewire llama esto cuando falla el endpoint temporal (p. ej. «Subir files.0 ha fallado»).
+     * Persistimos el bloqueo porque validate()/resetErrorBag limpia el bag en Guardar.
+     */
+    public function _uploadErrored(string $name, mixed $errorsInJson, bool $isMultiple): void
+    {
+        try {
+            $this->livewireUploadErrored($name, $errorsInJson, $isMultiple);
+        } catch (ValidationException $exception) {
+            $message = (string) (collect($exception->errors())->flatten()->first()
+                ?: 'Subir '.$this->uploadFieldLabel($name).' ha fallado.');
+            $this->rememberUploadFailure($name, $message);
+            $this->dispatch('toast', type: 'danger', message: $message);
+
+            throw $exception;
+        }
+    }
+
     public function preloadZip(): void
     {
         $this->requireAdmin();
@@ -146,8 +202,8 @@ class PublicInfoPanelEditor extends Component
             }
         } catch (ValidationException $exception) {
             $this->zip_precarga = null;
-            $this->resetErrorBag('zip_precarga');
             $message = (string) (collect($exception->errors())->flatten()->first() ?: 'ZIP inválido.');
+            $this->rememberUploadFailure('zip_precarga', $message);
             $this->dispatch('toast', type: 'danger', message: 'No se pudo precargar el ZIP: '.$message);
 
             return;
@@ -161,6 +217,7 @@ class PublicInfoPanelEditor extends Component
 
         $this->publicado = false;
         $this->zip_precarga = null;
+        $this->clearUploadFailure('zip_precarga');
         $this->resetValidation();
 
         $this->dispatch('toast', type: 'success', message: 'ZIP precargado. Revisa los campos y guarda; el panel no se publicó automáticamente.');
@@ -175,7 +232,20 @@ class PublicInfoPanelEditor extends Component
             $this->slug = (string) $record->slug;
         }
 
-        $this->validate();
+        if ($this->uploadBlockers !== []) {
+            $this->surfaceUploadBlockers();
+
+            return;
+        }
+
+        try {
+            $this->validate();
+            $this->assertPendingAssetUploadsOrFail();
+        } catch (ValidationException $exception) {
+            $this->abortSaveDueToUploadValidation($exception);
+
+            return;
+        }
 
         $disk = Storage::disk(config('voyager.storage.disk', 'private'));
         $dir = 'public-info-panels/'.$this->slug;
@@ -221,6 +291,7 @@ class PublicInfoPanelEditor extends Component
             $record->update($attributes);
         }
 
+        $this->uploadBlockers = [];
         $this->redirectRoute('centinela.admin.paneles-publicos.show', ['panel' => $record->getKey()]);
     }
 
@@ -276,7 +347,9 @@ class PublicInfoPanelEditor extends Component
             'zip_precarga' => ['nullable', 'file', $mimesZip, 'max:56320'],
             'embed_url' => [
                 Rule::requiredIf(fn (): bool => $this->tipo === PublicInfoPanel::TIPO_EMBED_EXTERNO && $this->publicado),
-                'nullable', 'url', 'max:2048',
+                'nullable',
+                'url',
+                'max:2048',
                 function (string $attribute, mixed $value, \Closure $fail): void {
                     if ($this->tipo === PublicInfoPanel::TIPO_EMBED_EXTERNO && filled($value) && ! PublicInfoPanelEmbedUrl::isAllowed(is_string($value) ? $value : null)) {
                         $fail('La URL debe ser https y pertenecer a un host allowlist (Power BI, Tableau, Looker Studio, Datawrapper, Flourish o ArcGIS público).');
@@ -373,6 +446,121 @@ class PublicInfoPanelEditor extends Component
 
         $message = (string) (collect($exception->errors())->flatten()->first() ?: 'Requisitos de publicación incompletos.');
         $this->dispatch('toast', type: 'danger', message: 'No se pudo guardar: '.$message);
+    }
+
+    private function assertAssetUpload(string $field): void
+    {
+        if (! in_array($field, self::UPLOAD_FIELDS, true)) {
+            return;
+        }
+
+        if (! $this->{$field} instanceof TemporaryUploadedFile) {
+            return;
+        }
+
+        try {
+            $this->validateOnly($field);
+            $this->clearUploadFailure($field);
+        } catch (ValidationException $exception) {
+            $this->{$field} = null;
+            $message = (string) (collect($exception->errors())->flatten()->first()
+                ?: 'Archivo '.$this->uploadFieldLabel($field).' inválido.');
+            $this->rememberUploadFailure($field, $message);
+            $this->dispatch('toast', type: 'danger', message: $message);
+
+            throw $exception;
+        }
+    }
+
+    /**
+     * Valida todos los uploads pendientes juntos; si uno falla, no se aplica ninguno (atomicidad).
+     */
+    private function assertPendingAssetUploadsOrFail(): void
+    {
+        $pending = [];
+        foreach (['htmlUpload', 'csvUpload', 'previewUpload'] as $field) {
+            if ($this->{$field} instanceof TemporaryUploadedFile) {
+                $pending[] = $field;
+            }
+        }
+
+        if ($pending === []) {
+            return;
+        }
+
+        $bag = [];
+        foreach ($pending as $field) {
+            try {
+                $this->validateOnly($field);
+                $this->clearUploadFailure($field);
+            } catch (ValidationException $exception) {
+                foreach ($exception->errors() as $errorField => $messages) {
+                    $bag[(string) $errorField] = $messages;
+                }
+            }
+        }
+
+        if ($bag !== []) {
+            throw ValidationException::withMessages($bag);
+        }
+    }
+
+    private function abortSaveDueToUploadValidation(ValidationException $exception): void
+    {
+        $touchedUpload = false;
+
+        foreach ($exception->errors() as $field => $messages) {
+            $fieldName = (string) $field;
+            if (! in_array($fieldName, self::UPLOAD_FIELDS, true)) {
+                continue;
+            }
+
+            $touchedUpload = true;
+            $message = (string) ($messages[0] ?? 'Archivo inválido.');
+            $this->{$fieldName} = null;
+            $this->rememberUploadFailure($fieldName, $message);
+        }
+
+        if ($touchedUpload) {
+            // Atomicidad: no se escribe ningún asset; los uploads OK quedan en estado hasta
+            // limpiar el bloqueo (reintentar el archivo fallido) y Guardar de nuevo.
+            $this->surfaceUploadBlockers();
+
+            return;
+        }
+
+        throw $exception;
+    }
+
+    private function rememberUploadFailure(string $field, string $message): void
+    {
+        $this->uploadBlockers[$field] = $message;
+        $this->addError($field, $message);
+    }
+
+    private function clearUploadFailure(string $field): void
+    {
+        unset($this->uploadBlockers[$field]);
+        $this->resetErrorBag($field);
+    }
+
+    private function surfaceUploadBlockers(): void
+    {
+        foreach ($this->uploadBlockers as $field => $message) {
+            $this->addError((string) $field, (string) $message);
+        }
+
+        $first = (string) (collect($this->uploadBlockers)->first() ?: 'hay archivos con error de subida.');
+        $this->dispatch(
+            'toast',
+            type: 'danger',
+            message: 'No se pudo guardar: '.$first.' Corrige o vuelve a subir el archivo antes de guardar.',
+        );
+    }
+
+    private function uploadFieldLabel(string $field): string
+    {
+        return $this->validationAttributes()[$field] ?? $field;
     }
 
     private function filledOrNull(?string $value): ?string

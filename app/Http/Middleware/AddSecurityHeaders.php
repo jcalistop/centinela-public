@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AddSecurityHeaders
 {
-    public const CSP_REPORT_ONLY = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self'; report-uri /csp-report";
+    public const CSP_REPORT_ONLY = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.tile.openstreetmap.org; font-src 'self' data:; connect-src 'self'; report-uri /csp-report";
 
     /**
      * @param  Closure(Request): Response  $next

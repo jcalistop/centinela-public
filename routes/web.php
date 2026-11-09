@@ -130,6 +130,8 @@ Route::any('/filament/{path?}', function () {
 })->where('path', '.*')->name('filament.legacy-redirect');
 
 Route::post('/csp-report', CspReportController::class)->name('csp.report');
+// Alias INTRA/IIS: POST /csp-report a veces reescribe a /index/csp-report (SDD-323).
+Route::post('/index/csp-report', CspReportController::class)->name('csp.report.index');
 
 Route::get('/login', function (Request $request) {
     $target = route('voyager.login');

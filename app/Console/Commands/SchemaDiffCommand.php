@@ -22,7 +22,7 @@ class SchemaDiffCommand extends Command
     {
         $this->warn('TOOL de mantenimiento del dump — no es instalación de Centinela.');
         $this->warn('Tras terminar: DROP DATABASE de la BD parity y quitar DB_SCHEMA_PARITY_* del .env.');
-        $this->line('Guía: .github/docs/sdd/guides/schema-dump-parity-tool.md');
+        $this->line('Guía de paridad de schema: ver documentación operativa del proyecto (schema-dump-parity-tool).');
         $this->newLine();
 
         $reference = (string) ($this->option('reference') ?: config('database.default'));

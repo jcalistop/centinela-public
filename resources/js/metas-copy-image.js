@@ -35,7 +35,7 @@ function captureOptions() {
         pixelRatio: 2,
         backgroundColor: "#ffffff",
         cacheBust: true,
-        // Voyager carga Open Sans desde fonts.googleapis.com (CORS): skipFonts evita SecurityError en cssRules.
+        // Open Sans self-host; skipFonts evita SecurityError en cssRules al clonar estilos.
         skipFonts: true,
         filter: (node) => !isExcludedFromCapture(node),
     };

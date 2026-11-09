@@ -11,8 +11,7 @@
 @source '../../../../resources/views/centinela/comges/**/*';
 
 /*
- * Tokens Centinela — canónico:
- * .github/docs/sdd/design/paleta-centinela-filament.md
+ * Tokens Centinela — canónico: paleta Centinela Filament (documentación de diseño en repo SDD).
  * Shell asimilado a Voyager/Compass legacy (sidebar oscuro, primary MINSAL).
  */
 @theme {

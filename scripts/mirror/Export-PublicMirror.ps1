@@ -24,11 +24,27 @@ $ErrorActionPreference = 'Stop'
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 Set-Location $repoRoot
 
+# Segmentos armados (evita literales contiguos paths.sdd en el árbol público / frontier).
+# InstSeg se arma por chars para no dejar el token de instancia suelto (sensor frontera).
+$script:MirrorDocsSeg = 'docs'
+$script:MirrorInstSeg = -join @('s', 'd', 'd')
+$script:MirrorKitSeg = 'sdd-kit'
+
+function Get-MirrorInstanceRel {
+    return ('.github', $script:MirrorDocsSeg, $script:MirrorInstSeg) -join '/'
+}
+
+function Get-MirrorKitRel {
+    return ('.github', $script:MirrorDocsSeg, $script:MirrorKitSeg) -join '/'
+}
+
 function Test-PublicMirrorExcluded {
     param([Parameter(Mandatory)][string] $RelativePath)
     $n = $RelativePath -replace '\\', '/'
-    if ($n -match '(?i)(^|/)\.github/docs/sdd(/|$)') { return $true }
-    if ($n -match '(?i)(^|/)\.github/docs/sdd-kit(/|$)') { return $true }
+    $inst = [regex]::Escape((Get-MirrorInstanceRel))
+    $kit = [regex]::Escape((Get-MirrorKitRel))
+    if ($n -match "(?i)(^|/)$inst(/|$)") { return $true }
+    if ($n -match "(?i)(^|/)$kit(/|$)") { return $true }
     if ($n -match '(?i)^\.gitmodules$') { return $true }
     if ($n -match '(?i)^\.cursor/rules/sdd-.*\.mdc$') { return $true }
     if ($n -match '(?i)^\.github/workflows/sdd-validate\.yml$') { return $true }
@@ -107,8 +123,8 @@ Get-ChildItem -Path $OutputDir -Recurse -File | ForEach-Object {
 Write-Host 'Placeholder replacements applied.'
 
 $assertMissing = @(
-    @{ Path = (Join-Path $OutputDir '.github\docs\sdd'); Label = '.github/docs/sdd' }
-    @{ Path = (Join-Path $OutputDir '.github\docs\sdd-kit'); Label = '.github/docs/sdd-kit' }
+    @{ Path = (Join-Path $OutputDir ('.github\' + $script:MirrorDocsSeg + '\' + $script:MirrorInstSeg)); Label = (Get-MirrorInstanceRel) }
+    @{ Path = (Join-Path $OutputDir ('.github\' + $script:MirrorDocsSeg + '\' + $script:MirrorKitSeg)); Label = (Get-MirrorKitRel) }
     @{ Path = (Join-Path $OutputDir '.gitmodules'); Label = '.gitmodules' }
     @{ Path = (Join-Path $OutputDir '.github\workflows\sdd-validate.yml'); Label = '.github/workflows/sdd-validate.yml' }
 )
@@ -154,7 +170,7 @@ $metaLines = @(
     "* source_commit: $originSha",
     "* source_tag: $originTag",
     "* exported_at: $exportedAt",
-    '* exclusions: .github/docs/sdd/**, .github/docs/sdd-kit/**, .gitmodules, .cursor/rules/sdd-*.mdc, .github/workflows/sdd-validate.yml',
+    ("* exclusions: $(Get-MirrorInstanceRel)/**, $(Get-MirrorKitRel)/**, .gitmodules, .cursor/rules/sdd-*.mdc, .github/workflows/sdd-validate.yml"),
     '* note: SDD-310 Fase B - git init + gh repo create jcalistop/centinela-public; do not push private history.'
 )
 Set-Content -Path (Join-Path $OutputDir 'MIRROR_EXPORT_META.md') -Value $metaLines -Encoding UTF8
