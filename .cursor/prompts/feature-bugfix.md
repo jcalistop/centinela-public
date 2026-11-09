@@ -5,7 +5,7 @@ Copia/pega y completa lo mínimo. La idea es forzar el análisis de **año/instr
 ## Contexto
 
 - **Alcance documentado**: (qué cambia y qué no)
-- **Módulo**: COMGES | SNSS | Admin(Voyager) | Otro
+- **Módulo**: COMGES | Metas | SNSS | Admin(Voyager) | Dash público | Otro
 - **Tipo**: feature | bugfix | refactor | performance | db-change (si aplica)
 
 ## Reglas críticas a respetar
@@ -13,7 +13,7 @@ Copia/pega y completa lo mínimo. La idea es forzar el análisis de **año/instr
 - Impacto por **año**: `ano < 2025` vs `ano >= 2025`
 - Impacto por **instrumento**: dependencia de `indicatorType` (si aplica)
 - Segmentación por **Servicio de Salud**: `Auth::user()->cen_hie_dependency_id`
-- Frontend: **Bootstrap 5 + SASS** (no Tailwind), Livewire 3
+- Frontend: **Bootstrap 5 + SASS** (no Tailwind), Livewire 4
 - Validación: inline (Voyager) o `#[Validate]` (Livewire) — no Form Requests salvo pedido
 
 ## Solicitud

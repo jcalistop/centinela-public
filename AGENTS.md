@@ -1,12 +1,35 @@
 # Centinela — Agent instructions
 
-## Laravel Boost
+## Qué es
 
-Guidelines de Laravel Boost (versiones, convenciones, MCP, PHPUnit, Livewire): cargados por Cursor desde [`.cursor/rules/laravel-boost.mdc`](.cursor/rules/laravel-boost.mdc).
+Plataforma de monitoreo de instrumentos MINSAL (COMGES, Metas, establecimientos SNSS, dashboard público y mensajería). Admin visible = Voyager `/admin`.
 
-**No duplicar aquí.** Upgrades de Laravel Boost regeneran ese archivo. Índice de reglas locales (Voyager/Livewire, migraciones): [`.cursor/rules/centinela.md`](.cursor/rules/centinela.md).
+## Stack (según `composer.lock`)
 
-Dominio de negocio y arquitectura COMGES/Metas: [`.github/copilot-instructions.md`](.github/copilot-instructions.md).
+PHP 8.3 · Laravel 11 · Livewire 4 · Voyager 1.8 · Bootstrap 5 / SASS · **no** Tailwind · Laragon (**no** Herd).
+
+## Precedencia (este orden gana)
+
+1. `.github/docs/business/domain-rules.md` — reglas de negocio
+2. Convenciones Centinela — este archivo + `.github/copilot-instructions.md` (sin dump Boost)
+3. Laravel Boost — `.cursor/rules/laravel-boost.mdc` (auto-generado; **cede** si choca con 1 o 2)
+
+## Invariantes
+
+- Año activo: `YearContext` / `session('indicator_year')`.
+- Tenancy SS: filtrar por `cen_hie_dependency_id` del usuario.
+- Bifurcación COMGES: flujos distintos para año `< 2025` vs `≥ 2025`.
+- No sobrescribir `.env` local (ver sección siguiente).
+
+## Punteros
+
+| Artefacto | Rol |
+| --------- | --- |
+| [`.github/docs/business/domain-rules.md`](.github/docs/business/domain-rules.md) | Negocio (primera fuente) |
+| [`.github/copilot-instructions.md`](.github/copilot-instructions.md) | Guía de producto / arquitectura |
+| [`.cursor/rules/centinela.md`](.cursor/rules/centinela.md) | Índice de reglas Cursor |
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contribución humana |
+| [`.cursor/rules/laravel-boost.mdc`](.cursor/rules/laravel-boost.mdc) | Boost (Cursor); no editar a mano ni duplicar aquí |
 
 ## Local `.env` (mandatory for this workspace)
 

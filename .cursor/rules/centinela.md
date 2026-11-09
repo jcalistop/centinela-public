@@ -7,6 +7,12 @@ alwaysApply: true
 
 Reglas vinculantes para Cursor. Este archivo enlaza fuentes de verdad del producto.
 
+## Precedencia (este orden gana)
+
+1. `.github/docs/business/domain-rules.md` — reglas de negocio (primera fuente)
+2. Convenciones Centinela — `AGENTS.md` + `.github/copilot-instructions.md`
+3. Laravel Boost — `laravel-boost.mdc` (auto-generado; **cede** si choca con 1 o 2)
+
 ## Reglas Cursor (capas)
 
 | Regla                                                      | Alcance                                                 | Carga            |
@@ -19,8 +25,8 @@ Reglas vinculantes para Cursor. Este archivo enlaza fuentes de verdad del produc
 
 ## Fuentes de verdad (leer antes de proponer cambios)
 
-- Arquitectura y convenciones: `AGENTS.md`, `.github/copilot-instructions.md`
 - Reglas de negocio: `.github/docs/business/domain-rules.md`
+- Arquitectura y convenciones: `AGENTS.md`, `.github/copilot-instructions.md`
 - Template PR: `.github/PULL_REQUEST_TEMPLATE.md`
 
 ## Checklist de calidad mínimo
