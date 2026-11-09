@@ -9,7 +9,7 @@ Reglas vinculantes para Cursor. Este archivo enlaza fuentes de verdad del produc
 
 ## Precedencia (este orden gana)
 
-1. `.github/docs/business/domain-rules.md` — reglas de negocio (primera fuente)
+1. Reglas de negocio en el taller del workspace (`domain-rules.md`) — primera fuente
 2. Convenciones Centinela — `AGENTS.md` + `.github/copilot-instructions.md`
 3. Laravel Boost — `laravel-boost.mdc` (auto-generado; **cede** si choca con 1 o 2)
 
@@ -25,7 +25,7 @@ Reglas vinculantes para Cursor. Este archivo enlaza fuentes de verdad del produc
 
 ## Fuentes de verdad (leer antes de proponer cambios)
 
-- Reglas de negocio: `.github/docs/business/domain-rules.md`
+- Reglas de negocio: taller del workspace (`domain-rules.md`; no path local en este repo)
 - Arquitectura y convenciones: `AGENTS.md`, `.github/copilot-instructions.md`
 - Template PR: `.github/PULL_REQUEST_TEMPLATE.md`
 

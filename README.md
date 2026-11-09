@@ -56,7 +56,7 @@ Narrativa ampliada en **Acerca de** del panel (`/admin/acerca-de`).
 
 ## Versiones y documentación de producto
 
-- Reglas de dominio (fuente canónica): [`.github/docs/business/domain-rules.md`](.github/docs/business/domain-rules.md)
+- Reglas de dominio: viven en el taller del workspace (no versionadas en este repositorio público).
 - Notas de versión: tags SemVer en `main` (GitHub Releases).
 
 ## Cómo participar (institucional)

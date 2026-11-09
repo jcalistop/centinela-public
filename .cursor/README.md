@@ -10,7 +10,7 @@ Este directorio contiene contexto **específico de Cursor** (no de GitHub):
 | Artefacto | Rol |
 | --------- | --- |
 | `../AGENTS.md` | Mapa corto: producto, stack, precedencia, invariantes |
-| `../.github/docs/business/domain-rules.md` | Reglas de negocio (primera fuente) |
+| Reglas de negocio en el taller del workspace | Primera fuente (no path local en este repo) |
 | `../.github/copilot-instructions.md` | Guía de producto / arquitectura |
 | `rules/centinela.md` | Índice de reglas Cursor + misma precedencia |
 | `rules/laravel-boost.mdc` | Laravel Boost (auto-generado; no editar) |

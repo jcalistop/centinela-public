@@ -3,7 +3,7 @@
 Esta guía conecta Cursor con el flujo de contribución del repo público:
 
 - Contribución: `CONTRIBUTING.md`
-- Reglas de negocio: `.github/docs/business/domain-rules.md`
+- Reglas de negocio: taller del workspace (`domain-rules.md`; no path local en este repo)
 - Plantilla PR: `.github/PULL_REQUEST_TEMPLATE.md`
 - Arquitectura/convenios: `AGENTS.md` + `.github/copilot-instructions.md`
 
