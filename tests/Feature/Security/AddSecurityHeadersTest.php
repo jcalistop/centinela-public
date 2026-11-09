@@ -29,6 +29,49 @@ class AddSecurityHeadersTest extends TestCase
 
     public function test_csp_report_loguea_el_payload_y_responde_204(): void
     {
+        $this->assertCspReportPostReturns204('/csp-report');
+    }
+
+    public function test_csp_report_alias_index_loguea_el_payload_y_responde_204(): void
+    {
+        $this->assertCspReportPostReturns204('/index/csp-report');
+    }
+
+    public function test_csp_report_con_body_invalido_no_rompe_con_5xx(): void
+    {
+        Log::shouldReceive('channel')->once()->with('csp')->andReturn(
+            tap(\Mockery::mock(), function ($logger): void {
+                $logger->shouldReceive('info')->once();
+            })
+        );
+
+        $response = $this->call(
+            'POST',
+            '/index/csp-report',
+            [],
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/csp-report', 'HTTP_ACCEPT' => 'application/json'],
+            'not-json{{{'
+        );
+
+        $this->assertLessThan(500, $response->status());
+        $response->assertNoContent();
+    }
+
+    public function test_csp_report_get_no_es_superficie_valida(): void
+    {
+        foreach (['/index/csp-report', '/csp-report'] as $uri) {
+            $status = $this->get($uri)->status();
+            $this->assertContains($status, [404, 405], "GET {$uri} debe ser 404 o 405, fue {$status}");
+        }
+    }
+
+    /**
+     * @param  non-empty-string  $uri
+     */
+    private function assertCspReportPostReturns204(string $uri): void
+    {
         $logger = \Mockery::mock();
         $logger->shouldReceive('info')
             ->once()
@@ -42,7 +85,7 @@ class AddSecurityHeadersTest extends TestCase
             ->with('csp')
             ->andReturn($logger);
 
-        $response = $this->postJson('/csp-report', [
+        $response = $this->postJson($uri, [
             'csp-report' => [
                 'document-uri' => 'https://example.test/admin',
                 'violated-directive' => 'script-src',

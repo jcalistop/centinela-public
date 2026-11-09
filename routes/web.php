@@ -130,12 +130,14 @@ Route::any('/filament/{path?}', function () {
 })->where('path', '.*')->name('filament.legacy-redirect');
 
 Route::post('/csp-report', CspReportController::class)->name('csp.report');
+// Alias INTRA/IIS: POST /csp-report a veces reescribe a /index/csp-report (SDD-323).
+Route::post('/index/csp-report', CspReportController::class)->name('csp.report.index');
 
 Route::get('/login', function (Request $request) {
     $target = route('voyager.login');
     $query = $request->getQueryString();
     if ($query !== null && $query !== '') {
-        $target .= '?'.$query;
+        $target .= '?' . $query;
     }
 
     return redirect()->to($target);
@@ -470,7 +472,7 @@ Route::group(['prefix' => 'admin'], function () {
             }
         }
     } catch (InvalidArgumentException $e) {
-        throw new InvalidArgumentException("Custom routes hasn't been configured because: ".$e->getMessage(), 1);
+        throw new InvalidArgumentException("Custom routes hasn't been configured because: " . $e->getMessage(), 1);
     } catch (Exception $e) {
         // do nothing, might just be because table not yet migrated.
     }
@@ -511,7 +513,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/', [AcercaDeController::class, 'show'])->name('acerca-de.index');
         Route::get('/modulos', [AcercaDeController::class, 'show'])->defaults('slug', 'modulos')->name('acerca-de.modulos');
         Route::get('/roles', [AcercaDeController::class, 'show'])->defaults('slug', 'roles')->name('acerca-de.roles');
-        Route::get('/ciclo', fn () => redirect()->route('acerca-de.ciclo-comges'));
+        Route::get('/ciclo', fn() => redirect()->route('acerca-de.ciclo-comges'));
         Route::get('/ciclo-comges', [AcercaDeController::class, 'show'])->defaults('slug', 'ciclo-comges')->name('acerca-de.ciclo-comges');
         Route::get('/ciclo-metas', [AcercaDeController::class, 'show'])->defaults('slug', 'ciclo-metas')->name('acerca-de.ciclo-metas');
         Route::get('/adopcion', [AcercaDeController::class, 'show'])->defaults('slug', 'adopcion')->name('acerca-de.adopcion');
