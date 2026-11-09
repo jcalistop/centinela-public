@@ -182,7 +182,7 @@ trait ManagesEstablishmentResponsibles
     {
         return User::query()
             ->where('cen_hie_dependency_id', $this->authenticatedUser()->cen_hie_dependency_id)
-            ->whereHas('role', fn($q) => $q->where('name', 'referente'))
+            ->whereHas('role', fn ($q) => $q->where('name', 'referente'))
             ->orderBy('name')
             ->get(['id', 'name']);
     }

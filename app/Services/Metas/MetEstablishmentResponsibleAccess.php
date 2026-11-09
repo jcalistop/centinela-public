@@ -245,7 +245,7 @@ class MetEstablishmentResponsibleAccess
 
         $name = trim((string) ($row->center?->nombre_corto ?: $row->center?->nombre_oficial ?: ''));
         if ($name === '') {
-            $name = 'establecimiento #' . (int) $row->cen_center_id;
+            $name = 'establecimiento #'.(int) $row->cen_center_id;
         }
 
         return [
