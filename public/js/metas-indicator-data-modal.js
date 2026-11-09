@@ -22,12 +22,11 @@
         }
 
         var script = document.createElement("script");
-        script.src =
-            "https://cdn.jsdelivr.net/npm/apexcharts/dist/apexcharts.min.js";
+        script.src = "/vendor/apexcharts/apexcharts.min.js";
         script.onload = callback;
         script.onerror = function () {
             console.error(
-                "[Centinela] No se pudo cargar ApexCharts desde CDN.",
+                "[Centinela] No se pudo cargar ApexCharts (self-host).",
             );
         };
         document.head.appendChild(script);

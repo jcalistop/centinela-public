@@ -21,8 +21,13 @@ class AddSecurityHeadersTest extends TestCase
         $response->assertHeader('X-Frame-Options', 'SAMEORIGIN');
         $response->assertHeader('X-Content-Type-Options', 'nosniff');
         $response->assertHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+        $csp = (string) $response->headers->get('Content-Security-Policy-Report-Only');
         $response->assertHeader('Content-Security-Policy-Report-Only', AddSecurityHeaders::CSP_REPORT_ONLY);
-        $this->assertStringContainsString('report-uri /csp-report', (string) $response->headers->get('Content-Security-Policy-Report-Only'));
+        $this->assertStringContainsString('report-uri /csp-report', $csp);
+        $this->assertStringContainsString('https://*.tile.openstreetmap.org', $csp);
+        $this->assertStringNotContainsString('fonts.googleapis.com', $csp);
+        $this->assertStringNotContainsString('cdn.jsdelivr.net', $csp);
+        $this->assertStringNotContainsString('unpkg.com', $csp);
         $response->assertHeaderMissing('Content-Security-Policy');
         $response->assertHeaderMissing('Strict-Transport-Security');
     }
@@ -118,5 +123,33 @@ class AddSecurityHeadersTest extends TestCase
         $this->artisan('schedule:list')
             ->expectsOutputToContain('security:audit-check')
             ->assertSuccessful();
+    }
+
+    public function test_critical_self_host_sources_do_not_point_to_cdn(): void
+    {
+        $paths = [
+            resource_path('views/vendor/voyager/master.blade.php'),
+            resource_path('views/vendor/voyager/auth/master.blade.php'),
+            resource_path('views/centinela/layouts/legal-minimal.blade.php'),
+            resource_path('views/vendor/voyager/partials/admin-usage-charts-script.blade.php'),
+            resource_path('views/vendor/voyager/establecimientos/browse.blade.php'),
+            resource_path('views/vendor/voyager/establecimientos/read.blade.php'),
+            resource_path('views/vendor/voyager/establecimientos/partials/browse-establecimientos-leaflet.blade.php'),
+            public_path('js/metas-indicator-data-modal.js'),
+        ];
+
+        foreach ($paths as $path) {
+            $this->assertFileExists($path);
+            $contents = (string) file_get_contents($path);
+            $this->assertStringNotContainsString('fonts.googleapis.com', $contents, $path);
+            $this->assertStringNotContainsString('fonts.gstatic.com', $contents, $path);
+            $this->assertStringNotContainsString('cdn.jsdelivr.net/npm/apexcharts', $contents, $path);
+            $this->assertStringNotContainsString('unpkg.com/leaflet', $contents, $path);
+        }
+
+        $this->assertFileExists(public_path('vendor/open-sans/open-sans.css'));
+        $this->assertFileExists(public_path('vendor/apexcharts/apexcharts.min.js'));
+        $this->assertFileExists(public_path('vendor/leaflet/leaflet.js'));
+        $this->assertFileExists(public_path('vendor/leaflet/leaflet.css'));
     }
 }

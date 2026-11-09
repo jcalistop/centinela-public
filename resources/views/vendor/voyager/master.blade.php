@@ -7,8 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <meta name="assets-path" content="{{ route('voyager.voyager_assets') }}" />
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <!-- Open Sans (self-host) -->
+    <link href="{{ asset('vendor/open-sans/open-sans.css') }}" rel="stylesheet">
 
     <!-- Favicon -->
     <?php $admin_favicon = Voyager::setting('admin.favicon_image', ''); ?>
