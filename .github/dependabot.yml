@@ -1,7 +1,8 @@
 # Dependabot: abre PRs de actualización de dependencias en GitHub.
 # No despliega al servidor; tras merge, el despliegue sigue siendo manual según vuestro runbook.
-# Los PRs van contra la rama `dep-integration` (no `dev`) para no saturar la lista de PRs de integración;
-# el equipo fusiona `dep-integration` → `dev` cuando corresponda.
+# Los PRs van contra la rama `dep-integration` (no `dev`) para no saturar la lista de PRs de integración.
+# Auto-merge (workflow dependabot-automerge): squash a `dep-integration` si CI verde y sin conflictos.
+# Promoción a `dev`: PR automático `dep-integration` → `dev` (merge humano; nunca auto-merge).
 # La rama `dep-integration` debe existir en el remoto (crearla desde `dev` si aún no está).
 # Limitación Git: NO usar la rama `dependabot` como target-branch — choca con las ramas
 # `dependabot/<ecosistema>/...` que crea Dependabot (error file_fetcher_error en la revisión semanal).

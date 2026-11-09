@@ -1,0 +1,76 @@
+# Auto-merge Dependabot PRs into dep-integration after CI succeeds.
+# Never merges into the development branch (dev) or main.
+
+name: dependabot-automerge
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  merge:
+    name: Merge Dependabot into dep-integration
+    runs-on: ubuntu-latest
+    if: >
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.actor.login == 'dependabot[bot]'
+    steps:
+      - name: Resolve PR and squash-merge if base is dep-integration
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -euo pipefail
+
+          num=""
+          base=""
+          author=""
+
+          pr_api="$(gh api "repos/${REPO}/commits/${HEAD_SHA}/pulls" --jq '.[0] // empty' || true)"
+          if [ -n "$pr_api" ] && [ "$pr_api" != "null" ]; then
+            num="$(echo "$pr_api" | jq -r '.number')"
+            base="$(echo "$pr_api" | jq -r '.base.ref')"
+            author="$(echo "$pr_api" | jq -r '.user.login')"
+          else
+            pr_list="$(gh pr list --repo "$REPO" --head "$HEAD_BRANCH" --state open --json number,baseRefName,author --jq '.[0] // empty')"
+            if [ -z "$pr_list" ] || [ "$pr_list" = "null" ]; then
+              echo "No open PR for $HEAD_BRANCH / $HEAD_SHA"
+              exit 0
+            fi
+            num="$(echo "$pr_list" | jq -r '.number')"
+            base="$(echo "$pr_list" | jq -r '.baseRefName')"
+            author="$(echo "$pr_list" | jq -r '.author.login')"
+          fi
+
+          echo "PR #$num base=$base author=$author"
+          if [ "$base" != "dep-integration" ]; then
+            echo "Base is not dep-integration; skip"
+            exit 0
+          fi
+          if [ "$author" != "dependabot[bot]" ]; then
+            echo "Author is not Dependabot; skip"
+            exit 0
+          fi
+
+          mergeable="$(gh pr view "$num" --repo "$REPO" --json mergeable -q .mergeable)"
+          echo "mergeable=$mergeable"
+          if [ "$mergeable" = "CONFLICTING" ]; then
+            echo "Conflicts; leave for human"
+            exit 0
+          fi
+          if [ "$mergeable" != "MERGEABLE" ]; then
+            echo "Not mergeable yet (state=$mergeable); skip"
+            exit 0
+          fi
+
+          gh pr merge "$num" --repo "$REPO" --squash --delete-branch
+          echo "Merged #$num into dep-integration"
