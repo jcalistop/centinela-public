@@ -26,18 +26,30 @@
 @endsection
 
 @push('javascript')
-    <script type="module">
+    <script>
         document.addEventListener('DOMContentLoaded', async function() {
             const mermaidBlocks = document.querySelectorAll('pre.mermaid');
             if (mermaidBlocks.length === 0) {
                 return;
             }
 
-            const {
-                default: mermaid
-            } = await import(
-                'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'
-            );
+            const loadMermaid = function() {
+                if (window.mermaid) {
+                    return Promise.resolve(window.mermaid);
+                }
+
+                return new Promise(function(resolve, reject) {
+                    const script = document.createElement('script');
+                    script.src = @json(asset('vendor/mermaid/mermaid.min.js'));
+                    script.onload = function() {
+                        resolve(window.mermaid);
+                    };
+                    script.onerror = reject;
+                    document.head.appendChild(script);
+                });
+            };
+
+            const mermaid = await loadMermaid();
             mermaid.initialize({
                 startOnLoad: false,
                 theme: 'neutral',

@@ -27,6 +27,7 @@ class AddSecurityHeadersTest extends TestCase
         $this->assertStringContainsString('https://*.tile.openstreetmap.org', $csp);
         $this->assertStringNotContainsString('fonts.googleapis.com', $csp);
         $this->assertStringNotContainsString('cdn.jsdelivr.net', $csp);
+        $this->assertStringNotContainsString('cdnjs.cloudflare.com', $csp);
         $this->assertStringNotContainsString('unpkg.com', $csp);
         $response->assertHeaderMissing('Content-Security-Policy');
         $response->assertHeaderMissing('Strict-Transport-Security');
@@ -151,5 +152,32 @@ class AddSecurityHeadersTest extends TestCase
         $this->assertFileExists(public_path('vendor/apexcharts/apexcharts.min.js'));
         $this->assertFileExists(public_path('vendor/leaflet/leaflet.js'));
         $this->assertFileExists(public_path('vendor/leaflet/leaflet.css'));
+    }
+
+    public function test_ola2_self_host_sources_do_not_point_to_cdn(): void
+    {
+        $paths = [
+            resource_path('views/vendor/voyager/master.blade.php'),
+            resource_path('views/vendor/voyager/auth/master.blade.php'),
+            resource_path('views/centinela/layouts/legal-minimal.blade.php'),
+            resource_path('views/centinela/acerca-de/page.blade.php'),
+            resource_path('views/centinela/comges/compromisos/structure-order.blade.php'),
+            resource_path('views/errors/master.blade.php'),
+        ];
+
+        foreach ($paths as $path) {
+            $this->assertFileExists($path);
+            $contents = (string) file_get_contents($path);
+            $this->assertStringNotContainsString('cdn.jsdelivr.net/npm/mermaid', $contents, $path);
+            $this->assertStringNotContainsString('cdn.jsdelivr.net/npm/sortablejs', $contents, $path);
+            $this->assertStringNotContainsString('cdn.jsdelivr.net/npm/@tabler', $contents, $path);
+            $this->assertStringNotContainsString('cdnjs.cloudflare.com/ajax/libs/bootstrap-rtl', $contents, $path);
+        }
+
+        $this->assertFileExists(public_path('vendor/mermaid/mermaid.min.js'));
+        $this->assertFileExists(public_path('vendor/sortablejs/Sortable.min.js'));
+        $this->assertFileExists(public_path('vendor/tabler/tabler.min.js'));
+        $this->assertFileExists(public_path('vendor/tabler/tabler.min.css'));
+        $this->assertFileExists(public_path('vendor/bootstrap-rtl/bootstrap-rtl.css'));
     }
 }
