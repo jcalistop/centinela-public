@@ -11,8 +11,12 @@ PHP 8.3 · Laravel 11 · Livewire 4 · Voyager 1.8 · Bootstrap 5 / SASS · **no
 ## Precedencia (este orden gana)
 
 1. Reglas de negocio en el taller del workspace (`domain-rules.md`) — primera fuente
-2. Convenciones Centinela — este archivo + `.github/copilot-instructions.md` (sin dump Boost)
+2. Convenciones Centinela — este stub + `.github/copilot-instructions.md` (sin dump Boost)
 3. Laravel Boost — `.cursor/rules/laravel-boost.mdc` (auto-generado; **cede** si choca con 1 o 2)
+
+## Workspace
+
+Abrir el **workspace multi-raíz** (producto + taller SDD) para rules Centinela, skills de producto, prompts y ciclo SDD. Sesión solo-producto: este stub + Boost + `safe-migrations.mdc`.
 
 ## Invariantes
 
@@ -27,9 +31,9 @@ PHP 8.3 · Laravel 11 · Livewire 4 · Voyager 1.8 · Bootstrap 5 / SASS · **no
 | --------- | --- |
 | Reglas de negocio en el taller del workspace | Negocio (primera fuente; no versionadas en este repo) |
 | [`.github/copilot-instructions.md`](.github/copilot-instructions.md) | Guía de producto / arquitectura |
-| [`.cursor/rules/centinela.md`](.cursor/rules/centinela.md) | Índice de reglas Cursor |
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Contribución humana |
 | [`.cursor/rules/laravel-boost.mdc`](.cursor/rules/laravel-boost.mdc) | Boost (Cursor); no editar a mano ni duplicar aquí |
+| [`.cursor/rules/safe-migrations.mdc`](.cursor/rules/safe-migrations.mdc) | Guard migraciones destructivas |
 
 ## Local `.env` (mandatory for this workspace)
 
