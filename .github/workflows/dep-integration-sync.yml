@@ -1,6 +1,6 @@
 # Sincroniza dep-integration con dev (fast-forward) antes del run semanal de Dependabot.
 # Fast-forward de dep-integration desde dev; si diverge, Issue de alerta.
-# Si el FF falla (rama divergente), abre o comenta un Issue de alerta.
+# Tras bumps en dep-integration (o sync), mantiene PR de promoción → dev (merge humano).
 
 name: Sync dep-integration from dev
 
@@ -9,10 +9,14 @@ on:
     # Lunes 02:00 UTC ≈ domingo 22:00 America/Santiago (UTC-4); antes de Dependabot (lunes 09:00 CL).
     - cron: "0 2 * * 1"
   workflow_dispatch:
+  push:
+    branches:
+      - dep-integration
 
 permissions:
   contents: write
   issues: write
+  pull-requests: write
 
 concurrency:
   group: dep-integration-sync
@@ -21,6 +25,7 @@ concurrency:
 jobs:
   fast-forward:
     name: Fast-forward dep-integration
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
@@ -135,4 +140,59 @@ jobs:
               --label "dependencies" \
               --body "$BODY"
             echo "Issue de alerta creado"
+          fi
+
+  promote-pr:
+    name: Open or refresh promotion PR
+    needs: [fast-forward]
+    if: always() && (needs.fast-forward.result == 'success' || needs.fast-forward.result == 'skipped')
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Ensure promotion PR dev ← dep-integration
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          DEV_BRANCH=dev
+          git fetch origin "$DEV_BRANCH" dep-integration || {
+            echo "dep-integration not on remote yet; skip"
+            exit 0
+          }
+          ahead="$(git rev-list --count "origin/${DEV_BRANCH}..origin/dep-integration" 2>/dev/null || echo 0)"
+          echo "Commits ahead of ${DEV_BRANCH}: $ahead"
+          if [ "$ahead" -eq 0 ]; then
+            echo "Nothing to promote; skip PR"
+            exit 0
+          fi
+
+          existing="$(gh pr list --base "$DEV_BRANCH" --head dep-integration --state open --json number --jq '.[0].number // empty')"
+          body="$(cat <<'EOF'
+          ## Summary
+          - Agrupa bumps de Dependabot desde `dep-integration` hacia `dev`.
+          - ID release: `—` (bump rutinario; sin spec).
+          - **Merge humano** — no auto-merge (invariante SDD).
+
+          ## Test plan
+          - [ ] CI verde en este PR
+          - [ ] Revisar diff de deps / Actions
+          - [ ] Merge manual a `dev` cuando corresponda
+          EOF
+          )"
+          body="$(printf '%s\n' "$body" | sed 's/^          //')"
+
+          if [ -n "$existing" ]; then
+            echo "Promotion PR already open: #$existing"
+            gh pr ready "$existing" || true
+          else
+            gh pr create \
+              --base "$DEV_BRANCH" \
+              --head dep-integration \
+              --title "chore(deps): promote dep-integration → dev" \
+              --body "$body"
           fi
