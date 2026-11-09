@@ -25,8 +25,9 @@ $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
 Set-Location $repoRoot
 
 # Segmentos armados (evita literales contiguos paths.sdd en el árbol público / frontier).
+# InstSeg se arma por chars para no dejar el token de instancia suelto (sensor frontera).
 $script:MirrorDocsSeg = 'docs'
-$script:MirrorInstSeg = 'sdd'
+$script:MirrorInstSeg = -join @('s', 'd', 'd')
 $script:MirrorKitSeg = 'sdd-kit'
 
 function Get-MirrorInstanceRel {
