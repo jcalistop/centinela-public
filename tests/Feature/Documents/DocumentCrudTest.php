@@ -26,9 +26,9 @@ class DocumentCrudTest extends TestCase
     {
         parent::setUp();
 
-        $this->year = Year::unguarded(fn() => Year::create(['ano' => 2026, 'default' => 1]));
+        $this->year = Year::unguarded(fn () => Year::create(['ano' => 2026, 'default' => 1]));
 
-        CenHieDependency::unguarded(fn() => CenHieDependency::create([
+        CenHieDependency::unguarded(fn () => CenHieDependency::create([
             'id' => 1,
             'codigo' => 'SS-DOC-TAB',
             'nombre' => 'Servicio documentos CRUD test',
@@ -53,8 +53,8 @@ class DocumentCrudTest extends TestCase
             'VoyagerAdminMiddleware requiere browse_admin.'
         );
         $this->assertTrue(
-            $this->adminUser->hasPermission('add_' . DocumentBread::permissionTableName()),
-            'Permiso add_' . DocumentBread::permissionTableName() . ' requerido para el formulario.'
+            $this->adminUser->hasPermission('add_'.DocumentBread::permissionTableName()),
+            'Permiso add_'.DocumentBread::permissionTableName().' requerido para el formulario.'
         );
     }
 
@@ -119,13 +119,13 @@ class DocumentCrudTest extends TestCase
 
         $response = $this->actingAs($this->adminUser)
             ->withSession(['indicator_year' => $this->year])
-            ->get('/admin/' . DocumentBread::slug() . '/' . $documentId);
+            ->get('/admin/'.DocumentBread::slug().'/'.$documentId);
 
         $response->assertOk();
         $content = $response->getContent();
         $this->assertStringContainsString('Volver a Documentos del instrumento', $content);
         $this->assertStringContainsString(
-            route('metas.instrument.index', ['indicatorType' => $indicatorType]) . '#tab-documentos',
+            route('metas.instrument.index', ['indicatorType' => $indicatorType]).'#tab-documentos',
             $content
         );
         $this->assertStringContainsString('hub=metas', $content);
@@ -152,7 +152,7 @@ class DocumentCrudTest extends TestCase
 
         $response = $this->actingAs($this->adminUser)
             ->withSession(['indicator_year' => $this->year])
-            ->get('/admin/' . DocumentBread::slug() . '/' . $documentId . '/edit');
+            ->get('/admin/'.DocumentBread::slug().'/'.$documentId.'/edit');
 
         $response->assertOk();
         $content = $response->getContent();
@@ -183,12 +183,12 @@ class DocumentCrudTest extends TestCase
 
         $response = $this->actingAs($this->adminUser)
             ->withSession(['indicator_year' => $this->year])
-            ->put('/admin/' . DocumentBread::slug() . '/' . $documentId, [
+            ->put('/admin/'.DocumentBread::slug().'/'.$documentId, [
                 'nombre' => 'Doc actualizado',
             ]);
 
         $response->assertRedirect(
-            route('metas.instrument.index', ['indicatorType' => $indicatorType]) . '#tab-documentos'
+            route('metas.instrument.index', ['indicatorType' => $indicatorType]).'#tab-documentos'
         );
         $this->assertDatabaseHas('documents', [
             'id' => $documentId,
@@ -258,10 +258,10 @@ class DocumentCrudTest extends TestCase
 
         $response = $this->actingAs($this->adminUser)
             ->withSession(['indicator_year' => $this->year])
-            ->delete('/admin/' . DocumentBread::slug() . '/' . $documentId);
+            ->delete('/admin/'.DocumentBread::slug().'/'.$documentId);
 
         $response->assertRedirect(
-            route('metas.instrument.index', ['indicatorType' => $indicatorType]) . '#tab-documentos'
+            route('metas.instrument.index', ['indicatorType' => $indicatorType]).'#tab-documentos'
         );
         $this->assertDatabaseMissing('documents', ['id' => $documentId]);
     }
@@ -284,7 +284,7 @@ class DocumentCrudTest extends TestCase
 
         $response = $this->actingAs($this->adminUser)
             ->withSession(['indicator_year' => $this->year])
-            ->delete('/admin/' . DocumentBread::slug() . '/' . $documentId, [
+            ->delete('/admin/'.DocumentBread::slug().'/'.$documentId, [
                 'centinela_document_hub' => 'comges',
             ]);
 
@@ -317,8 +317,8 @@ class DocumentCrudTest extends TestCase
      */
     private function documentsCreatePath(array $query = []): string
     {
-        $path = '/admin/' . DocumentBread::slug() . '/create';
+        $path = '/admin/'.DocumentBread::slug().'/create';
 
-        return $query === [] ? $path : $path . '?' . http_build_query($query);
+        return $query === [] ? $path : $path.'?'.http_build_query($query);
     }
 }
