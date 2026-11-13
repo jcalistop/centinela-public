@@ -11,20 +11,22 @@
     (isset($measurementUnit) && $measurementUnit ? ' / ' . $measurementUnit->codigo : ''))
 
 @section('page_header')
-    <div class="metas-etapa-header">
-        <h1 class="page-title">
-            <i class="{{ $indicatorType->icon_class }}"></i>
-            {{ $indicatorType->nombre_indicador }} para el establecimiento {{ $center->nombre_corto }}
-            ({{ $center->codigo }})
+    <div class="metas-etapa-header{{ isset($measurementUnit) && $measurementUnit ? ' metas-etapa-header--with-unit' : '' }}">
+        <div class="metas-etapa-header__main">
+            <h1 class="page-title">
+                <i class="{{ $indicatorType->icon_class }}"></i>
+                {{ $indicatorType->nombre_indicador }} para el establecimiento {{ $center->nombre_corto }}
+                ({{ $center->codigo }})
+            </h1>
             @if (isset($measurementUnit) && $measurementUnit)
-                <span class="metas-results-unit-header-context">
-                    — Unidad <code>{{ $measurementUnit->codigo }}</code>
+                <div class="metas-results-unit-header-context">
+                    Unidad <code>{{ $measurementUnit->codigo }}</code>
                     @if ($measurementUnit->nombre)
                         ({{ $measurementUnit->nombre }})
                     @endif
-                </span>
+                </div>
             @endif
-        </h1>
+        </div>
         @if ($setting->etapa_vigente)
             <span class="label label-warning metas-etapa-badge">
                 <i class="voyager-activity"></i> Etapa vigente: {{ $setting->etapa_vigente }}
