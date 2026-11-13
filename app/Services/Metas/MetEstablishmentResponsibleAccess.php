@@ -107,8 +107,12 @@ class MetEstablishmentResponsibleAccess
     }
 
     /**
-     * CTA desde resultados del establecimiento: solo el responsable designado.
-     * Control-gestión / admin editan convenio desde «Configurar establecimientos».
+     * CTA desde resultados del establecimiento.
+     *
+     * Lo ven control-gestión y admin (editan convenio en su SS), y el responsable
+     * designado del centro. `parametrizador` queda fuera: ve resultados cross-SS
+     * pero no opera convenio. Se exige que el centro esté incluido en la medición
+     * para no ofrecer un enlace que la vista destino resolvería como 404.
      * Visible también con convenio ENVIADO (solo lectura).
      */
     public function canShowConvenioCtaOnEstablishmentResults(
@@ -117,7 +121,7 @@ class MetEstablishmentResponsibleAccess
         int $yearId,
         int $indicatorTypeId,
     ): bool {
-        if ($user->hasRole(['control-gestion', 'admin', 'parametrizador'])) {
+        if ($user->hasRole('parametrizador')) {
             return false;
         }
 
@@ -127,7 +131,29 @@ class MetEstablishmentResponsibleAccess
             return false;
         }
 
+        if (! $this->isCenterIncludedInMeasurement($user, $centerId, $yearId, $indicatorTypeId)) {
+            return false;
+        }
+
+        if ($user->hasRole(['control-gestion', 'admin'])) {
+            return true;
+        }
+
         return $this->isResponsibleForCenter($user, $centerId, $yearId, $indicatorTypeId);
+    }
+
+    private function isCenterIncludedInMeasurement(
+        User $user,
+        int $centerId,
+        int $yearId,
+        int $indicatorTypeId,
+    ): bool {
+        return MetCenterInclusion::query()
+            ->where('cen_center_id', $centerId)
+            ->where('year_id', $yearId)
+            ->where('indicator_type_id', $indicatorTypeId)
+            ->where('cen_hie_dependency_id', $user->cen_hie_dependency_id)
+            ->exists();
     }
 
     public function canLoadDataForCenter(

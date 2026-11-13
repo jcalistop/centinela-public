@@ -3,6 +3,7 @@
 namespace Tests\Feature\MetasInstrument;
 
 use App\Enums\IndicatorType\EtapaVigente;
+use App\Enums\Metas\EstadoConvenioEstablecimiento;
 use App\Livewire\MetasInstrument\CenterSelectionComponent;
 use App\Models\CenCenter;
 use App\Models\CenHieDependency;
@@ -10,6 +11,7 @@ use App\Models\IndicatorType;
 use App\Models\IndicatorTypeGlobalSetting;
 use App\Models\IndicatorTypeSetting;
 use App\Models\MetCenterInclusion;
+use App\Models\MetEstablishmentAgreement;
 use App\Models\MetEstablishmentResponsible;
 use App\Models\MetIndicator;
 use App\Models\MetIndicatorConfiguration;
@@ -43,9 +45,9 @@ class EstablishmentResponsibleTest extends TestCase
     {
         parent::setUp();
 
-        $this->year = Year::unguarded(fn () => Year::create(['ano' => 2026, 'default' => 1]));
+        $this->year = Year::unguarded(fn() => Year::create(['ano' => 2026, 'default' => 1]));
 
-        CenHieDependency::unguarded(fn () => CenHieDependency::create([
+        CenHieDependency::unguarded(fn() => CenHieDependency::create([
             'id' => 1,
             'codigo' => 'SS01',
             'nombre' => 'Servicio de Salud Test',
@@ -67,7 +69,7 @@ class EstablishmentResponsibleTest extends TestCase
 
         $this->indicatorType = $this->indicatorTypeByRoute(attributes: ['estado' => true]);
 
-        IndicatorTypeSetting::unguarded(fn () => IndicatorTypeSetting::create([
+        IndicatorTypeSetting::unguarded(fn() => IndicatorTypeSetting::create([
             'indicator_type_id' => $this->indicatorType->id,
             'year_id' => $this->year->id,
             'cen_hie_dependency_id' => 1,
@@ -75,7 +77,7 @@ class EstablishmentResponsibleTest extends TestCase
             'habilitado' => 1,
         ]));
 
-        IndicatorTypeGlobalSetting::unguarded(fn () => IndicatorTypeGlobalSetting::create([
+        IndicatorTypeGlobalSetting::unguarded(fn() => IndicatorTypeGlobalSetting::create([
             'indicator_type_id' => $this->indicatorType->id,
             'year_id' => $this->year->id,
             'min_indicadores' => 4,
@@ -102,7 +104,7 @@ class EstablishmentResponsibleTest extends TestCase
         ]);
 
         foreach ([$this->centerA, $this->centerB] as $center) {
-            MetCenterInclusion::unguarded(fn () => MetCenterInclusion::create([
+            MetCenterInclusion::unguarded(fn() => MetCenterInclusion::create([
                 'cen_center_id' => $center->id,
                 'year_id' => $this->year->id,
                 'indicator_type_id' => $this->indicatorType->id,
@@ -204,7 +206,7 @@ class EstablishmentResponsibleTest extends TestCase
         ]);
 
         foreach ($indicators as $indicator) {
-            MetIndicatorConfiguration::unguarded(fn () => MetIndicatorConfiguration::create([
+            MetIndicatorConfiguration::unguarded(fn() => MetIndicatorConfiguration::create([
                 'met_indicator_id' => $indicator->id,
                 'year_id' => $this->year->id,
                 'cen_center_id' => $this->centerA->id,
@@ -263,7 +265,7 @@ class EstablishmentResponsibleTest extends TestCase
         ]);
 
         foreach ($indicators as $index => $indicator) {
-            MetIndicatorConfiguration::unguarded(fn () => MetIndicatorConfiguration::create([
+            MetIndicatorConfiguration::unguarded(fn() => MetIndicatorConfiguration::create([
                 'met_indicator_id' => $indicator->id,
                 'year_id' => $this->year->id,
                 'cen_center_id' => $this->centerA->id,
@@ -307,7 +309,7 @@ class EstablishmentResponsibleTest extends TestCase
 
         $indicator = $this->createIndicator('R-M');
 
-        MetIndicatorConfiguration::unguarded(fn () => MetIndicatorConfiguration::create([
+        MetIndicatorConfiguration::unguarded(fn() => MetIndicatorConfiguration::create([
             'met_indicator_id' => $indicator->id,
             'year_id' => $this->year->id,
             'cen_center_id' => $this->centerA->id,
@@ -344,7 +346,7 @@ class EstablishmentResponsibleTest extends TestCase
 
         $indicator = $this->createIndicator('R-X');
 
-        MetIndicatorConfiguration::unguarded(fn () => MetIndicatorConfiguration::create([
+        MetIndicatorConfiguration::unguarded(fn() => MetIndicatorConfiguration::create([
             'met_indicator_id' => $indicator->id,
             'year_id' => $this->year->id,
             'cen_center_id' => $this->centerA->id,
@@ -395,9 +397,108 @@ class EstablishmentResponsibleTest extends TestCase
     }
 
     /** @test */
-    public function control_gestion_no_ve_cta_convenio_en_resultados_por_establecimiento(): void
+    public function control_gestion_ve_cta_convenio_en_resultados_por_establecimiento(): void
     {
         $this->enableFormulacion();
+
+        $this->actingAs($this->controlGestion)->withSession(['indicator_year' => $this->year]);
+
+        $this->get(route('metas.instrument.establishment.results', [
+            'indicatorType' => $this->indicatorType,
+            'center' => $this->centerA,
+        ]))
+            ->assertOk()
+            ->assertSee('Configurar convenio', false)
+            ->assertSee(route('metas.instrument.establishments.indicators', [
+                'indicatorType' => $this->indicatorType,
+                'center' => $this->centerA,
+            ], false), false);
+    }
+
+    /** @test */
+    public function admin_ve_cta_convenio_en_resultados_por_establecimiento(): void
+    {
+        $this->enableFormulacion();
+
+        $this->actingAs($this->createUserWithRole('admin'))->withSession(['indicator_year' => $this->year]);
+
+        $this->get(route('metas.instrument.establishment.results', [
+            'indicatorType' => $this->indicatorType,
+            'center' => $this->centerA,
+        ]))
+            ->assertOk()
+            ->assertSee('Configurar convenio', false);
+    }
+
+    /** @test */
+    public function parametrizador_no_ve_cta_convenio_en_resultados_por_establecimiento(): void
+    {
+        $this->enableFormulacion();
+
+        $this->actingAs($this->createUserWithRole('parametrizador'))->withSession(['indicator_year' => $this->year]);
+
+        $this->get(route('metas.instrument.establishment.results', [
+            'indicatorType' => $this->indicatorType,
+            'center' => $this->centerA,
+        ]))
+            ->assertOk()
+            ->assertDontSee('Configurar convenio', false);
+    }
+
+    /** @test */
+    public function control_gestion_no_ve_cta_convenio_en_centro_no_incluido(): void
+    {
+        $this->enableFormulacion();
+
+        MetCenterInclusion::query()
+            ->where('cen_center_id', $this->centerB->id)
+            ->where('year_id', $this->year->id)
+            ->where('indicator_type_id', $this->indicatorType->id)
+            ->delete();
+
+        $this->actingAs($this->controlGestion)->withSession(['indicator_year' => $this->year]);
+
+        $this->get(route('metas.instrument.establishment.results', [
+            'indicatorType' => $this->indicatorType,
+            'center' => $this->centerB,
+        ]))
+            ->assertOk()
+            ->assertDontSee('Configurar convenio', false);
+    }
+
+    /** @test */
+    public function control_gestion_ve_cta_con_convenio_enviado(): void
+    {
+        $this->enableFormulacion();
+
+        MetEstablishmentAgreement::unguarded(fn() => MetEstablishmentAgreement::create([
+            'cen_center_id' => $this->centerA->id,
+            'year_id' => $this->year->id,
+            'indicator_type_id' => $this->indicatorType->id,
+            'cen_hie_dependency_id' => 1,
+            'estado' => EstadoConvenioEstablecimiento::Enviado,
+            'submitted_at' => now(),
+            'submitted_by' => $this->controlGestion->id,
+        ]));
+
+        $this->actingAs($this->controlGestion)->withSession(['indicator_year' => $this->year]);
+
+        $this->get(route('metas.instrument.establishment.results', [
+            'indicatorType' => $this->indicatorType,
+            'center' => $this->centerA,
+        ]))
+            ->assertOk()
+            ->assertSee('Configurar convenio', false);
+    }
+
+    /** @test */
+    public function control_gestion_no_ve_cta_con_instrumento_no_iniciado(): void
+    {
+        IndicatorTypeSetting::unguarded(fn() => IndicatorTypeSetting::query()
+            ->where('indicator_type_id', $this->indicatorType->id)
+            ->where('year_id', $this->year->id)
+            ->where('cen_hie_dependency_id', 1)
+            ->update(['etapa_vigente' => EtapaVigente::NoIniciado->value]));
 
         $this->actingAs($this->controlGestion)->withSession(['indicator_year' => $this->year]);
 
@@ -424,16 +525,30 @@ class EstablishmentResponsibleTest extends TestCase
 
     private function enableFormulacion(): void
     {
-        IndicatorTypeSetting::unguarded(fn () => IndicatorTypeSetting::query()
+        IndicatorTypeSetting::unguarded(fn() => IndicatorTypeSetting::query()
             ->where('indicator_type_id', $this->indicatorType->id)
             ->where('year_id', $this->year->id)
             ->where('cen_hie_dependency_id', 1)
             ->update(['etapa_vigente' => EtapaVigente::Formulacion->value]));
     }
 
+    private function createUserWithRole(string $roleName): User
+    {
+        $role = Role::firstOrCreate(['name' => $roleName], ['display_name' => ucfirst($roleName)]);
+
+        /** @var User $user */
+        $user = User::factory()->create([
+            'role_id' => $role->id,
+            'cen_hie_dependency_id' => 1,
+        ]);
+        $user->role()->associate($role)->save();
+
+        return $user;
+    }
+
     private function designate(CenCenter $center, User $user): void
     {
-        MetEstablishmentResponsible::unguarded(fn () => MetEstablishmentResponsible::create([
+        MetEstablishmentResponsible::unguarded(fn() => MetEstablishmentResponsible::create([
             'cen_center_id' => $center->id,
             'year_id' => $this->year->id,
             'indicator_type_id' => $this->indicatorType->id,
@@ -445,10 +560,10 @@ class EstablishmentResponsibleTest extends TestCase
 
     private function createIndicator(string $clave): MetIndicator
     {
-        return MetIndicator::unguarded(fn () => MetIndicator::create([
+        return MetIndicator::unguarded(fn() => MetIndicator::create([
             'indicator_type_id' => $this->indicatorType->id,
             'clave' => $clave,
-            'nombre' => 'Indicador '.$clave,
+            'nombre' => 'Indicador ' . $clave,
             'decimales' => 2,
             'decimales_modo' => 'redondear',
             'meta_valor' => 50.0,
@@ -461,7 +576,7 @@ class EstablishmentResponsibleTest extends TestCase
 
     private function enableMetasModuleAccessForDependency(int $depId): void
     {
-        ServiceModuleToggle::unguarded(fn () => ServiceModuleToggle::firstOrCreate(
+        ServiceModuleToggle::unguarded(fn() => ServiceModuleToggle::firstOrCreate(
             ['cen_hie_dependency_id' => $depId, 'module_key' => 'metas-18834'],
             ['enabled' => true],
         ));
