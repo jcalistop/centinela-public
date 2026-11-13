@@ -504,4 +504,67 @@ class MetEstablishmentIndicatorConfigServiceTest extends TestCase
         $this->assertTrue($statuses->firstWhere('codigo', 'OK-1')['is_complete']);
         $this->assertFalse($statuses->firstWhere('codigo', 'BAD-1')['is_complete']);
     }
+
+    /** @test */
+    public function unidad_inactiva_no_aparece_en_statuses_ni_en_issues(): void
+    {
+        $internalType = IndicatorType::unguarded(fn () => IndicatorType::create([
+            'clave_indicador' => 'metas-20707-inact',
+            'nombre_indicador' => 'Metas 20.707 Inactivas',
+            'route' => 'metas-20707-inact',
+            'view' => null,
+            'estado' => true,
+            'orden' => 96,
+            'measurement_granularity' => 'internal_unit',
+        ]));
+
+        $unitType = MetUnitType::create([
+            'codigo' => 'UT-IN',
+            'nombre' => 'Tipo Inactivas',
+            'orden' => 1,
+            'enabled' => true,
+        ]);
+
+        $activeUnit = MetMeasurementUnit::unguarded(fn () => MetMeasurementUnit::create([
+            'cen_center_id' => $this->center->id,
+            'year_id' => $this->year->id,
+            'met_unit_type_id' => $unitType->id,
+            'codigo' => 'ACT-1',
+            'activo' => true,
+            'cen_hie_dependency_id' => 1,
+        ]));
+
+        MetMeasurementUnit::unguarded(fn () => MetMeasurementUnit::create([
+            'cen_center_id' => $this->center->id,
+            'year_id' => $this->year->id,
+            'met_unit_type_id' => $unitType->id,
+            'codigo' => 'INA-1',
+            'activo' => false,
+            'cen_hie_dependency_id' => 1,
+        ]));
+
+        $service = app(MetEstablishmentIndicatorConfigService::class);
+
+        $statuses = $service->unitStatusesForCenter(
+            (int) $internalType->id,
+            (int) $this->center->id,
+            (int) $this->year->id,
+            1,
+        );
+
+        $this->assertSame(['ACT-1'], $statuses->pluck('codigo')->all());
+        $this->assertNotNull($statuses->firstWhere('id', $activeUnit->id));
+
+        $issues = $service->issuesByCenterId(
+            (int) $internalType->id,
+            [(int) $this->center->id],
+            (int) $this->year->id,
+            1,
+            true,
+        );
+
+        $issue = $issues->get((int) $this->center->id);
+        $this->assertNotContains('INA-1', array_column($issue['units'] ?? [], 'codigo'));
+        $this->assertStringNotContainsString('INA-1', $issue['message'] ?? '');
+    }
 }

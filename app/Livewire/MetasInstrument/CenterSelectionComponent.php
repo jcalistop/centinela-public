@@ -220,6 +220,7 @@ class CenterSelectionComponent extends Component
             ? MetMeasurementUnit::query()
                 ->whereIn('cen_center_id', array_keys($this->includedCenterIds) ?: [0])
                 ->where('year_id', $yearId)
+                ->where('activo', true)
                 ->selectRaw('cen_center_id, COUNT(*) as total')
                 ->groupBy('cen_center_id')
                 ->pluck('total', 'cen_center_id')
@@ -300,9 +301,25 @@ class CenterSelectionComponent extends Component
                 ->where('cen_center_id', $this->configCenterId)
                 ->where('year_id', $yearId)
                 ->where('cen_hie_dependency_id', $depId)
+                ->where('activo', true)
                 ->with('unitType')
                 ->orderBy('codigo')
                 ->get();
+
+            $activeUnitIds = $measurementUnitsForConfigModal
+                ->pluck('id')
+                ->map(fn ($unitId): int => (int) $unitId)
+                ->all();
+
+            if (! in_array((int) $this->configMeasurementUnitId, $activeUnitIds, true)) {
+                $fallbackUnitId = $activeUnitIds[0] ?? null;
+
+                if ($fallbackUnitId !== $this->configMeasurementUnitId) {
+                    $this->configMeasurementUnitId = $fallbackUnitId;
+                    $this->configs = [];
+                    $this->loadConfigs();
+                }
+            }
         }
 
         $periodicidadPorIndicadorId = [];
@@ -766,6 +783,7 @@ class CenterSelectionComponent extends Component
                 ->where('cen_center_id', $centerId)
                 ->where('year_id', $this->indicatorYear()->id)
                 ->where('cen_hie_dependency_id', $this->authenticatedUser()->cen_hie_dependency_id)
+                ->where('activo', true)
                 ->orderBy('codigo')
                 ->value('id');
 

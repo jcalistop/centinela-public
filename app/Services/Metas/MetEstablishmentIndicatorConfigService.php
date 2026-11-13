@@ -124,6 +124,7 @@ class MetEstablishmentIndicatorConfigService
             ->where('cen_center_id', $centerId)
             ->where('year_id', $yearId)
             ->where('cen_hie_dependency_id', $cenHieDependencyId)
+            ->where('activo', true)
             ->orderBy('codigo')
             ->get(['id', 'codigo', 'nombre']);
 
@@ -165,6 +166,7 @@ class MetEstablishmentIndicatorConfigService
                 ->where('cen_center_id', $centerId)
                 ->where('year_id', $yearId)
                 ->where('cen_hie_dependency_id', $cenHieDependencyId)
+                ->where('activo', true)
                 ->orderBy('codigo')
                 ->get(['id', 'codigo', 'nombre']);
 
