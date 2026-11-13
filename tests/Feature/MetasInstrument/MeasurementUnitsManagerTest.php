@@ -3,12 +3,14 @@
 namespace Tests\Feature\MetasInstrument;
 
 use App\Enums\IndicatorType\EtapaVigente;
+use App\Enums\Metas\EstadoConvenioEstablecimiento;
 use App\Livewire\MetasInstrument\MeasurementUnitsManagerComponent;
 use App\Models\CenCenter;
 use App\Models\CenHieDependency;
 use App\Models\IndicatorType;
 use App\Models\IndicatorTypeSetting;
 use App\Models\MetDataField;
+use App\Models\MetEstablishmentAgreement;
 use App\Models\MetIndicator;
 use App\Models\MetIndicatorConfiguration;
 use App\Models\MetMeasurementUnit;
@@ -201,9 +203,9 @@ class MeasurementUnitsManagerTest extends TestCase
     }
 
     /** @test */
-    public function delete_blocked_when_unit_has_indicator_configuration(): void
+    public function admin_can_delete_unit_with_only_draft_configuration(): void
     {
-        $unit = $this->createUnit('U-CFG', 'Con convenio', $this->enabledType->id);
+        $unit = $this->createUnit('U-CFG', 'Con borrador', $this->enabledType->id);
         $indicator = $this->createIndicator();
 
         MetIndicatorConfiguration::unguarded(fn () => MetIndicatorConfiguration::create([
@@ -212,8 +214,61 @@ class MeasurementUnitsManagerTest extends TestCase
             'cen_hie_dependency_id' => 1,
             'cen_center_id' => $this->center->id,
             'met_measurement_unit_id' => $unit->id,
-            'seleccionado' => true,
-            'aplica' => true,
+            'seleccionado' => false,
+            'aplica' => false,
+        ]));
+
+        Livewire::test(MeasurementUnitsManagerComponent::class, [
+            'centerId' => $this->center->id,
+            'indicatorTypeId' => $this->indicatorType->id,
+        ])
+            ->call('confirmDeleteUnit', $unit->id)
+            ->call('deleteUnit');
+
+        $this->assertDatabaseMissing('met_measurement_units', ['id' => $unit->id]);
+        $this->assertDatabaseMissing('met_indicator_configurations', ['met_measurement_unit_id' => $unit->id]);
+    }
+
+    /** @test */
+    public function admin_can_delete_unit_with_results_without_values(): void
+    {
+        $unit = $this->createUnit('U-RSV', 'Sin valores', $this->enabledType->id);
+        $indicator = $this->createIndicator();
+
+        MetResult::unguarded(fn () => MetResult::create([
+            'met_indicator_id' => $indicator->id,
+            'cen_center_id' => $this->center->id,
+            'cen_hie_dependency_id' => 1,
+            'year_id' => $this->year->id,
+            'met_measurement_unit_id' => $unit->id,
+            'periodo' => 'ENE',
+            'error_message' => MetResult::MESSAGE_SIN_CASOS,
+        ]));
+
+        Livewire::test(MeasurementUnitsManagerComponent::class, [
+            'centerId' => $this->center->id,
+            'indicatorTypeId' => $this->indicatorType->id,
+        ])
+            ->call('confirmDeleteUnit', $unit->id)
+            ->call('deleteUnit');
+
+        $this->assertDatabaseMissing('met_measurement_units', ['id' => $unit->id]);
+        $this->assertDatabaseMissing('met_results', ['met_measurement_unit_id' => $unit->id]);
+    }
+
+    /** @test */
+    public function delete_blocked_when_agreement_is_enviado(): void
+    {
+        $unit = $this->createUnit('U-ENV', 'Con convenio enviado', $this->enabledType->id);
+
+        MetEstablishmentAgreement::unguarded(fn () => MetEstablishmentAgreement::create([
+            'cen_center_id' => $this->center->id,
+            'year_id' => $this->year->id,
+            'indicator_type_id' => $this->indicatorType->id,
+            'cen_hie_dependency_id' => 1,
+            'estado' => EstadoConvenioEstablecimiento::Enviado,
+            'submitted_at' => now(),
+            'submitted_by' => $this->admin->id,
         ]));
 
         Livewire::test(MeasurementUnitsManagerComponent::class, [
@@ -282,6 +337,8 @@ class MeasurementUnitsManagerTest extends TestCase
     public function user_without_cg_role_cannot_mount_component(): void
     {
         $referenteRole = Role::firstOrCreate(['name' => 'referente'], ['display_name' => 'Referente']);
+
+        /** @var User $referente */
         $referente = User::factory()->create([
             'role_id' => $referenteRole->id,
             'cen_hie_dependency_id' => 1,

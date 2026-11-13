@@ -15,6 +15,7 @@ use App\Services\Metas\MetEstablishmentAgreementService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
 
@@ -277,6 +278,17 @@ class MeasurementUnitsManagerComponent extends Component
         abort_unless($this->pendingDeleteUnitId !== null, 400);
 
         $unit = $this->findScopedUnit($this->pendingDeleteUnitId);
+        $yearId = $this->currentYear()->id;
+
+        if (app(MetEstablishmentAgreementService::class)->isEnviado($this->centerId, $yearId, $this->indicatorTypeId)) {
+            session()->flash(
+                'units_error',
+                'No se puede eliminar: el convenio del establecimiento ya fue enviado. Reabra el convenio para modificar las unidades.'
+            );
+            $this->cancelDelete();
+
+            return;
+        }
 
         if ($unit->isInUse()) {
             session()->flash('units_error', $unit->usageBlockMessage());
@@ -286,7 +298,18 @@ class MeasurementUnitsManagerComponent extends Component
         }
 
         $codigo = $unit->codigo;
-        $unit->delete();
+
+        DB::transaction(function () use ($unit): void {
+            $unit->indicatorConfigurations()->delete();
+
+            $unit->results()
+                ->whereNull('numerador')
+                ->whereNull('denominador')
+                ->whereNull('resultado')
+                ->delete();
+
+            $unit->delete();
+        });
 
         $this->cancelDelete();
         $this->dispatch('units-updated');

@@ -197,6 +197,48 @@ class DocumentCrudTest extends TestCase
     }
 
     /** @test */
+    public function documents_file_column_persists_voyager_multi_file_json_longer_than_255_chars(): void
+    {
+        $indicatorType = $this->indicatorTypeByRoute(attributes: ['estado' => true]);
+
+        $fileJson = json_encode([
+            [
+                'download_link' => 'documentos\\November2026\\wcne2VTYV0pOggUbQXuc.docx',
+                'original_name' => 'RE-737_Metas-Sanitarias-Ley-18834-2027_VF-firma.docx',
+            ],
+            [
+                'download_link' => 'documentos\\November2026\\8pkfiwtxuLuBvx9HZqb8.pdf',
+                'original_name' => 'RES. EXENTA N° 737 FIJA METAS SANITARIAS.pdf',
+            ],
+        ], JSON_UNESCAPED_UNICODE);
+
+        $this->assertIsString($fileJson);
+        $this->assertGreaterThan(255, strlen($fileJson));
+
+        $documentId = DB::table('documents')->insertGetId([
+            'nombre' => 'Doc multi-archivo',
+            'descripcion' => '',
+            'autor' => '',
+            'file' => '',
+            'year_id' => $this->year->id,
+            'indicator_type_id' => $indicatorType->id,
+            'cen_hie_dependency_id' => 1,
+            'user_id' => $this->adminUser->id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        DB::table('documents')->where('id', $documentId)->update([
+            'file' => $fileJson,
+            'updated_at' => now(),
+        ]);
+
+        $stored = DB::table('documents')->where('id', $documentId)->value('file');
+        $this->assertSame($fileJson, $stored);
+        $this->assertGreaterThan(255, strlen((string) $stored));
+    }
+
+    /** @test */
     public function destroy_redirects_to_metas_documents_tab_for_instrument_document(): void
     {
         $indicatorType = $this->indicatorTypeByRoute(attributes: ['estado' => true]);

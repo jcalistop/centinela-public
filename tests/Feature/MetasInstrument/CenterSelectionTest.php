@@ -989,6 +989,148 @@ class CenterSelectionTest extends TestCase
     }
 
     /** @test */
+    public function unidad_inactiva_no_es_tab_ni_unidad_por_defecto(): void
+    {
+        $internalType = $this->createInternalUnitInstrumentType();
+        $unitType = MetUnitType::create([
+            'codigo' => 'T-INA',
+            'nombre' => 'Tipo Inactivas',
+            'orden' => 1,
+            'enabled' => true,
+        ]);
+
+        MetCenterInclusion::unguarded(fn () => MetCenterInclusion::create([
+            'cen_center_id' => $this->centerA->id,
+            'year_id' => $this->year->id,
+            'indicator_type_id' => $internalType->id,
+            'cen_hie_dependency_id' => 1,
+        ]));
+
+        MetMeasurementUnit::unguarded(fn () => MetMeasurementUnit::create([
+            'cen_center_id' => $this->centerA->id,
+            'year_id' => $this->year->id,
+            'met_unit_type_id' => $unitType->id,
+            'codigo' => 'AAA-INA',
+            'activo' => false,
+            'cen_hie_dependency_id' => 1,
+        ]));
+
+        $activeUnit = MetMeasurementUnit::unguarded(fn () => MetMeasurementUnit::create([
+            'cen_center_id' => $this->centerA->id,
+            'year_id' => $this->year->id,
+            'met_unit_type_id' => $unitType->id,
+            'codigo' => 'ZZZ-ACT',
+            'activo' => true,
+            'cen_hie_dependency_id' => 1,
+        ]));
+
+        $this->actingAs($this->controlGestion)->withSession(['indicator_year' => $this->year]);
+
+        Livewire::test(CenterSelectionComponent::class, [
+            'indicatorTypeId' => $internalType->id,
+            'instrumentNombre' => $internalType->nombre_indicador,
+            'standaloneConfigPage' => true,
+            'configCenterId' => $this->centerA->id,
+        ])
+            ->assertSet('configMeasurementUnitId', $activeUnit->id)
+            ->assertSee('ZZZ-ACT')
+            ->assertDontSee('AAA-INA');
+    }
+
+    /** @test */
+    public function conteo_de_unidades_del_listado_solo_suma_activas(): void
+    {
+        $internalType = $this->createInternalUnitInstrumentType();
+        $unitType = MetUnitType::create([
+            'codigo' => 'T-CNT',
+            'nombre' => 'Tipo Conteo',
+            'orden' => 1,
+            'enabled' => true,
+        ]);
+
+        MetCenterInclusion::unguarded(fn () => MetCenterInclusion::create([
+            'cen_center_id' => $this->centerA->id,
+            'year_id' => $this->year->id,
+            'indicator_type_id' => $internalType->id,
+            'cen_hie_dependency_id' => 1,
+        ]));
+
+        foreach (['ACT-1' => true, 'INA-1' => false] as $codigo => $activo) {
+            MetMeasurementUnit::unguarded(fn () => MetMeasurementUnit::create([
+                'cen_center_id' => $this->centerA->id,
+                'year_id' => $this->year->id,
+                'met_unit_type_id' => $unitType->id,
+                'codigo' => $codigo,
+                'activo' => $activo,
+                'cen_hie_dependency_id' => 1,
+            ]));
+        }
+
+        $this->actingAs($this->controlGestion)->withSession(['indicator_year' => $this->year]);
+
+        $component = Livewire::test(CenterSelectionComponent::class, [
+            'indicatorTypeId' => $internalType->id,
+            'instrumentNombre' => $internalType->nombre_indicador,
+        ]);
+
+        $counts = $component->viewData('unitCountsByCenterId');
+
+        $this->assertSame(1, (int) $counts->get($this->centerA->id));
+    }
+
+    /** @test */
+    public function unidad_activa_desactivada_cambia_a_otra_unidad_activa(): void
+    {
+        $internalType = $this->createInternalUnitInstrumentType();
+        $unitType = MetUnitType::create([
+            'codigo' => 'T-FB',
+            'nombre' => 'Tipo Fallback',
+            'orden' => 1,
+            'enabled' => true,
+        ]);
+
+        MetCenterInclusion::unguarded(fn () => MetCenterInclusion::create([
+            'cen_center_id' => $this->centerA->id,
+            'year_id' => $this->year->id,
+            'indicator_type_id' => $internalType->id,
+            'cen_hie_dependency_id' => 1,
+        ]));
+
+        $unitA = MetMeasurementUnit::unguarded(fn () => MetMeasurementUnit::create([
+            'cen_center_id' => $this->centerA->id,
+            'year_id' => $this->year->id,
+            'met_unit_type_id' => $unitType->id,
+            'codigo' => 'A-1',
+            'activo' => true,
+            'cen_hie_dependency_id' => 1,
+        ]));
+
+        $unitB = MetMeasurementUnit::unguarded(fn () => MetMeasurementUnit::create([
+            'cen_center_id' => $this->centerA->id,
+            'year_id' => $this->year->id,
+            'met_unit_type_id' => $unitType->id,
+            'codigo' => 'B-2',
+            'activo' => true,
+            'cen_hie_dependency_id' => 1,
+        ]));
+
+        $this->actingAs($this->controlGestion)->withSession(['indicator_year' => $this->year]);
+
+        $component = Livewire::test(CenterSelectionComponent::class, [
+            'indicatorTypeId' => $internalType->id,
+            'instrumentNombre' => $internalType->nombre_indicador,
+            'standaloneConfigPage' => true,
+            'configCenterId' => $this->centerA->id,
+        ])->assertSet('configMeasurementUnitId', $unitA->id);
+
+        MetMeasurementUnit::query()->whereKey($unitA->id)->update(['activo' => false]);
+
+        $component->call('$refresh')
+            ->assertSet('configMeasurementUnitId', $unitB->id)
+            ->assertDontSee('A-1');
+    }
+
+    /** @test */
     public function save_config_allows_aplica_without_convenidos(): void
     {
         MetCenterInclusion::unguarded(fn () => MetCenterInclusion::create([

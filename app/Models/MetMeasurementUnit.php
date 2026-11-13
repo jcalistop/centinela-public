@@ -77,6 +77,12 @@ class MetMeasurementUnit extends Model
     }
 
     /**
+     * Motivos que impiden eliminar la unidad por datos ya operados.
+     *
+     * El borrador de convenio (`met_indicator_configurations`) y los resultados
+     * todavía sin valor (`numerador`/`denominador`/`resultado` nulos) no cuentan
+     * como uso: se limpian al eliminar la unidad.
+     *
      * @return list<string>
      */
     public function usageReasons(): array
@@ -87,11 +93,10 @@ class MetMeasurementUnit extends Model
             $reasons[] = 'carga mensual';
         }
 
-        if ($this->indicatorConfigurations()->exists()) {
-            $reasons[] = 'convenio configurado';
-        }
-
-        if ($this->results()->exists()) {
+        if ($this->results()->where(fn (Builder $query) => $query
+            ->whereNotNull('numerador')
+            ->orWhereNotNull('denominador')
+            ->orWhereNotNull('resultado'))->exists()) {
             $reasons[] = 'resultados calculados';
         }
 
