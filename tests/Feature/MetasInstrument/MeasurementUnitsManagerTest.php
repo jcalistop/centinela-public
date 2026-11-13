@@ -46,7 +46,7 @@ class MeasurementUnitsManagerTest extends TestCase
     {
         parent::setUp();
 
-        CenHieDependency::unguarded(fn() => CenHieDependency::create([
+        CenHieDependency::unguarded(fn () => CenHieDependency::create([
             'id' => 1,
             'codigo' => 'SS01',
             'nombre' => 'Servicio de Salud Test',
@@ -54,7 +54,7 @@ class MeasurementUnitsManagerTest extends TestCase
             'habilitado' => true,
         ]));
 
-        $this->year = Year::unguarded(fn() => Year::create(['ano' => 2026, 'default' => 1]));
+        $this->year = Year::unguarded(fn () => Year::create(['ano' => 2026, 'default' => 1]));
 
         $adminRole = Role::firstOrCreate(['name' => 'admin'], ['display_name' => 'Administrador']);
         $this->admin = User::factory()->create([
@@ -63,7 +63,7 @@ class MeasurementUnitsManagerTest extends TestCase
         ]);
         $this->admin->role()->associate($adminRole)->save();
 
-        $this->indicatorType = IndicatorType::unguarded(fn() => IndicatorType::create([
+        $this->indicatorType = IndicatorType::unguarded(fn () => IndicatorType::create([
             'clave_indicador' => 'metas-20707-test',
             'nombre_indicador' => 'Metas 20.707 Test',
             'route' => 'metas-20707-test',
@@ -73,7 +73,7 @@ class MeasurementUnitsManagerTest extends TestCase
             'measurement_granularity' => 'internal_unit',
         ]));
 
-        IndicatorTypeSetting::unguarded(fn() => IndicatorTypeSetting::create([
+        IndicatorTypeSetting::unguarded(fn () => IndicatorTypeSetting::create([
             'indicator_type_id' => $this->indicatorType->id,
             'year_id' => $this->year->id,
             'cen_hie_dependency_id' => 1,
@@ -182,7 +182,7 @@ class MeasurementUnitsManagerTest extends TestCase
         $indicator = $this->createIndicator();
         $field = $this->createDataField($indicator);
 
-        MetMonthlyData::unguarded(fn() => MetMonthlyData::create([
+        MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
             'met_data_field_id' => $field->id,
             'cen_center_id' => $this->center->id,
             'year_id' => $this->year->id,
@@ -208,7 +208,7 @@ class MeasurementUnitsManagerTest extends TestCase
         $unit = $this->createUnit('U-CFG', 'Con borrador', $this->enabledType->id);
         $indicator = $this->createIndicator();
 
-        MetIndicatorConfiguration::unguarded(fn() => MetIndicatorConfiguration::create([
+        MetIndicatorConfiguration::unguarded(fn () => MetIndicatorConfiguration::create([
             'met_indicator_id' => $indicator->id,
             'year_id' => $this->year->id,
             'cen_hie_dependency_id' => 1,
@@ -235,7 +235,7 @@ class MeasurementUnitsManagerTest extends TestCase
         $unit = $this->createUnit('U-RSV', 'Sin valores', $this->enabledType->id);
         $indicator = $this->createIndicator();
 
-        MetResult::unguarded(fn() => MetResult::create([
+        MetResult::unguarded(fn () => MetResult::create([
             'met_indicator_id' => $indicator->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -261,7 +261,7 @@ class MeasurementUnitsManagerTest extends TestCase
     {
         $unit = $this->createUnit('U-ENV', 'Con convenio enviado', $this->enabledType->id);
 
-        MetEstablishmentAgreement::unguarded(fn() => MetEstablishmentAgreement::create([
+        MetEstablishmentAgreement::unguarded(fn () => MetEstablishmentAgreement::create([
             'cen_center_id' => $this->center->id,
             'year_id' => $this->year->id,
             'indicator_type_id' => $this->indicatorType->id,
@@ -287,7 +287,7 @@ class MeasurementUnitsManagerTest extends TestCase
         $unit = $this->createUnit('U-RES', 'Con resultados', $this->enabledType->id);
         $indicator = $this->createIndicator();
 
-        MetResult::unguarded(fn() => MetResult::create([
+        MetResult::unguarded(fn () => MetResult::create([
             'met_indicator_id' => $indicator->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -356,7 +356,7 @@ class MeasurementUnitsManagerTest extends TestCase
     /** @test */
     public function center_from_other_ss_returns_forbidden(): void
     {
-        CenHieDependency::unguarded(fn() => CenHieDependency::create([
+        CenHieDependency::unguarded(fn () => CenHieDependency::create([
             'id' => 2,
             'codigo' => 'SS02',
             'nombre' => 'Otro SS',
@@ -377,7 +377,7 @@ class MeasurementUnitsManagerTest extends TestCase
 
     private function createUnit(string $codigo, string $nombre, int $typeId): MetMeasurementUnit
     {
-        return MetMeasurementUnit::unguarded(fn() => MetMeasurementUnit::create([
+        return MetMeasurementUnit::unguarded(fn () => MetMeasurementUnit::create([
             'cen_center_id' => $this->center->id,
             'year_id' => $this->year->id,
             'met_unit_type_id' => $typeId,
@@ -390,9 +390,9 @@ class MeasurementUnitsManagerTest extends TestCase
 
     private function createIndicator(): MetIndicator
     {
-        return MetIndicator::unguarded(fn() => MetIndicator::create([
+        return MetIndicator::unguarded(fn () => MetIndicator::create([
             'indicator_type_id' => $this->indicatorType->id,
-            'clave' => 'IND-' . uniqid(),
+            'clave' => 'IND-'.uniqid(),
             'nombre' => 'Indicador test',
             'decimales' => 2,
             'year_id' => $this->year->id,
@@ -404,7 +404,7 @@ class MeasurementUnitsManagerTest extends TestCase
 
     private function createDataField(MetIndicator $indicator): MetDataField
     {
-        return MetDataField::unguarded(fn() => MetDataField::create([
+        return MetDataField::unguarded(fn () => MetDataField::create([
             'met_indicator_id' => $indicator->id,
             'label' => 'Campo',
             'variable_key' => 'A',

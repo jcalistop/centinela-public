@@ -45,9 +45,9 @@ class EstablishmentResponsibleTest extends TestCase
     {
         parent::setUp();
 
-        $this->year = Year::unguarded(fn() => Year::create(['ano' => 2026, 'default' => 1]));
+        $this->year = Year::unguarded(fn () => Year::create(['ano' => 2026, 'default' => 1]));
 
-        CenHieDependency::unguarded(fn() => CenHieDependency::create([
+        CenHieDependency::unguarded(fn () => CenHieDependency::create([
             'id' => 1,
             'codigo' => 'SS01',
             'nombre' => 'Servicio de Salud Test',
@@ -69,7 +69,7 @@ class EstablishmentResponsibleTest extends TestCase
 
         $this->indicatorType = $this->indicatorTypeByRoute(attributes: ['estado' => true]);
 
-        IndicatorTypeSetting::unguarded(fn() => IndicatorTypeSetting::create([
+        IndicatorTypeSetting::unguarded(fn () => IndicatorTypeSetting::create([
             'indicator_type_id' => $this->indicatorType->id,
             'year_id' => $this->year->id,
             'cen_hie_dependency_id' => 1,
@@ -77,7 +77,7 @@ class EstablishmentResponsibleTest extends TestCase
             'habilitado' => 1,
         ]));
 
-        IndicatorTypeGlobalSetting::unguarded(fn() => IndicatorTypeGlobalSetting::create([
+        IndicatorTypeGlobalSetting::unguarded(fn () => IndicatorTypeGlobalSetting::create([
             'indicator_type_id' => $this->indicatorType->id,
             'year_id' => $this->year->id,
             'min_indicadores' => 4,
@@ -104,7 +104,7 @@ class EstablishmentResponsibleTest extends TestCase
         ]);
 
         foreach ([$this->centerA, $this->centerB] as $center) {
-            MetCenterInclusion::unguarded(fn() => MetCenterInclusion::create([
+            MetCenterInclusion::unguarded(fn () => MetCenterInclusion::create([
                 'cen_center_id' => $center->id,
                 'year_id' => $this->year->id,
                 'indicator_type_id' => $this->indicatorType->id,
@@ -206,7 +206,7 @@ class EstablishmentResponsibleTest extends TestCase
         ]);
 
         foreach ($indicators as $indicator) {
-            MetIndicatorConfiguration::unguarded(fn() => MetIndicatorConfiguration::create([
+            MetIndicatorConfiguration::unguarded(fn () => MetIndicatorConfiguration::create([
                 'met_indicator_id' => $indicator->id,
                 'year_id' => $this->year->id,
                 'cen_center_id' => $this->centerA->id,
@@ -265,7 +265,7 @@ class EstablishmentResponsibleTest extends TestCase
         ]);
 
         foreach ($indicators as $index => $indicator) {
-            MetIndicatorConfiguration::unguarded(fn() => MetIndicatorConfiguration::create([
+            MetIndicatorConfiguration::unguarded(fn () => MetIndicatorConfiguration::create([
                 'met_indicator_id' => $indicator->id,
                 'year_id' => $this->year->id,
                 'cen_center_id' => $this->centerA->id,
@@ -309,7 +309,7 @@ class EstablishmentResponsibleTest extends TestCase
 
         $indicator = $this->createIndicator('R-M');
 
-        MetIndicatorConfiguration::unguarded(fn() => MetIndicatorConfiguration::create([
+        MetIndicatorConfiguration::unguarded(fn () => MetIndicatorConfiguration::create([
             'met_indicator_id' => $indicator->id,
             'year_id' => $this->year->id,
             'cen_center_id' => $this->centerA->id,
@@ -346,7 +346,7 @@ class EstablishmentResponsibleTest extends TestCase
 
         $indicator = $this->createIndicator('R-X');
 
-        MetIndicatorConfiguration::unguarded(fn() => MetIndicatorConfiguration::create([
+        MetIndicatorConfiguration::unguarded(fn () => MetIndicatorConfiguration::create([
             'met_indicator_id' => $indicator->id,
             'year_id' => $this->year->id,
             'cen_center_id' => $this->centerA->id,
@@ -471,7 +471,7 @@ class EstablishmentResponsibleTest extends TestCase
     {
         $this->enableFormulacion();
 
-        MetEstablishmentAgreement::unguarded(fn() => MetEstablishmentAgreement::create([
+        MetEstablishmentAgreement::unguarded(fn () => MetEstablishmentAgreement::create([
             'cen_center_id' => $this->centerA->id,
             'year_id' => $this->year->id,
             'indicator_type_id' => $this->indicatorType->id,
@@ -494,7 +494,7 @@ class EstablishmentResponsibleTest extends TestCase
     /** @test */
     public function control_gestion_no_ve_cta_con_instrumento_no_iniciado(): void
     {
-        IndicatorTypeSetting::unguarded(fn() => IndicatorTypeSetting::query()
+        IndicatorTypeSetting::unguarded(fn () => IndicatorTypeSetting::query()
             ->where('indicator_type_id', $this->indicatorType->id)
             ->where('year_id', $this->year->id)
             ->where('cen_hie_dependency_id', 1)
@@ -525,7 +525,7 @@ class EstablishmentResponsibleTest extends TestCase
 
     private function enableFormulacion(): void
     {
-        IndicatorTypeSetting::unguarded(fn() => IndicatorTypeSetting::query()
+        IndicatorTypeSetting::unguarded(fn () => IndicatorTypeSetting::query()
             ->where('indicator_type_id', $this->indicatorType->id)
             ->where('year_id', $this->year->id)
             ->where('cen_hie_dependency_id', 1)
@@ -548,7 +548,7 @@ class EstablishmentResponsibleTest extends TestCase
 
     private function designate(CenCenter $center, User $user): void
     {
-        MetEstablishmentResponsible::unguarded(fn() => MetEstablishmentResponsible::create([
+        MetEstablishmentResponsible::unguarded(fn () => MetEstablishmentResponsible::create([
             'cen_center_id' => $center->id,
             'year_id' => $this->year->id,
             'indicator_type_id' => $this->indicatorType->id,
@@ -560,10 +560,10 @@ class EstablishmentResponsibleTest extends TestCase
 
     private function createIndicator(string $clave): MetIndicator
     {
-        return MetIndicator::unguarded(fn() => MetIndicator::create([
+        return MetIndicator::unguarded(fn () => MetIndicator::create([
             'indicator_type_id' => $this->indicatorType->id,
             'clave' => $clave,
-            'nombre' => 'Indicador ' . $clave,
+            'nombre' => 'Indicador '.$clave,
             'decimales' => 2,
             'decimales_modo' => 'redondear',
             'meta_valor' => 50.0,
@@ -576,7 +576,7 @@ class EstablishmentResponsibleTest extends TestCase
 
     private function enableMetasModuleAccessForDependency(int $depId): void
     {
-        ServiceModuleToggle::unguarded(fn() => ServiceModuleToggle::firstOrCreate(
+        ServiceModuleToggle::unguarded(fn () => ServiceModuleToggle::firstOrCreate(
             ['cen_hie_dependency_id' => $depId, 'module_key' => 'metas-18834'],
             ['enabled' => true],
         ));
