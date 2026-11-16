@@ -19,7 +19,7 @@
         "laravel-vite-plugin": "^3.2.1",
         "sass": "^1.108.2",
         "tailwindcss": "^4.3.5",
-        "vite": "^8.3.6"
+        "vite": "^8.3.8"
     },
     "dependencies": {
         "ace-builds": "^1.45.2",
