@@ -3,6 +3,7 @@
 namespace App\Livewire\MetasInstrument;
 
 use App\Enums\IndicatorType\EtapaVigente;
+use App\Enums\Metas\MetDataLoadStatus;
 use App\Livewire\MetasInstrument\Concerns\InteractsWithComplexFormulaVariablesModal;
 use App\Livewire\MetasInstrument\Concerns\InteractsWithMetStageCapture;
 use App\Livewire\MetasInstrument\Concerns\ResolvesInstrumentIndicatorTypeId;
@@ -16,6 +17,7 @@ use App\Services\Metas\MetEstablishmentResponsibleAccess;
 use App\Services\Metas\MetFieldSsConfigService;
 use App\Services\Metas\MetIndicatorCalculationDataScopeService;
 use App\Services\Metas\MetIndicatorCalculationErrorService;
+use App\Services\Metas\MetIndicatorComplianceVisibilityService;
 use App\Services\Metas\MetIndicatorDataModalService;
 use App\Services\Metas\MetIndicatorLastLoadedMonthService;
 use App\Services\Metas\MetResultAggregationPresenter;
@@ -281,6 +283,15 @@ class EstablishmentResultsDetailComponent extends Component
 
         $yearId = $this->currentIndicatorYear()->id;
         $depId = (int) $this->authUser()->cen_hie_dependency_id;
+
+        [$sinDatosByIndicator, $cumplimientoVisibleByIndicator] = $this->resolveComplianceVisibility(
+            $byIndicator,
+            $configurations,
+            $dataLoadSnapshotsByIndicator,
+            $depId,
+            $yearId,
+        );
+
         $configIssue = app(MetEstablishmentIndicatorConfigService::class)
             ->issuesByCenterId(
                 $this->indicatorTypeId,
@@ -307,9 +318,10 @@ class EstablishmentResultsDetailComponent extends Component
             'byIndicator' => $byIndicator,
             'configurations' => $configurations,
             'dataLoadSnapshotsByIndicator' => $dataLoadSnapshotsByIndicator,
+            'sinDatosByIndicator' => $sinDatosByIndicator,
+            'cumplimientoVisibleByIndicator' => $cumplimientoVisibleByIndicator,
             'footerCumplimientoGlobal' => $globalCompliance['resultado_global'],
             'weightedComplianceByIndicator' => $weightedComplianceByIndicator,
-            'calculationService' => $calculationService,
             'canWrite' => $this->canWriteStage(EtapaVigente::Autoevaluacion),
             'indicatorTypeRoute' => $indicatorType->route,
             'indicatorType' => $indicatorType,
@@ -317,6 +329,62 @@ class EstablishmentResultsDetailComponent extends Component
             'configIssue' => $configIssue,
             'canEditEstablishmentIndicators' => $canEditEstablishmentIndicators,
         ]);
+    }
+
+    /**
+     * Criterio compartido con el tab Desempeño (SDD-334): «sin datos» por indicador y período.
+     *
+     * @param  Collection<int, Collection<int, MetResult>>  $byIndicator
+     * @param  Collection<int|string, MetIndicatorConfiguration>  $configurations
+     * @param  Collection<int, array{ultimo_mes_cargado: int|null, estado_carga: MetDataLoadStatus}>  $dataLoadSnapshotsByIndicator
+     * @return array{0: array<int, array<string, bool>>, 1: array<int, array<string, float|null>>}
+     */
+    private function resolveComplianceVisibility(
+        Collection $byIndicator,
+        Collection $configurations,
+        Collection $dataLoadSnapshotsByIndicator,
+        int $dependencyId,
+        int $yearId,
+    ): array {
+        $visibilityService = app(MetIndicatorComplianceVisibilityService::class);
+        $fieldSsConfigService = app(MetFieldSsConfigService::class);
+
+        $sinDatosByIndicator = [];
+        $cumplimientoVisibleByIndicator = [];
+
+        foreach ($byIndicator as $indicatorId => $periodResults) {
+            $indicator = $periodResults->first()?->indicator;
+            $config = $configurations->get($indicatorId);
+            $metaEfectiva = $config?->meta_efectiva !== null
+                ? (float) $config->meta_efectiva
+                : (float) ($indicator?->meta_valor ?? 0);
+            $hasTrackableLoadFields = $indicator !== null
+                && $fieldSsConfigService->applyEffectiveTypes($indicator->dataFields, $dependencyId, $yearId)->isNotEmpty();
+
+            $indicatorLoadStatus = $visibilityService->resolveLoadStatus(
+                $dataLoadSnapshotsByIndicator->get($indicatorId)['estado_carga'] ?? null,
+            );
+
+            foreach ($periodResults as $result) {
+                $loadStatus = $visibilityService->resolveLoadStatus($indicatorLoadStatus, $result->error_message);
+                $resultado = $result->resultado !== null ? (float) $result->resultado : null;
+
+                $sinDatosByIndicator[(int) $indicatorId][$result->periodo] = $visibilityService->sinDatos(
+                    $resultado,
+                    $loadStatus,
+                    $hasTrackableLoadFields,
+                );
+                $cumplimientoVisibleByIndicator[(int) $indicatorId][$result->periodo] = $visibilityService->cumplimientoVisible(
+                    $indicator,
+                    $resultado,
+                    $metaEfectiva,
+                    $loadStatus,
+                    $hasTrackableLoadFields,
+                );
+            }
+        }
+
+        return [$sinDatosByIndicator, $cumplimientoVisibleByIndicator];
     }
 
     /** @param Collection<int, MetResult> $results */

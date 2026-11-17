@@ -213,15 +213,9 @@
                                         @endif
                                     @else
                                         @php
-                                            $resultado = (float) $ir->resultado;
+                                            $sinDatos = $sinDatosByIndicator[$indicatorId][$ir->periodo] ?? false;
                                             $cumplimiento =
-                                                $metaEfectiva > 0
-                                                    ? $calculationService->indicatorCompliancePercent(
-                                                        $indicator,
-                                                        $resultado,
-                                                        $metaEfectiva,
-                                                    )
-                                                    : null;
+                                                $cumplimientoVisibleByIndicator[$indicatorId][$ir->periodo] ?? null;
                                             $cumplPonderado = $loop->first
                                                 ? $weightedComplianceByIndicator[$indicatorId] ?? null
                                                 : null;
@@ -250,20 +244,28 @@
                                             @endif
                                         @else
                                             <td class="text-center">
-                                                {{ \App\Support\Metas\MetIndicatorMetaPresenter::formatCompactNumber((float) $ir->numerador) .
-                                                    ' / ' .
-                                                    \App\Support\Metas\MetIndicatorMetaPresenter::formatCompactNumber((float) $ir->denominador) }}
+                                                @if ($sinDatos)
+                                                    <span class="text-muted">—</span>
+                                                @else
+                                                    {{ \App\Support\Metas\MetIndicatorMetaPresenter::formatCompactNumber((float) $ir->numerador) .
+                                                        ' / ' .
+                                                        \App\Support\Metas\MetIndicatorMetaPresenter::formatCompactNumber((float) $ir->denominador) }}
+                                                @endif
                                             </td>
                                         @endif
                                         <td class="text-center">
-                                            @include(
-                                                'livewire.metas-instrument.partials.indicator-result-value',
-                                                [
-                                                    'value' => $resultado,
-                                                    'decimales' => $decimales,
-                                                    'unidadMedida' => $indicator?->unidad_medida,
-                                                ]
-                                            )
+                                            @if ($sinDatos)
+                                                <span class="text-muted">—</span>
+                                            @else
+                                                @include(
+                                                    'livewire.metas-instrument.partials.indicator-result-value',
+                                                    [
+                                                        'value' => (float) $ir->resultado,
+                                                        'decimales' => $decimales,
+                                                        'unidadMedida' => $indicator?->unidad_medida,
+                                                    ]
+                                                )
+                                            @endif
                                         </td>
                                         <td class="text-center">
                                             @if ($cumplimiento !== null)
