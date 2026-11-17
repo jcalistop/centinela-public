@@ -14,6 +14,7 @@ use App\Models\MetDataField;
 use App\Models\MetFormula;
 use App\Models\MetIndicator;
 use App\Models\MetIndicatorConfiguration;
+use App\Models\MetMonthlyData;
 use App\Models\MetResult;
 use App\Models\Role;
 use App\Models\ServiceModuleToggle;
@@ -225,6 +226,8 @@ class MetasCopyImageTest extends TestCase
     /** @test */
     public function autoevaluacion_marca_columnas_anchas_como_no_capture(): void
     {
+        $this->loadMonthlyDataForDetail();
+
         MetResult::unguarded(fn () => MetResult::create([
             'met_indicator_id' => $this->indicator->id,
             'cen_center_id' => $this->center->id,
@@ -334,6 +337,8 @@ class MetasCopyImageTest extends TestCase
     /** @test */
     public function autoevaluacion_formula_simple_omite_decimales_cero(): void
     {
+        $this->loadMonthlyDataForDetail();
+
         MetResult::unguarded(fn () => MetResult::create([
             'met_indicator_id' => $this->indicator->id,
             'cen_center_id' => $this->center->id,
@@ -376,6 +381,35 @@ class MetasCopyImageTest extends TestCase
             ->assertSee('Imprimir', false)
             ->assertSee('.no-capture', false)
             ->assertSee('td.capture-only', false);
+    }
+
+    /**
+     * Carga mensual del centro para que `estado_carga` sea `cargado` (SDD-334).
+     */
+    private function loadMonthlyDataForDetail(): void
+    {
+        $fields = MetDataField::query()
+            ->where('met_indicator_id', $this->indicator->id)
+            ->get()
+            ->keyBy('variable_key');
+
+        MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+            'met_data_field_id' => $fields['A']->id,
+            'cen_center_id' => $this->center->id,
+            'cen_hie_dependency_id' => 1,
+            'year_id' => $this->year->id,
+            'mes' => 6,
+            'valor' => 10,
+        ]));
+
+        MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+            'met_data_field_id' => $fields['B']->id,
+            'cen_center_id' => $this->center->id,
+            'cen_hie_dependency_id' => 1,
+            'year_id' => $this->year->id,
+            'mes' => null,
+            'valor' => 100,
+        ]));
     }
 
     private function createCenterCatalogDependencies(): void {}

@@ -412,6 +412,8 @@ class ResultsSummaryModalTest extends TestCase
             ->where('cen_center_id', $this->center->id)
             ->update(['meta_efectiva' => 100]);
 
+        $this->loadMonthlyDataForCenter($this->center);
+
         MetResult::unguarded(fn () => MetResult::create([
             'met_indicator_id' => $this->indicator->id,
             'cen_center_id' => $this->center->id,
@@ -445,6 +447,8 @@ class ResultsSummaryModalTest extends TestCase
             ->where('met_indicator_id', $this->indicator->id)
             ->where('cen_center_id', $this->center->id)
             ->update(['meta_efectiva' => 100, 'ponderacion' => 25, 'seleccionado' => true]);
+
+        $this->loadMonthlyDataForCenter($this->center);
 
         MetResult::unguarded(fn () => MetResult::create([
             'met_indicator_id' => $this->indicator->id,
@@ -480,6 +484,8 @@ class ResultsSummaryModalTest extends TestCase
             ->where('met_indicator_id', $this->indicator->id)
             ->where('cen_center_id', $this->center->id)
             ->update(['meta_efectiva' => 100]);
+
+        $this->loadMonthlyDataForCenter($this->center);
 
         MetResult::unguarded(fn () => MetResult::create([
             'met_indicator_id' => $this->indicator->id,
@@ -1245,6 +1251,8 @@ class ResultsSummaryModalTest extends TestCase
             ->where('cen_center_id', $this->center->id)
             ->update(['meta_efectiva' => 100]);
 
+        $this->loadMonthlyDataForCenter($this->center);
+
         MetResult::unguarded(fn () => MetResult::create([
             'met_indicator_id' => $this->indicator->id,
             'cen_center_id' => $this->center->id,
@@ -1279,6 +1287,159 @@ class ResultsSummaryModalTest extends TestCase
             $component->html(),
         );
         $component->assertSee('Cumplimiento satisfactorio');
+    }
+
+    /** @test */
+    public function establishment_detail_sin_datos_no_muestra_cumplimiento_ni_resultado_fabricado(): void
+    {
+        $this->configurePonderacion(50);
+        $this->storeDetailResult(['resultado' => null, 'numerador' => null, 'denominador' => null]);
+
+        $component = Livewire::test(EstablishmentResultsDetailComponent::class, [
+            'indicatorTypeId' => $this->indicatorType->id,
+            'centerId' => $this->center->id,
+        ])->set('soloComprometidos', false);
+
+        $component->assertOk();
+
+        $html = $component->html();
+        $this->assertSame(4, preg_match_all('/text-muted">—<\/span>/u', $html));
+        $this->assertStringNotContainsString('0 / 0', $html);
+        $this->assertDoesNotMatchRegularExpression('/(?<![\d.])0\.00%/u', $html);
+    }
+
+    /** @test */
+    public function establishment_detail_sin_datos_con_polaridad_inversa_no_muestra_100(): void
+    {
+        $this->indicator->update(['meta_operador' => '<=']);
+        $this->configurePonderacion(50);
+        $this->storeDetailResult(['resultado' => null, 'numerador' => null, 'denominador' => null]);
+
+        $component = Livewire::test(EstablishmentResultsDetailComponent::class, [
+            'indicatorTypeId' => $this->indicatorType->id,
+            'centerId' => $this->center->id,
+        ])->set('soloComprometidos', false);
+
+        $component->assertOk();
+
+        $html = $component->html();
+        $this->assertSame(4, preg_match_all('/text-muted">—<\/span>/u', $html));
+        $this->assertStringNotContainsString('100.00%', $html);
+    }
+
+    /** @test */
+    public function establishment_detail_resultado_cero_con_carga_conserva_el_cumplimiento(): void
+    {
+        $this->configurePonderacion(50);
+        $this->loadMonthlyDataForCenter($this->center);
+        $this->storeDetailResult(['resultado' => 0, 'numerador' => 0, 'denominador' => 100]);
+
+        $component = Livewire::test(EstablishmentResultsDetailComponent::class, [
+            'indicatorTypeId' => $this->indicatorType->id,
+            'centerId' => $this->center->id,
+        ])->set('soloComprometidos', false);
+
+        $component->assertOk();
+        $this->assertStringContainsString('0.00%', $component->html());
+
+        $this->indicator->update(['meta_operador' => '<=']);
+
+        $this->assertStringContainsString(
+            '100.00%',
+            Livewire::test(EstablishmentResultsDetailComponent::class, [
+                'indicatorTypeId' => $this->indicatorType->id,
+                'centerId' => $this->center->id,
+            ])->set('soloComprometidos', false)->html(),
+        );
+    }
+
+    /** @test */
+    public function establishment_detail_parcial_muestra_el_cumplimiento(): void
+    {
+        $this->configurePonderacion(50);
+        $numeradorField = $this->indicator->dataFields()->where('variable_key', 'A')->firstOrFail();
+        MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+            'met_data_field_id' => $numeradorField->id,
+            'cen_center_id' => $this->center->id,
+            'cen_hie_dependency_id' => 1,
+            'year_id' => $this->year->id,
+            'mes' => 6,
+            'valor' => 10,
+        ]));
+        $this->storeDetailResult(['resultado' => 10, 'numerador' => 10, 'denominador' => 100]);
+
+        $component = Livewire::test(EstablishmentResultsDetailComponent::class, [
+            'indicatorTypeId' => $this->indicatorType->id,
+            'centerId' => $this->center->id,
+        ])->set('soloComprometidos', false);
+
+        $component->assertOk()->assertSee('Parcial');
+        $this->assertStringContainsString('50.00%', $component->html());
+    }
+
+    /** @test */
+    public function establishment_detail_error_nd_muestra_guion_sin_badge_error(): void
+    {
+        $this->storeDetailResult([
+            'resultado' => null,
+            'numerador' => null,
+            'denominador' => null,
+            'error_message' => 'N/D',
+        ]);
+
+        $component = Livewire::test(EstablishmentResultsDetailComponent::class, [
+            'indicatorTypeId' => $this->indicatorType->id,
+            'centerId' => $this->center->id,
+        ])->set('soloComprometidos', false);
+
+        $component->assertOk();
+        $html = $component->html();
+        $this->assertStringNotContainsString('>Error<', $html);
+        $this->assertStringNotContainsString('Sin casos', $html);
+    }
+
+    /** @test */
+    public function establishment_detail_error_de_calculo_mantiene_el_render_de_error(): void
+    {
+        $this->storeDetailResult([
+            'resultado' => null,
+            'numerador' => null,
+            'denominador' => null,
+            'error_message' => 'Error: divisor cero',
+        ]);
+
+        $component = Livewire::test(EstablishmentResultsDetailComponent::class, [
+            'indicatorTypeId' => $this->indicatorType->id,
+            'centerId' => $this->center->id,
+        ])->set('soloComprometidos', false);
+
+        $component->assertOk();
+        $this->assertStringContainsString('>Error<', $component->html());
+    }
+
+    private function configurePonderacion(float $ponderacion): void
+    {
+        MetIndicatorConfiguration::query()
+            ->where('met_indicator_id', $this->indicator->id)
+            ->where('cen_center_id', $this->center->id)
+            ->update(['ponderacion' => $ponderacion]);
+    }
+
+    /**
+     * @param  array<string, mixed>  $attributes
+     */
+    private function storeDetailResult(array $attributes): void
+    {
+        MetResult::unguarded(fn () => MetResult::create([
+            'met_indicator_id' => $this->indicator->id,
+            'cen_center_id' => $this->center->id,
+            'cen_hie_dependency_id' => 1,
+            'year_id' => $this->year->id,
+            'periodo' => 'ANUAL',
+            'etapa' => 'AUTOEVALUACION',
+            'cumple_meta' => null,
+            ...$attributes,
+        ]));
     }
 
     private function createCenterCatalogDependencies(): void {}

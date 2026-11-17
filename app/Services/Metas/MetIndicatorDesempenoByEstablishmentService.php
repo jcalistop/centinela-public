@@ -6,7 +6,6 @@ use App\Enums\Metas\MetDataLoadStatus;
 use App\Models\MetIndicator;
 use App\Models\MetIndicatorConfiguration;
 use App\Models\MetResult;
-use App\Services\MetCalculationService;
 use App\Support\Metas\MetIndicatorPrimaryComponentPresenter;
 use Illuminate\Support\Collection;
 
@@ -534,17 +533,12 @@ class MetIndicatorDesempenoByEstablishmentService
         MetDataLoadStatus $loadStatus,
         bool $hasTrackableLoadFields,
     ): ?float {
-        if ($resultado === null || $metaEfectiva <= 0) {
-            return null;
-        }
-
-        if (
-            $hasTrackableLoadFields
-            && ($loadStatus === MetDataLoadStatus::SinDatos || $loadStatus === MetDataLoadStatus::ErrorCalculo)
-        ) {
-            return null;
-        }
-
-        return app(MetCalculationService::class)->indicatorCompliancePercent($indicator, $resultado, $metaEfectiva);
+        return app(MetIndicatorComplianceVisibilityService::class)->cumplimientoVisible(
+            $indicator,
+            $resultado,
+            $metaEfectiva,
+            $loadStatus,
+            $hasTrackableLoadFields,
+        );
     }
 }
