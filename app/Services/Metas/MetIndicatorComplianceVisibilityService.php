@@ -4,6 +4,7 @@ namespace App\Services\Metas;
 
 use App\Enums\Metas\MetDataLoadStatus;
 use App\Models\MetIndicator;
+use App\Models\MetResult;
 use App\Services\MetCalculationService;
 
 /**
@@ -30,6 +31,26 @@ class MetIndicatorComplianceVisibilityService
 
         return $hasTrackableLoadFields
             && ($loadStatus === MetDataLoadStatus::SinDatos || $loadStatus === MetDataLoadStatus::ErrorCalculo);
+    }
+
+    /**
+     * Estado de carga efectivo de una fila: normaliza el snapshot y promueve a `error_calculo`
+     * cuando el resultado persistido trae un error de cálculo (nunca por alertas como `N/D`).
+     */
+    public function resolveLoadStatus(mixed $estadoCarga, ?string $storedMessage = null): MetDataLoadStatus
+    {
+        $status = $estadoCarga instanceof MetDataLoadStatus
+            ? $estadoCarga
+            : (MetDataLoadStatus::tryFrom((string) $estadoCarga) ?? MetDataLoadStatus::SinDatos);
+
+        return $this->storedMessageIsCalculationError($storedMessage)
+            ? MetDataLoadStatus::ErrorCalculo
+            : $status;
+    }
+
+    public function storedMessageIsCalculationError(?string $storedMessage): bool
+    {
+        return filled($storedMessage) && ! MetResult::storedErrorMessageIsNonCalculationAlert($storedMessage);
     }
 
     public function cumplimientoVisible(

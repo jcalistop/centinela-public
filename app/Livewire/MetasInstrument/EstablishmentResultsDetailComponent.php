@@ -361,12 +361,12 @@ class EstablishmentResultsDetailComponent extends Component
             $hasTrackableLoadFields = $indicator !== null
                 && $fieldSsConfigService->applyEffectiveTypes($indicator->dataFields, $dependencyId, $yearId)->isNotEmpty();
 
-            $indicatorLoadStatus = $this->normalizeLoadStatus(
+            $indicatorLoadStatus = $visibilityService->resolveLoadStatus(
                 $dataLoadSnapshotsByIndicator->get($indicatorId)['estado_carga'] ?? null,
             );
 
             foreach ($periodResults as $result) {
-                $loadStatus = $this->resolveRowLoadStatus($indicatorLoadStatus, $result->error_message);
+                $loadStatus = $visibilityService->resolveLoadStatus($indicatorLoadStatus, $result->error_message);
                 $resultado = $result->resultado !== null ? (float) $result->resultado : null;
 
                 $sinDatosByIndicator[(int) $indicatorId][$result->periodo] = $visibilityService->sinDatos(
@@ -385,22 +385,6 @@ class EstablishmentResultsDetailComponent extends Component
         }
 
         return [$sinDatosByIndicator, $cumplimientoVisibleByIndicator];
-    }
-
-    private function normalizeLoadStatus(mixed $estadoCarga): MetDataLoadStatus
-    {
-        return $estadoCarga instanceof MetDataLoadStatus
-            ? $estadoCarga
-            : (MetDataLoadStatus::tryFrom((string) $estadoCarga) ?? MetDataLoadStatus::SinDatos);
-    }
-
-    private function resolveRowLoadStatus(MetDataLoadStatus $indicatorLoadStatus, ?string $storedMessage): MetDataLoadStatus
-    {
-        if (filled($storedMessage) && ! MetResult::storedErrorMessageIsNonCalculationAlert($storedMessage)) {
-            return MetDataLoadStatus::ErrorCalculo;
-        }
-
-        return $indicatorLoadStatus;
     }
 
     /** @param Collection<int, MetResult> $results */

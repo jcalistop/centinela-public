@@ -522,8 +522,7 @@ class MetIndicatorDesempenoByEstablishmentService
 
     private function storedMessageIsCalculationError(?string $message): bool
     {
-        return filled($message)
-            && ! MetResult::storedErrorMessageIsNonCalculationAlert($message);
+        return app(MetIndicatorComplianceVisibilityService::class)->storedMessageIsCalculationError($message);
     }
 
     private function resolveCumplimiento(

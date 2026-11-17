@@ -114,6 +114,32 @@ class MetIndicatorComplianceVisibilityServiceTest extends TestCase
         );
     }
 
+    /** @test */
+    public function sin_campos_rastreables_el_estado_de_carga_no_oculta_el_cumplimiento(): void
+    {
+        $service = app(MetIndicatorComplianceVisibilityService::class);
+
+        $this->assertFalse($service->sinDatos(12.0, MetDataLoadStatus::ErrorCalculo, false));
+        $this->assertSame(
+            60.0,
+            $service->cumplimientoVisible($this->indicator('>='), 12.0, 20.0, MetDataLoadStatus::ErrorCalculo, false),
+        );
+    }
+
+    /** @test */
+    public function estado_de_carga_normaliza_y_promueve_errores_de_calculo(): void
+    {
+        $service = app(MetIndicatorComplianceVisibilityService::class);
+
+        $this->assertSame(MetDataLoadStatus::Parcial, $service->resolveLoadStatus('parcial'));
+        $this->assertSame(MetDataLoadStatus::SinDatos, $service->resolveLoadStatus(null));
+        $this->assertSame(
+            MetDataLoadStatus::ErrorCalculo,
+            $service->resolveLoadStatus(MetDataLoadStatus::SinDatos, 'Error: divisor cero'),
+        );
+        $this->assertSame(MetDataLoadStatus::Cargado, $service->resolveLoadStatus(MetDataLoadStatus::Cargado, 'N/D'));
+    }
+
     private function indicator(string $operador): MetIndicator
     {
         $indicator = new MetIndicator;

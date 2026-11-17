@@ -10,10 +10,12 @@ use App\Models\CenHieDependency;
 use App\Models\IndicatorType;
 use App\Models\IndicatorTypeSetting;
 use App\Models\MetCenterInclusion;
+use App\Models\MetDataField;
 use App\Models\MetEstablishmentResult;
 use App\Models\MetIndicator;
 use App\Models\MetIndicatorConfiguration;
 use App\Models\MetMeasurementUnit;
+use App\Models\MetMonthlyData;
 use App\Models\MetResult;
 use App\Models\MetUnitType;
 use App\Models\Role;
@@ -319,6 +321,71 @@ class ResultsSummaryWidgetsByUnitTest extends TestCase
 
         $this->assertSame('80.0000', number_format((float) $unitA['resultado_global'], 4, '.', ''));
         $this->assertSame('100.0000', number_format((float) $unitB['resultado_global'], 4, '.', ''));
+    }
+
+    /** @test */
+    public function detail_promedio_unidades_internas_aplica_el_criterio_sin_datos(): void
+    {
+        $this->createDetailDataFields();
+        $indicatorId = $this->indicator->id;
+
+        Livewire::test(EstablishmentResultsDetailComponent::class, [
+            'indicatorTypeId' => $this->indicatorType20707->id,
+            'centerId' => $this->center->id,
+        ])
+            ->set('soloComprometidos', false)
+            ->assertSee('promedio de todas las unidades')
+            ->assertViewHas('sinDatosByIndicator', fn (array $map): bool => $map[$indicatorId]['ANUAL'] === true)
+            ->assertViewHas(
+                'cumplimientoVisibleByIndicator',
+                fn (array $map): bool => $map[$indicatorId]['ANUAL'] === null,
+            );
+
+        $this->loadDetailMonthlyData();
+
+        Livewire::test(EstablishmentResultsDetailComponent::class, [
+            'indicatorTypeId' => $this->indicatorType20707->id,
+            'centerId' => $this->center->id,
+        ])
+            ->set('soloComprometidos', false)
+            ->assertViewHas('sinDatosByIndicator', fn (array $map): bool => $map[$indicatorId]['ANUAL'] === false)
+            ->assertViewHas(
+                'cumplimientoVisibleByIndicator',
+                fn (array $map): bool => $map[$indicatorId]['ANUAL'] === 90.0,
+            );
+    }
+
+    private function createDetailDataFields(): void
+    {
+        foreach (['A' => ['numerador', 0], 'B' => ['denominador', 1]] as $key => [$componente, $orden]) {
+            MetDataField::unguarded(fn () => MetDataField::create([
+                'met_indicator_id' => $this->indicator->id,
+                'label' => "Variable {$key}",
+                'variable_key' => $key,
+                'componente' => $componente,
+                'input_type' => 'mensual',
+                'aggregation_type' => 'sumatoria',
+                'orden' => $orden,
+            ]));
+        }
+    }
+
+    private function loadDetailMonthlyData(): void
+    {
+        $fields = MetDataField::query()
+            ->where('met_indicator_id', $this->indicator->id)
+            ->get();
+
+        foreach ($fields as $field) {
+            MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+                'met_data_field_id' => $field->id,
+                'cen_center_id' => $this->center->id,
+                'cen_hie_dependency_id' => 1,
+                'year_id' => $this->year->id,
+                'mes' => 1,
+                'valor' => 10,
+            ]));
+        }
     }
 
     private function createCenterCatalogDependencies(): void {}

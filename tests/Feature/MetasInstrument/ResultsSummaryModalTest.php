@@ -1303,7 +1303,7 @@ class ResultsSummaryModalTest extends TestCase
         $component->assertOk();
 
         $html = $component->html();
-        $this->assertSame(4, preg_match_all('/text-muted">—<\/span>/u', $html));
+        $this->assertSame(4, $this->tableBodyDashes($html));
         $this->assertStringNotContainsString('0 / 0', $html);
         $this->assertDoesNotMatchRegularExpression('/(?<![\d.])0\.00%/u', $html);
     }
@@ -1323,7 +1323,7 @@ class ResultsSummaryModalTest extends TestCase
         $component->assertOk();
 
         $html = $component->html();
-        $this->assertSame(4, preg_match_all('/text-muted">—<\/span>/u', $html));
+        $this->assertSame(4, $this->tableBodyDashes($html));
         $this->assertStringNotContainsString('100.00%', $html);
     }
 
@@ -1415,6 +1415,16 @@ class ResultsSummaryModalTest extends TestCase
 
         $component->assertOk();
         $this->assertStringContainsString('>Error<', $component->html());
+    }
+
+    /**
+     * Celdas con `—` dentro del cuerpo de la tabla (Fórmula, Resultado, Cumplimiento y ponderado).
+     */
+    private function tableBodyDashes(string $html): int
+    {
+        preg_match('/<tbody>(.*?)<\/tbody>/su', $html, $matches);
+
+        return (int) preg_match_all('/text-muted">—<\/span>/u', $matches[1] ?? '');
     }
 
     private function configurePonderacion(float $ponderacion): void
