@@ -16,6 +16,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Year;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\URL;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -37,9 +38,9 @@ class IndicatorDesempenoTest extends TestCase
     {
         parent::setUp();
 
-        $this->year = Year::unguarded(fn () => Year::create(['ano' => 2026, 'default' => 1]));
+        $this->year = Year::unguarded(fn() => Year::create(['ano' => 2026, 'default' => 1]));
 
-        CenHieDependency::unguarded(fn () => CenHieDependency::create([
+        CenHieDependency::unguarded(fn() => CenHieDependency::create([
             'id' => 1,
             'codigo' => 'SS01',
             'nombre' => 'Servicio de Salud Test',
@@ -61,7 +62,7 @@ class IndicatorDesempenoTest extends TestCase
 
         $this->createCenterCatalogDependencies();
 
-        $this->center = CenCenter::unguarded(fn () => CenCenter::create([
+        $this->center = CenCenter::unguarded(fn() => CenCenter::create([
             'codigo' => 'CEN-001',
             'cod_antiguo' => null,
             'codigo_madre' => null,
@@ -84,7 +85,7 @@ class IndicatorDesempenoTest extends TestCase
             'tipo_atencion' => 'Abierta',
         ]));
 
-        $this->indicator = MetIndicator::unguarded(fn () => MetIndicator::create([
+        $this->indicator = MetIndicator::unguarded(fn() => MetIndicator::create([
             'indicator_type_id' => $this->indicatorType->id,
             'clave' => 'MET-RES-01',
             'nombre' => 'Indicador desempeño vista',
@@ -96,7 +97,7 @@ class IndicatorDesempenoTest extends TestCase
             'estado' => true,
         ]));
 
-        MetDataField::unguarded(fn () => MetDataField::create([
+        MetDataField::unguarded(fn() => MetDataField::create([
             'met_indicator_id' => $this->indicator->id,
             'label' => 'Numerador semestral',
             'variable_key' => 'A',
@@ -106,7 +107,7 @@ class IndicatorDesempenoTest extends TestCase
             'orden' => 0,
         ]));
 
-        MetDataField::unguarded(fn () => MetDataField::create([
+        MetDataField::unguarded(fn() => MetDataField::create([
             'met_indicator_id' => $this->indicator->id,
             'label' => 'Denominador línea base',
             'variable_key' => 'B',
@@ -116,7 +117,7 @@ class IndicatorDesempenoTest extends TestCase
             'orden' => 1,
         ]));
 
-        MetIndicatorConfiguration::unguarded(fn () => MetIndicatorConfiguration::create([
+        MetIndicatorConfiguration::unguarded(fn() => MetIndicatorConfiguration::create([
             'met_indicator_id' => $this->indicator->id,
             'year_id' => $this->year->id,
             'cen_hie_dependency_id' => 1,
@@ -130,7 +131,7 @@ class IndicatorDesempenoTest extends TestCase
     public function desempeno_route_redirects_to_show_tab(): void
     {
         $this->get(route('metas.instrument.indicators.desempeno', [$this->indicatorType, $this->indicator]))
-            ->assertRedirect(route('metas.instrument.indicators.show', [$this->indicatorType, $this->indicator]).'#tab-desempeno');
+            ->assertRedirect(route('metas.instrument.indicators.show', [$this->indicatorType, $this->indicator]) . '#tab-desempeno');
     }
 
     /** @test */
@@ -148,7 +149,7 @@ class IndicatorDesempenoTest extends TestCase
     {
         $this->indicator->update(['meta_valor' => 100]);
 
-        $centerDos = CenCenter::unguarded(fn () => CenCenter::create([
+        $centerDos = CenCenter::unguarded(fn() => CenCenter::create([
             'codigo' => 'CEN-002',
             'cod_antiguo' => null,
             'codigo_madre' => null,
@@ -171,7 +172,7 @@ class IndicatorDesempenoTest extends TestCase
             'tipo_atencion' => 'Abierta',
         ]));
 
-        MetIndicatorConfiguration::unguarded(fn () => MetIndicatorConfiguration::create([
+        MetIndicatorConfiguration::unguarded(fn() => MetIndicatorConfiguration::create([
             'met_indicator_id' => $this->indicator->id,
             'year_id' => $this->year->id,
             'cen_hie_dependency_id' => 1,
@@ -184,7 +185,7 @@ class IndicatorDesempenoTest extends TestCase
         $denominadorField = $this->indicator->dataFields()->where('variable_key', 'B')->firstOrFail();
 
         foreach ([$this->center, $centerDos] as $center) {
-            MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+            MetMonthlyData::unguarded(fn() => MetMonthlyData::create([
                 'met_data_field_id' => $numeradorField->id,
                 'cen_center_id' => $center->id,
                 'cen_hie_dependency_id' => 1,
@@ -192,7 +193,7 @@ class IndicatorDesempenoTest extends TestCase
                 'mes' => 6,
                 'valor' => $center->id === $this->center->id ? 80 : 100,
             ]));
-            MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+            MetMonthlyData::unguarded(fn() => MetMonthlyData::create([
                 'met_data_field_id' => $denominadorField->id,
                 'cen_center_id' => $center->id,
                 'cen_hie_dependency_id' => 1,
@@ -202,7 +203,7 @@ class IndicatorDesempenoTest extends TestCase
             ]));
         }
 
-        MetResult::unguarded(fn () => MetResult::create([
+        MetResult::unguarded(fn() => MetResult::create([
             'met_indicator_id' => $this->indicator->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -214,7 +215,7 @@ class IndicatorDesempenoTest extends TestCase
             'cumple_meta' => true,
         ]));
 
-        MetResult::unguarded(fn () => MetResult::create([
+        MetResult::unguarded(fn() => MetResult::create([
             'met_indicator_id' => $this->indicator->id,
             'cen_center_id' => $centerDos->id,
             'cen_hie_dependency_id' => 1,
@@ -249,7 +250,7 @@ class IndicatorDesempenoTest extends TestCase
         $numeradorField = $this->indicator->dataFields()->where('variable_key', 'A')->firstOrFail();
         $denominadorField = $this->indicator->dataFields()->where('variable_key', 'B')->firstOrFail();
 
-        MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+        MetMonthlyData::unguarded(fn() => MetMonthlyData::create([
             'met_data_field_id' => $numeradorField->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -257,7 +258,7 @@ class IndicatorDesempenoTest extends TestCase
             'mes' => 6,
             'valor' => 94,
         ]));
-        MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+        MetMonthlyData::unguarded(fn() => MetMonthlyData::create([
             'met_data_field_id' => $denominadorField->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -266,7 +267,7 @@ class IndicatorDesempenoTest extends TestCase
             'valor' => 100,
         ]));
 
-        MetResult::unguarded(fn () => MetResult::create([
+        MetResult::unguarded(fn() => MetResult::create([
             'met_indicator_id' => $this->indicator->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -295,7 +296,7 @@ class IndicatorDesempenoTest extends TestCase
         $numeradorField = $this->indicator->dataFields()->where('variable_key', 'A')->firstOrFail();
         $denominadorField = $this->indicator->dataFields()->where('variable_key', 'B')->firstOrFail();
 
-        MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+        MetMonthlyData::unguarded(fn() => MetMonthlyData::create([
             'met_data_field_id' => $numeradorField->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -303,7 +304,7 @@ class IndicatorDesempenoTest extends TestCase
             'mes' => 6,
             'valor' => 120,
         ]));
-        MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+        MetMonthlyData::unguarded(fn() => MetMonthlyData::create([
             'met_data_field_id' => $denominadorField->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -312,7 +313,7 @@ class IndicatorDesempenoTest extends TestCase
             'valor' => 100,
         ]));
 
-        MetResult::unguarded(fn () => MetResult::create([
+        MetResult::unguarded(fn() => MetResult::create([
             'met_indicator_id' => $this->indicator->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -342,7 +343,7 @@ class IndicatorDesempenoTest extends TestCase
         $numeradorField = $this->indicator->dataFields()->where('variable_key', 'A')->firstOrFail();
         $denominadorField = $this->indicator->dataFields()->where('variable_key', 'B')->firstOrFail();
 
-        MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+        MetMonthlyData::unguarded(fn() => MetMonthlyData::create([
             'met_data_field_id' => $numeradorField->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -350,7 +351,7 @@ class IndicatorDesempenoTest extends TestCase
             'mes' => 6,
             'valor' => 90,
         ]));
-        MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+        MetMonthlyData::unguarded(fn() => MetMonthlyData::create([
             'met_data_field_id' => $denominadorField->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -359,7 +360,7 @@ class IndicatorDesempenoTest extends TestCase
             'valor' => 100,
         ]));
 
-        MetResult::unguarded(fn () => MetResult::create([
+        MetResult::unguarded(fn() => MetResult::create([
             'met_indicator_id' => $this->indicator->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -383,7 +384,7 @@ class IndicatorDesempenoTest extends TestCase
     public function desempeno_vista_no_acumula_denominador_linea_base(): void
     {
         foreach (['SEM-1', 'SEM-2'] as $periodo) {
-            MetResult::unguarded(fn () => MetResult::create([
+            MetResult::unguarded(fn() => MetResult::create([
                 'met_indicator_id' => $this->indicator->id,
                 'cen_center_id' => $this->center->id,
                 'cen_hie_dependency_id' => 1,
@@ -430,7 +431,7 @@ class IndicatorDesempenoTest extends TestCase
     public function desempeno_vista_muestra_sin_datos_cuando_error_message_es_nd(): void
     {
         foreach (['SEM-1', 'SEM-2'] as $periodo) {
-            MetResult::unguarded(fn () => MetResult::create([
+            MetResult::unguarded(fn() => MetResult::create([
                 'met_indicator_id' => $this->indicator->id,
                 'cen_center_id' => $this->center->id,
                 'cen_hie_dependency_id' => 1,
@@ -454,7 +455,7 @@ class IndicatorDesempenoTest extends TestCase
     public function desempeno_vista_muestra_error_de_calculo(): void
     {
         foreach (['SEM-1', 'SEM-2'] as $periodo) {
-            MetResult::unguarded(fn () => MetResult::create([
+            MetResult::unguarded(fn() => MetResult::create([
                 'met_indicator_id' => $this->indicator->id,
                 'cen_center_id' => $this->center->id,
                 'cen_hie_dependency_id' => 1,
@@ -497,7 +498,7 @@ class IndicatorDesempenoTest extends TestCase
         $numeradorField = $this->indicator->dataFields()->where('variable_key', 'A')->firstOrFail();
         $denominadorField = $this->indicator->dataFields()->where('variable_key', 'B')->firstOrFail();
 
-        MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+        MetMonthlyData::unguarded(fn() => MetMonthlyData::create([
             'met_data_field_id' => $numeradorField->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -505,7 +506,7 @@ class IndicatorDesempenoTest extends TestCase
             'mes' => 6,
             'valor' => 10,
         ]));
-        MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+        MetMonthlyData::unguarded(fn() => MetMonthlyData::create([
             'met_data_field_id' => $denominadorField->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -514,7 +515,7 @@ class IndicatorDesempenoTest extends TestCase
             'valor' => 100,
         ]));
 
-        MetResult::unguarded(fn () => MetResult::create([
+        MetResult::unguarded(fn() => MetResult::create([
             'met_indicator_id' => $this->indicator->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -545,7 +546,7 @@ class IndicatorDesempenoTest extends TestCase
     {
         $numeradorField = $this->indicator->dataFields()->where('variable_key', 'A')->firstOrFail();
 
-        MetMonthlyData::unguarded(fn () => MetMonthlyData::create([
+        MetMonthlyData::unguarded(fn() => MetMonthlyData::create([
             'met_data_field_id' => $numeradorField->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -583,7 +584,7 @@ class IndicatorDesempenoTest extends TestCase
         ])
             ->assertSet('canShowCargaButton', true)
             ->assertSee('Cargar datos')
-            ->assertSeeHtml('href="'.$cargaUrl.'"')
+            ->assertSeeHtml('href="' . $cargaUrl . '"')
             ->assertSee('Copiar imagen')
             ->assertSee('Imprimir');
     }
@@ -592,6 +593,7 @@ class IndicatorDesempenoTest extends TestCase
     public function desempeno_oculta_boton_cargar_datos_para_visualizador(): void
     {
         $visualizadorRole = Role::firstOrCreate(['name' => 'visualizador'], ['display_name' => 'Visualizador']);
+        /** @var User $visualizador */
         $visualizador = User::factory()->create([
             'role_id' => $visualizadorRole->id,
             'cen_hie_dependency_id' => 1,
@@ -610,7 +612,7 @@ class IndicatorDesempenoTest extends TestCase
             'indicator' => $this->indicator,
         ])
             ->assertSet('canShowCargaButton', false)
-            ->assertDontSeeHtml('href="'.$cargaUrl.'"')
+            ->assertDontSeeHtml('href="' . $cargaUrl . '"')
             ->assertSee('Copiar imagen')
             ->assertSee('Imprimir');
     }
@@ -620,7 +622,7 @@ class IndicatorDesempenoTest extends TestCase
     {
         $this->indicator->update(['umbral_inferior' => 60, 'umbral_superior' => 95]);
 
-        MetResult::unguarded(fn () => MetResult::create([
+        MetResult::unguarded(fn() => MetResult::create([
             'met_indicator_id' => $this->indicator->id,
             'cen_center_id' => $this->center->id,
             'cen_hie_dependency_id' => 1,
@@ -644,7 +646,7 @@ class IndicatorDesempenoTest extends TestCase
         ])
             ->assertSee('Visualizar datos')
             ->assertDontSee('Descargar datos')
-            ->assertDontSeeHtml('href="'.$downloadUrl.'"')
+            ->assertDontSeeHtml('href="' . $downloadUrl . '"')
             ->call('openDataModal', $this->center->id)
             ->assertDispatched('open-data-modal', function (string $eventName, array $payload) use ($downloadUrl): bool {
                 return ($payload['clave'] ?? '') === 'MET-RES-01'
@@ -671,6 +673,33 @@ class IndicatorDesempenoTest extends TestCase
         $this->assertStringContainsString('formulaQuotientHtml', $js);
         $this->assertStringNotContainsString('Numerador / denominador', $js);
         $this->assertStringNotContainsString("'>Numerador</th>'", $js);
+    }
+
+    /** @test */
+    public function modal_scripts_emiten_url_apexcharts_via_asset_sin_ruta_root_absolute(): void
+    {
+        // Mismo host que phpunit; path de APP_URL como en IIS /centinela.
+        config(['app.url' => 'http://localhost/centinela']);
+        URL::forceRootUrl('http://localhost/centinela');
+
+        $html = view('livewire.metas-instrument.partials.indicator-data-modal-scripts', [
+            'attachDownloadGuardsOnLoad' => false,
+        ])->render();
+
+        $expected = asset('vendor/apexcharts/apexcharts.min.js');
+
+        $this->assertStringContainsString('window.METAS_APEXCHARTS_URL', $html);
+        $this->assertStringContainsString(json_encode($expected), $html);
+        $this->assertSame(
+            'http://localhost/centinela/vendor/apexcharts/apexcharts.min.js',
+            $expected
+        );
+        $this->assertStringNotContainsString('"/vendor/apexcharts/apexcharts.min.js"', $html);
+
+        $js = (string) file_get_contents(public_path('js/metas-indicator-data-modal.js'));
+        $this->assertStringNotContainsString('"/vendor/apexcharts/apexcharts.min.js"', $js);
+        $this->assertStringContainsString('METAS_APEXCHARTS_URL', $js);
+        $this->assertStringContainsString('../vendor/apexcharts/apexcharts.min.js', $js);
     }
 
     private function createCenterCatalogDependencies(): void {}

@@ -14,6 +14,31 @@
         return labels[periodo] || periodo;
     }
 
+    function resolveApexChartsUrl() {
+        if (
+            typeof window.METAS_APEXCHARTS_URL === "string" &&
+            window.METAS_APEXCHARTS_URL.length > 0
+        ) {
+            return window.METAS_APEXCHARTS_URL;
+        }
+
+        var current =
+            document.currentScript ||
+            document.querySelector('script[src*="metas-indicator-data-modal.js"]');
+        if (current && current.src) {
+            try {
+                return new URL(
+                    "../vendor/apexcharts/apexcharts.min.js",
+                    current.src,
+                ).href;
+            } catch (e) {
+                // fall through to explicit error below
+            }
+        }
+
+        return null;
+    }
+
     function loadApexCharts(callback) {
         if (typeof ApexCharts !== "undefined") {
             callback();
@@ -21,8 +46,17 @@
             return;
         }
 
+        var src = resolveApexChartsUrl();
+        if (!src) {
+            console.error(
+                "[Centinela] No se pudo resolver la URL de ApexCharts (self-host).",
+            );
+
+            return;
+        }
+
         var script = document.createElement("script");
-        script.src = "/vendor/apexcharts/apexcharts.min.js";
+        script.src = src;
         script.onload = callback;
         script.onerror = function () {
             console.error(
