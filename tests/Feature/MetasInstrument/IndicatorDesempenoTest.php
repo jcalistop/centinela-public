@@ -16,6 +16,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\Year;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\URL;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -592,6 +593,7 @@ class IndicatorDesempenoTest extends TestCase
     public function desempeno_oculta_boton_cargar_datos_para_visualizador(): void
     {
         $visualizadorRole = Role::firstOrCreate(['name' => 'visualizador'], ['display_name' => 'Visualizador']);
+        /** @var User $visualizador */
         $visualizador = User::factory()->create([
             'role_id' => $visualizadorRole->id,
             'cen_hie_dependency_id' => 1,
@@ -671,6 +673,33 @@ class IndicatorDesempenoTest extends TestCase
         $this->assertStringContainsString('formulaQuotientHtml', $js);
         $this->assertStringNotContainsString('Numerador / denominador', $js);
         $this->assertStringNotContainsString("'>Numerador</th>'", $js);
+    }
+
+    /** @test */
+    public function modal_scripts_emiten_url_apexcharts_via_asset_sin_ruta_root_absolute(): void
+    {
+        // Mismo host que phpunit; path de APP_URL como en IIS /centinela.
+        config(['app.url' => 'http://localhost/centinela']);
+        URL::forceRootUrl('http://localhost/centinela');
+
+        $html = view('livewire.metas-instrument.partials.indicator-data-modal-scripts', [
+            'attachDownloadGuardsOnLoad' => false,
+        ])->render();
+
+        $expected = asset('vendor/apexcharts/apexcharts.min.js');
+
+        $this->assertStringContainsString('window.METAS_APEXCHARTS_URL', $html);
+        $this->assertStringContainsString(json_encode($expected), $html);
+        $this->assertSame(
+            'http://localhost/centinela/vendor/apexcharts/apexcharts.min.js',
+            $expected
+        );
+        $this->assertStringNotContainsString('"/vendor/apexcharts/apexcharts.min.js"', $html);
+
+        $js = (string) file_get_contents(public_path('js/metas-indicator-data-modal.js'));
+        $this->assertStringNotContainsString('"/vendor/apexcharts/apexcharts.min.js"', $js);
+        $this->assertStringContainsString('METAS_APEXCHARTS_URL', $js);
+        $this->assertStringContainsString('../vendor/apexcharts/apexcharts.min.js', $js);
     }
 
     private function createCenterCatalogDependencies(): void {}

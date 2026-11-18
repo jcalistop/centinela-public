@@ -169,6 +169,10 @@ Route::get('/download/{slug}/{field}/{id}/{file_index}', [StorageController::cla
 Route::get('/view/{slug}/{field}/{id}/{file_index}', [StorageController::class, 'viewFileInline'])
     ->name('view-document-file')
     ->middleware(['auth', 'readonly.files:download-document-only']);
+Route::get('/agent/documents/{document}/download', [StorageController::class, 'downloadDocumentById'])
+    ->whereNumber('document')
+    ->name('centinela.documents.download')
+    ->middleware(['signed']);
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', VoyagerAdminMiddleware::class]], function (): void {
     // Antes de Voyager::routes(): {id} capturaría segmentos literales como show.

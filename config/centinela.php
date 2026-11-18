@@ -138,6 +138,13 @@ return [
     ],
 
     /**
+     * TTL de URL firmada para descarga de documentos normativos vía MCP (`get-documento-tool`).
+     *
+     * @see `.env.example` CENTINELA_AGENT_DOCUMENT_URL_TTL_MINUTES
+     */
+    'agent_document_url_ttl_minutes' => max(1, (int) (filter_var(env('CENTINELA_AGENT_DOCUMENT_URL_TTL_MINUTES', 10), FILTER_VALIDATE_INT) ?: 10)),
+
+    /**
      * Términos y condiciones (y política de privacidad) desde el login: pie con enlaces y acceso público a `/legal/*`.
      *
      * @see `.env.example` CENTINELA_LOGIN_LEGAL_DOCUMENTS_ENABLED

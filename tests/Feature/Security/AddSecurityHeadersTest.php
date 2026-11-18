@@ -148,7 +148,24 @@ class AddSecurityHeadersTest extends TestCase
             $this->assertStringNotContainsString('unpkg.com/leaflet', $contents, $path);
         }
 
+        $modalJs = (string) file_get_contents(public_path('js/metas-indicator-data-modal.js'));
+        $this->assertStringNotContainsString('"/vendor/', $modalJs);
+        $this->assertStringNotContainsString("'/vendor/", $modalJs);
+        $this->assertStringNotContainsString('"/js/', $modalJs);
+        $this->assertStringNotContainsString("'/js/", $modalJs);
+        $this->assertStringContainsString('METAS_APEXCHARTS_URL', $modalJs);
+        $this->assertStringContainsString('resolveApexChartsUrl', $modalJs);
+
+        $openSansCss = (string) file_get_contents(public_path('vendor/open-sans/open-sans.css'));
+        $this->assertStringNotContainsString('url("/', $openSansCss);
+        $this->assertStringContainsString('url("files/open-sans-latin-300-normal.woff2")', $openSansCss);
+        $this->assertStringContainsString('url("files/open-sans-latin-400-normal.woff2")', $openSansCss);
+        $this->assertStringContainsString('url("files/open-sans-latin-700-normal.woff2")', $openSansCss);
+
         $this->assertFileExists(public_path('vendor/open-sans/open-sans.css'));
+        $this->assertFileExists(public_path('vendor/open-sans/files/open-sans-latin-300-normal.woff2'));
+        $this->assertFileExists(public_path('vendor/open-sans/files/open-sans-latin-400-normal.woff2'));
+        $this->assertFileExists(public_path('vendor/open-sans/files/open-sans-latin-700-normal.woff2'));
         $this->assertFileExists(public_path('vendor/apexcharts/apexcharts.min.js'));
         $this->assertFileExists(public_path('vendor/leaflet/leaflet.js'));
         $this->assertFileExists(public_path('vendor/leaflet/leaflet.css'));

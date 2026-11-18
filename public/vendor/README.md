@@ -20,3 +20,9 @@ Pins SDD-325 (ola 2):
 | bootstrap-rtl | `3.4.0` | cdnjs → `public/vendor/bootstrap-rtl/bootstrap-rtl.css` |
 
 Nota: Mermaid ESM no se vendoriza (imports relativos); Acerca de usa el mismo UMD.
+
+## Subdirectorio e IIS (SDD-337)
+
+- URLs de assets self-host: emitir con `asset(...)` desde Blade. No hardcodear rutas root-absolute (`/vendor/...`) en JS estático.
+- Open Sans: `open-sans.css` usa `url("files/….woff2")` relativas al CSS; si el CSS se sirve vía `asset('vendor/open-sans/open-sans.css')`, las fuentes resuelven bajo el mismo prefijo de aplicación.
+- En IIS, mapear MIME `.woff2` → `font/woff2` (y `.woff` → `font/woff` si aplica). Sin ese mapa el navegador puede descartar la fuente aunque el archivo exista.

@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Document;
 use App\Models\PublicInfoPanel;
 use App\Models\User;
 use App\Services\Dashboard\PublicInfoPanelAssetService;
 use App\Support\Configuration\PublicDashboardGate;
 use App\Support\Configuration\PublicSsDashboardGate;
 use App\Support\Dashboard\PublicInfoPanelPreview;
+use App\Support\Storage\RelativePathGuard;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -174,6 +177,66 @@ class StorageController extends Controller
     }
 
     /**
+     * Descarga firmada de documento normativo (MCP/agentes). Sin sesión: la firma es la capacidad.
+     */
+    public function downloadDocumentById(Request $request, int $document): BinaryFileResponse|StreamedResponse
+    {
+        $ssRaw = $request->query('ss');
+        $ssId = filter_var($ssRaw, FILTER_VALIDATE_INT);
+        $fileIndexRaw = $request->query('file_index');
+        $fileIndex = filter_var($fileIndexRaw, FILTER_VALIDATE_INT);
+
+        if ($ssId === false || $ssId < 1 || $fileIndex === false || $fileIndex < 0) {
+            abort(404);
+        }
+
+        $model = Document::query()->find($document);
+        if (! $model instanceof Document) {
+            abort(404);
+        }
+
+        if ((int) $model->cen_hie_dependency_id !== (int) $ssId) {
+            abort(404);
+        }
+
+        $raw = $model->getAttribute('file');
+        $fileList = is_array($raw) ? $raw : json_decode(is_string($raw) ? $raw : '', true);
+        if (! is_array($fileList) || ! array_key_exists($fileIndex, $fileList)) {
+            abort(404);
+        }
+
+        $entry = $fileList[$fileIndex];
+        if (! is_array($entry)) {
+            abort(404);
+        }
+
+        $downloadLink = $entry['download_link'] ?? null;
+        $originalName = is_string($entry['original_name'] ?? null) ? $entry['original_name'] : 'archivo';
+
+        if (! is_string($downloadLink) || $downloadLink === '') {
+            abort(404);
+        }
+
+        $this->assertRelativePathSegmentSafe($downloadLink);
+
+        /** @var FilesystemAdapter $disk */
+        $disk = Storage::disk('private');
+        if (! $disk->exists($downloadLink)) {
+            Log::warning('Signed document download: missing file on disk', [
+                'id' => (int) $model->id,
+            ]);
+            abort(404);
+        }
+
+        $absolutePath = $disk->path($downloadLink);
+
+        $response = Response::download($absolutePath, $originalName);
+        $response->headers->set('Cache-Control', 'private, no-store');
+
+        return $response;
+    }
+
+    /**
      * Sirve un PDF con cabecera inline (vista previa en modal o pestaña).
      *
      * Slugs admitidos: normativa (`documentos` / `documents`) y medios de verificación COMGES (`medios-verificacion`).
@@ -295,20 +358,6 @@ class StorageController extends Controller
      */
     private function assertRelativePathSegmentSafe(string $relativePath): void
     {
-        if ($relativePath === '') {
-            abort(403);
-        }
-
-        if (str_contains($relativePath, '..') || str_contains($relativePath, "\0")) {
-            abort(403);
-        }
-
-        if (str_starts_with($relativePath, '/') || str_starts_with($relativePath, '\\')) {
-            abort(403);
-        }
-
-        if (preg_match('#^[a-zA-Z]:[/\\\\]#', $relativePath) === 1) {
-            abort(403);
-        }
+        RelativePathGuard::assertSafe($relativePath);
     }
 }

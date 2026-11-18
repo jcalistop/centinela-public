@@ -24,7 +24,11 @@ Antes de pedir indicadores/resultados:
 5. `get-capabilities-tool` / `get-open-api-tool` (o resources `centinela://v1/openapi`, playbook)
 6. Si no conoces el instrumento: `search-indicadores-tool` (`q`) o REST `GET /api/v1/search`
 7. Establecimientos del territorio (SS del token): `list-establecimientos-tool` / `get-establecimiento-tool` (filtros `tipo=SAR`, `vigente=true` → usar `meta.total`)
-8. Tools de datos de indicadores (`list-indicadores-tool`, detalle, resultados, alertas)
+8. Tools de datos (`list-indicadores-tool`, detalle, resultados, `list-formulacion-tool`, `list-documentos-tool` / `get-documento-tool`, alertas)
+
+Formulación Metas (`list-formulacion-tool`): ley obligatoria; `estado_convenio` es BORRADOR/ENVIADO/null (no VALIDADO); distinto de `etapa` en resultados; `justificacion` siempre null. En 20.707 cada fila es establecimiento×indicador×unidad (`met_measurement_unit_id` / `unidad_codigo`); `comprometido` = casilla por indicador; `en_convenio` = convenio del establecimiento enviado. Filtro `estado=BORRADOR` exige fila explícita (null no entra).
+
+Documentos (`list-documentos-tool` / `get-documento-tool`): solo el SS del token; filtros `year`, `ley`, `instrumento`. Sin filtro por establecimiento ni `hash` persistido. `get-documento-tool` entrega `download_url` firmada (TTL corto, sin sesión).
 
 También: prompt MCP `orientate` y resource `centinela://v1/agent-playbook`.
 
@@ -40,7 +44,7 @@ Plantillas de onboarding: [agent-system-prompt.md](./agent-system-prompt.md) · 
 
 | Tipo | Identificador |
 | ---- | ------------- |
-| Tool | `get-capabilities-tool`, `get-glossary-tool`, `get-open-api-tool`, `list-establecimientos-tool`, `get-establecimiento-tool` |
+| Tool | `get-capabilities-tool`, `get-glossary-tool`, `get-open-api-tool`, `list-establecimientos-tool`, `get-establecimiento-tool`, `list-formulacion-tool`, `list-documentos-tool`, `get-documento-tool` |
 | Resource | `centinela://v1/glossary`, `centinela://v1/openapi`, `centinela://v1/agent-playbook` |
 | Prompt | `orientate` |
 | REST | `GET /api/v1/glossary`, `GET /api/v1/openapi.json`, `GET /api/v1/establecimientos` |
