@@ -16,6 +16,8 @@ use App\Models\MetEstablishmentAgreement;
 use App\Models\MetFormula;
 use App\Models\MetIndicator;
 use App\Models\MetIndicatorConfiguration;
+use App\Models\MetMeasurementUnit;
+use App\Models\MetUnitType;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Year;
@@ -50,9 +52,9 @@ class CentinelaAgentMcpFormulacionTest extends TestCase
             'centinela.agent_api.ip_allowlist' => [],
         ]);
 
-        $this->year2026 = Year::unguarded(fn() => Year::create(['ano' => 2026, 'default' => 1]));
+        $this->year2026 = Year::unguarded(fn () => Year::create(['ano' => 2026, 'default' => 1]));
 
-        CenHieDependency::unguarded(fn() => CenHieDependency::firstOrCreate(
+        CenHieDependency::unguarded(fn () => CenHieDependency::firstOrCreate(
             ['id' => 1],
             [
                 'codigo' => 'SS01',
@@ -61,7 +63,7 @@ class CentinelaAgentMcpFormulacionTest extends TestCase
                 'habilitado' => true,
             ]
         ));
-        CenHieDependency::unguarded(fn() => CenHieDependency::firstOrCreate(
+        CenHieDependency::unguarded(fn () => CenHieDependency::firstOrCreate(
             ['id' => 2],
             [
                 'codigo' => 'SS02',
@@ -110,7 +112,7 @@ class CentinelaAgentMcpFormulacionTest extends TestCase
         $this->assertContains('list-formulacion-tool', $names);
         $this->assertTrue(
             collect($caps['ritual'])->contains(
-                fn($step) => is_string($step) && str_contains($step, 'list-formulacion-tool')
+                fn ($step) => is_string($step) && str_contains($step, 'list-formulacion-tool')
             )
         );
 
@@ -121,12 +123,12 @@ class CentinelaAgentMcpFormulacionTest extends TestCase
             'nombre_corto' => 'CFA',
         ]);
         $indicator = $this->createMetIndicator();
-        MetFormula::unguarded(fn() => MetFormula::create([
+        MetFormula::unguarded(fn () => MetFormula::create([
             'met_indicator_id' => $indicator->id,
             'expression' => ['num', '/', 'den'],
             'description' => 'Numerador / Denominador',
         ]));
-        MetDataField::unguarded(fn() => MetDataField::create([
+        MetDataField::unguarded(fn () => MetDataField::create([
             'met_indicator_id' => $indicator->id,
             'label' => 'Num',
             'variable_key' => 'num',
@@ -135,7 +137,7 @@ class CentinelaAgentMcpFormulacionTest extends TestCase
             'fuente' => 'REM',
             'orden' => 1,
         ]));
-        MetDataField::unguarded(fn() => MetDataField::create([
+        MetDataField::unguarded(fn () => MetDataField::create([
             'met_indicator_id' => $indicator->id,
             'label' => 'Den',
             'variable_key' => 'den',
@@ -368,8 +370,8 @@ class CentinelaAgentMcpFormulacionTest extends TestCase
             $center = $this->createMinimalCenCenter([
                 'codigo' => sprintf('FORM-P-%03d', $i),
                 'cen_hie_dependency_id' => 1,
-                'nombre_oficial' => 'Centro ' . $i,
-                'nombre_corto' => 'C' . $i,
+                'nombre_oficial' => 'Centro '.$i,
+                'nombre_corto' => 'C'.$i,
             ]);
             $this->createConfig($indicator, $center, ['seleccionado' => ($i % 2 === 0)]);
         }
@@ -513,7 +515,7 @@ class CentinelaAgentMcpFormulacionTest extends TestCase
                 ])
                 ->assertOk()
         );
-        $ids = collect($borradores['data'])->pluck('cen_center_id')->map(fn($id) => (int) $id)->all();
+        $ids = collect($borradores['data'])->pluck('cen_center_id')->map(fn ($id) => (int) $id)->all();
         $this->assertContains($centerSs1B->id, $ids);
         $this->assertNotContains($centerSs1->id, $ids);
         $this->assertNotContains($centerSs1Sin->id, $ids, 'sin fila de convenio no entra en filtro BORRADOR');
@@ -528,7 +530,7 @@ class CentinelaAgentMcpFormulacionTest extends TestCase
                 ])
                 ->assertOk()
         );
-        $allIds = collect($allSs1['data'])->pluck('cen_center_id')->map(fn($id) => (int) $id)->all();
+        $allIds = collect($allSs1['data'])->pluck('cen_center_id')->map(fn ($id) => (int) $id)->all();
         $this->assertContains($centerSs1->id, $allIds);
         $this->assertContains($centerSs1B->id, $allIds);
         $this->assertContains($centerSs1Sin->id, $allIds);
@@ -572,6 +574,91 @@ class CentinelaAgentMcpFormulacionTest extends TestCase
     }
 
     /** @test */
+    public function list_formulacion_exposes_measurement_units_for_ley_20707(): void
+    {
+        $type20707 = IndicatorType::query()->firstOrCreate(
+            ['route' => 'metas-20707'],
+            [
+                'clave_indicador' => 'M20707',
+                'nombre_indicador' => 'Metas 20.707',
+                'estado' => true,
+                'orden' => 3,
+                'measurement_granularity' => 'internal_unit',
+            ]
+        );
+        $type20707->forceFill(['measurement_granularity' => 'internal_unit', 'estado' => true])->save();
+
+        $center = $this->createMinimalCenCenter([
+            'codigo' => 'FORM-20707',
+            'cen_hie_dependency_id' => 1,
+            'nombre_oficial' => 'Hospital Unidades',
+            'nombre_corto' => 'HU',
+        ]);
+        $unitType = MetUnitType::query()->firstOrCreate(
+            ['codigo' => 'T-MCP-FORM'],
+            ['nombre' => 'Tipo MCP Formulación', 'orden' => 1, 'enabled' => true]
+        );
+        $unitA = MetMeasurementUnit::unguarded(fn () => MetMeasurementUnit::create([
+            'cen_center_id' => $center->id,
+            'year_id' => $this->year2026->id,
+            'met_unit_type_id' => $unitType->id,
+            'codigo' => 'UCI',
+            'nombre' => 'Cuidados Intensivos',
+            'activo' => true,
+            'cen_hie_dependency_id' => 1,
+        ]));
+        $unitB = MetMeasurementUnit::unguarded(fn () => MetMeasurementUnit::create([
+            'cen_center_id' => $center->id,
+            'year_id' => $this->year2026->id,
+            'met_unit_type_id' => $unitType->id,
+            'codigo' => 'PAB',
+            'nombre' => 'Pabellón',
+            'activo' => true,
+            'cen_hie_dependency_id' => 1,
+        ]));
+
+        $indicator = MetIndicator::unguarded(fn () => MetIndicator::create([
+            'indicator_type_id' => $type20707->id,
+            'clave' => 'M-20707-'.uniqid(),
+            'nombre' => 'Indicador 20.707',
+            'year_id' => $this->year2026->id,
+            'meta_valor' => 0.8,
+            'orden' => 1,
+            'estado' => true,
+        ]));
+        $this->createConfig($indicator, $center, [
+            'met_measurement_unit_id' => $unitA->id,
+            'seleccionado' => true,
+            'aplica' => true,
+            'meta_efectiva' => 0.7,
+        ]);
+        $this->createConfig($indicator, $center, [
+            'met_measurement_unit_id' => $unitB->id,
+            'seleccionado' => false,
+            'aplica' => false,
+        ]);
+
+        $payload = $this->toolJson(
+            CentinelaAgentServer::actingAs($this->agent)
+                ->tool(ListFormulacionTool::class, [
+                    'ley' => '20707',
+                    'year' => 2026,
+                ])
+                ->assertOk()
+        );
+
+        $this->assertCount(2, $payload['data']);
+        $byCodigo = collect($payload['data'])->keyBy('unidad_codigo');
+        $this->assertSame($unitA->id, (int) $byCodigo['UCI']['met_measurement_unit_id']);
+        $this->assertSame('Cuidados Intensivos', $byCodigo['UCI']['unidad_nombre']);
+        $this->assertSame($center->id, (int) $byCodigo['UCI']['cen_center_id']);
+        $this->assertSame('20707', $byCodigo['UCI']['ley']);
+        $this->assertSame($unitB->id, (int) $byCodigo['PAB']['met_measurement_unit_id']);
+        $this->assertSame('Pabellón', $byCodigo['PAB']['unidad_nombre']);
+        $this->assertNull($byCodigo['PAB']['meta_vigente']);
+    }
+
+    /** @test */
     public function list_formulacion_requires_agent_with_ss(): void
     {
         $role = Role::firstOrCreate(['name' => 'agente'], ['display_name' => 'Agente']);
@@ -607,9 +694,9 @@ class CentinelaAgentMcpFormulacionTest extends TestCase
 
     private function createMetIndicator(): MetIndicator
     {
-        return MetIndicator::unguarded(fn() => MetIndicator::create([
+        return MetIndicator::unguarded(fn () => MetIndicator::create([
             'indicator_type_id' => $this->type18834->id,
-            'clave' => 'M-FORM-' . uniqid(),
+            'clave' => 'M-FORM-'.uniqid(),
             'nombre' => 'Indicador Formulación',
             'year_id' => $this->year2026->id,
             'meta_valor' => 0.9,
@@ -623,7 +710,7 @@ class CentinelaAgentMcpFormulacionTest extends TestCase
      */
     private function createConfig(MetIndicator $indicator, mixed $center, array $overrides = []): MetIndicatorConfiguration
     {
-        return MetIndicatorConfiguration::unguarded(fn() => MetIndicatorConfiguration::create(array_merge([
+        return MetIndicatorConfiguration::unguarded(fn () => MetIndicatorConfiguration::create(array_merge([
             'met_indicator_id' => $indicator->id,
             'year_id' => $this->year2026->id,
             'cen_hie_dependency_id' => 1,
@@ -638,7 +725,7 @@ class CentinelaAgentMcpFormulacionTest extends TestCase
 
     private function createAgreement(mixed $center, EstadoConvenioEstablecimiento $estado, ?User $submittedBy): MetEstablishmentAgreement
     {
-        return MetEstablishmentAgreement::unguarded(fn() => MetEstablishmentAgreement::create([
+        return MetEstablishmentAgreement::unguarded(fn () => MetEstablishmentAgreement::create([
             'cen_center_id' => $center->id,
             'year_id' => $this->year2026->id,
             'indicator_type_id' => $this->type18834->id,

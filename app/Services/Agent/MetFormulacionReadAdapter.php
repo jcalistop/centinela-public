@@ -123,16 +123,16 @@ class MetFormulacionReadAdapter
             return;
         }
 
-        $centerIds = $configs->pluck('cen_center_id')->unique()->filter()->map(fn($id) => (int) $id)->values()->all();
+        $centerIds = $configs->pluck('cen_center_id')->unique()->filter()->map(fn ($id) => (int) $id)->values()->all();
         $typeIds = $configs
-            ->map(fn(MetIndicatorConfiguration $c) => (int) ($c->metIndicator?->indicator_type_id ?? 0))
+            ->map(fn (MetIndicatorConfiguration $c) => (int) ($c->metIndicator?->indicator_type_id ?? 0))
             ->unique()
-            ->filter(fn(int $id) => $id > 0)
+            ->filter(fn (int $id) => $id > 0)
             ->values()
             ->all();
 
         if ($centerIds === [] || $typeIds === []) {
-            $configs->each(fn(MetIndicatorConfiguration $c) => $c->setRelation('agentAgreement', null));
+            $configs->each(fn (MetIndicatorConfiguration $c) => $c->setRelation('agentAgreement', null));
 
             return;
         }
@@ -146,7 +146,7 @@ class MetFormulacionReadAdapter
             ->get();
 
         $byKey = $agreements->keyBy(
-            fn(MetEstablishmentAgreement $a) => $this->agreementKey(
+            fn (MetEstablishmentAgreement $a) => $this->agreementKey(
                 (int) $a->cen_center_id,
                 (int) $a->indicator_type_id
             )
@@ -278,8 +278,8 @@ class MetFormulacionReadAdapter
 
                 return $value === $componente;
             })
-            ->map(fn(MetDataField $field) => is_string($field->fuente) ? trim($field->fuente) : '')
-            ->filter(fn(string $fuente) => $fuente !== '')
+            ->map(fn (MetDataField $field) => is_string($field->fuente) ? trim($field->fuente) : '')
+            ->filter(fn (string $fuente) => $fuente !== '')
             ->unique()
             ->values();
 
@@ -350,7 +350,7 @@ class MetFormulacionReadAdapter
 
     private function agreementKey(int $centerId, int $typeId): string
     {
-        return $centerId . ':' . $typeId;
+        return $centerId.':'.$typeId;
     }
 
     /**
@@ -374,7 +374,7 @@ class MetFormulacionReadAdapter
             ->where('estado', true)
             ->where('route', $route)
             ->pluck('id')
-            ->map(fn($id) => (int) $id)
+            ->map(fn ($id) => (int) $id)
             ->all();
     }
 
