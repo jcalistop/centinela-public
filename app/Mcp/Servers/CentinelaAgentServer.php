@@ -9,12 +9,14 @@ use App\Mcp\Resources\OpenApiResource;
 use App\Mcp\Tools\GetCapabilitiesTool;
 use App\Mcp\Tools\GetContextTool;
 use App\Mcp\Tools\GetDashboardAlertasTool;
+use App\Mcp\Tools\GetDocumentoTool;
 use App\Mcp\Tools\GetEstablecimientoTool;
 use App\Mcp\Tools\GetGlossaryTool;
 use App\Mcp\Tools\GetHealthTool;
 use App\Mcp\Tools\GetIndicadorTool;
 use App\Mcp\Tools\GetOpenApiTool;
 use App\Mcp\Tools\ListCompromisosTool;
+use App\Mcp\Tools\ListDocumentosTool;
 use App\Mcp\Tools\ListEstablecimientosTool;
 use App\Mcp\Tools\ListFormulacionTool;
 use App\Mcp\Tools\ListIndicadoresTool;
@@ -41,14 +43,15 @@ class CentinelaAgentServer extends Server
         5) get-capabilities-tool / get-open-api-tool
         6) search-indicadores-tool (descubrimiento sin instrumento) o list-indicadores-tool
         7) list-establecimientos-tool / get-establecimiento-tool (maestro CEN del SS)
-        8) detallar / resultados / formulación Metas / alertas
+        8) detallar / resultados / formulación Metas / documentos / alertas
 
         Resources: centinela://v1/glossary, centinela://v1/openapi, centinela://v1/agent-playbook.
         Prompt: orientate.
 
-        Pasa `year` en argumentos cuando necesites override de año (indicadores/resultados/formulacion).
+        Pasa `year` en argumentos cuando necesites override de año (indicadores/resultados/formulacion/documentos).
         Establecimientos: territorio = SS del token; filtros tipo (SAR|SAPU|SUR) y vigente.
         Formulación Metas: list-formulacion-tool (ley obligatoria; estado convenio ≠ etapa de resultados).
+        Documentos: list-documentos-tool / get-documento-tool (URL firmada temporal; sin hash ni filtro establecimiento).
         No existe tool `set_context`. No hay tools de escritura (solo ability `read`).
     MARKDOWN;
 
@@ -71,6 +74,8 @@ class CentinelaAgentServer extends Server
         GetEstablecimientoTool::class,
         ListResultadosTool::class,
         ListFormulacionTool::class,
+        ListDocumentosTool::class,
+        GetDocumentoTool::class,
         GetDashboardAlertasTool::class,
     ];
 

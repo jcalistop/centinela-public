@@ -15,7 +15,9 @@ Cada fila: pregunta del usuario → secuencia sugerida de tools MCP. Año: pasar
 | 9 | Detalle de un indicador Metas ya identificado | `get-indicador-tool` (`instrumento=metas`, `id=…`) |
 | 10 | Resultados por establecimiento de un indicador Metas | `list-resultados-tool` (`instrumento=metas`, `indicador_id=…`) |
 | 11 | Formulación del convenio Metas por establecimiento (meta, ponderación, estado) | `list-formulacion-tool` (`ley=18834|19664|20707`, `year` opcional, `establecimiento_id` opcional) |
-| 12 | ¿Hay alertas del dashboard? | `get-dashboard-alertas-tool` |
-| 13 | ¿Puedo cargar una evaluación por chat? | **No** — explicar P3a readonly; sin tools de escritura |
+| 12 | ¿Qué documentos normativos hay cargados este año? | `list-documentos-tool` (`year` opcional; `ley` / `instrumento` opcionales) |
+| 13 | Descargar un documento normativo por id | `get-documento-tool` (`id`) → usar `download_url` firmada antes de `expires_at` |
+| 14 | ¿Hay alertas del dashboard? | `get-dashboard-alertas-tool` |
+| 15 | ¿Puedo cargar una evaluación por chat? | **No** — explicar P3a readonly; sin tools de escritura |
 
 Ver también: [agent-system-prompt.md](./agent-system-prompt.md), [README-agentes.md](./README-agentes.md), [agent-playbook.md](./agent-playbook.md).

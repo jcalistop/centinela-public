@@ -1,5 +1,5 @@
 {
-  "version": "2026-11-18b",
+  "version": "2026-11-18c",
   "entries": [
     {
       "term": "SS",
@@ -128,6 +128,18 @@
     {
       "term": "formulacion",
       "definition": "Tool MCP list-formulacion-tool: lectura de convenio/configuración Metas por establecimiento×indicador (leyes 18.834/19.664/20.707). Sin paridad REST. Solo ability read."
+    },
+    {
+      "term": "documentos",
+      "definition": "Tools MCP list-documentos-tool y get-documento-tool: documentos normativos del SS del token (año × instrumento/ley). Sin filtro por establecimiento (no existe cen_center_id). Solo ability read."
+    },
+    {
+      "term": "hash",
+      "definition": "En el contrato de documentos siempre null: Centinela no persiste hash del archivo. tamaño_bytes se calcula desde el disco al consultar."
+    },
+    {
+      "term": "download_url",
+      "definition": "URL firmada temporal (middleware signed, sin sesión) que entrega el archivo del disco private. TTL config centinela.agent_document_url_ttl_minutes (default 10). No exponer download_link ni ruta física."
     }
   ]
 }

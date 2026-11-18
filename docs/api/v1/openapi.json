@@ -399,6 +399,88 @@
         }
       }
     },
+    "/mcp/list-documentos": {
+      "get": {
+        "summary": "MCP list-documentos-tool — documentos normativos del SS (solo lectura; sin paridad REST)",
+        "operationId": "mcpListDocumentos",
+        "description": "Contrato de agentes. Filtros: year (default YearContext), ley (18834|19664|20707), instrumento (comges|metas|adp), per_page (máx. 100), page. empty_reason: ausente|sin_datos. hash siempre null; sin filtro establecimiento.",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "ley",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "18834",
+                "19664",
+                "20707"
+              ]
+            }
+          },
+          {
+            "name": "instrumento",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "comges",
+                "metas",
+                "adp"
+              ]
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "maximum": 100
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Envelope AgentPagination (data + meta)"
+          }
+        }
+      }
+    },
+    "/mcp/get-documento": {
+      "get": {
+        "summary": "MCP get-documento-tool — metadatos + URL firmada temporal",
+        "operationId": "mcpGetDocumento",
+        "description": "Devuelve el contrato de documento más download_url y expires_at (TTL centinela.agent_document_url_ttl_minutes). id inexistente o de otro SS → NOT_FOUND.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Documento + download_url + expires_at"
+          }
+        }
+      }
+    },
     "/dashboard/alertas": {
       "get": {
         "summary": "Alertas dashboard parametrizadas",

@@ -30,7 +30,7 @@ class GetCapabilitiesTool extends Tool
         'get-capabilities-tool',
         'get-open-api-tool',
         'search-indicadores-tool',
-        'list-compromisos-tool|list-indicadores-tool|get-indicador-tool|list-resultados-tool|list-formulacion-tool|get-dashboard-alertas-tool',
+        'list-compromisos-tool|list-indicadores-tool|get-indicador-tool|list-resultados-tool|list-formulacion-tool|list-documentos-tool|get-documento-tool|get-dashboard-alertas-tool',
     ];
 
     public function handle(Request $request): Response
