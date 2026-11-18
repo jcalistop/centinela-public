@@ -16,14 +16,13 @@ use App\Mcp\Tools\GetIndicadorTool;
 use App\Mcp\Tools\GetOpenApiTool;
 use App\Mcp\Tools\ListCompromisosTool;
 use App\Mcp\Tools\ListEstablecimientosTool;
+use App\Mcp\Tools\ListFormulacionTool;
 use App\Mcp\Tools\ListIndicadoresTool;
 use App\Mcp\Tools\ListInstrumentosTool;
 use App\Mcp\Tools\ListResultadosTool;
 use App\Mcp\Tools\ListYearsTool;
 use App\Mcp\Tools\SearchIndicadoresTool;
 use Laravel\Mcp\Server;
-use Laravel\Mcp\Server\Prompt;
-use Laravel\Mcp\Server\Tool;
 
 class CentinelaAgentServer extends Server
 {
@@ -42,18 +41,19 @@ class CentinelaAgentServer extends Server
         5) get-capabilities-tool / get-open-api-tool
         6) search-indicadores-tool (descubrimiento sin instrumento) o list-indicadores-tool
         7) list-establecimientos-tool / get-establecimiento-tool (maestro CEN del SS)
-        8) detallar / resultados / alertas
+        8) detallar / resultados / formulación Metas / alertas
 
         Resources: centinela://v1/glossary, centinela://v1/openapi, centinela://v1/agent-playbook.
         Prompt: orientate.
 
-        Pasa `year` en argumentos cuando necesites override de año (indicadores/resultados).
+        Pasa `year` en argumentos cuando necesites override de año (indicadores/resultados/formulacion).
         Establecimientos: territorio = SS del token; filtros tipo (SAR|SAPU|SUR) y vigente.
+        Formulación Metas: list-formulacion-tool (ley obligatoria; estado convenio ≠ etapa de resultados).
         No existe tool `set_context`. No hay tools de escritura (solo ability `read`).
     MARKDOWN;
 
     /**
-     * @var array<int, class-string<Tool>>
+     * @var array<int, class-string<Server\Tool>>
      */
     protected array $tools = [
         GetHealthTool::class,
@@ -70,6 +70,7 @@ class CentinelaAgentServer extends Server
         ListEstablecimientosTool::class,
         GetEstablecimientoTool::class,
         ListResultadosTool::class,
+        ListFormulacionTool::class,
         GetDashboardAlertasTool::class,
     ];
 
@@ -83,7 +84,7 @@ class CentinelaAgentServer extends Server
     ];
 
     /**
-     * @var array<int, class-string<Prompt>>
+     * @var array<int, class-string<Server\Prompt>>
      */
     protected array $prompts = [
         OrientatePrompt::class,

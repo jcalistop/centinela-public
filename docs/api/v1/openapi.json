@@ -325,6 +325,80 @@
         }
       }
     },
+    "/mcp/list-formulacion": {
+      "get": {
+        "summary": "MCP list-formulacion-tool — formulación Metas por establecimiento×indicador (solo lectura; sin paridad REST)",
+        "operationId": "mcpListFormulacion",
+        "description": "Contrato de agentes. Filtros: ley (obligatoria 18834|19664|20707), year, establecimiento_id, estado (BORRADOR|ENVIADO), aplica, per_page (máx. 100), page. empty_reason: ausente|sin_datos|fuera_de_alcance. estado_convenio nunca VALIDADO; justificacion siempre null.",
+        "parameters": [
+          {
+            "name": "ley",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "18834",
+                "19664",
+                "20707"
+              ]
+            }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "establecimiento_id",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "estado",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "BORRADOR",
+                "ENVIADO"
+              ]
+            }
+          },
+          {
+            "name": "aplica",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "maximum": 100
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Envelope AgentPagination (data + meta)"
+          }
+        }
+      }
+    },
     "/dashboard/alertas": {
       "get": {
         "summary": "Alertas dashboard parametrizadas",

@@ -33,7 +33,9 @@ Orden sugerido antes de pedir datos de indicadores:
 4. `get-glossary-tool` — vocabulario
 5. `get-capabilities-tool` / `get-open-api-tool` — contrato y límites (`GetOpenApiTool` → slug `open-api`, no `openapi`)
 6. `search-indicadores-tool` — descubrimiento COMGES+Metas **sin** exigir `instrumento` (REST: `GET /api/v1/search?q=`)
-7. Tools de datos (`list-compromisos-tool`, `list-indicadores-tool`, etc.)
+7. Tools de datos (`list-compromisos-tool`, `list-indicadores-tool`, `list-resultados-tool`, `list-formulacion-tool`, etc.)
+
+Formulación Metas: `list-formulacion-tool` (ley obligatoria; sin paridad REST). `estado_convenio` ≠ `etapa` de resultados; no existe `VALIDADO`; `justificacion` siempre null.
 
 No existe `set_context`. Pasar `year` por argumento (o header REST `X-Centinela-Year` / `?year=`) cuando haga falta.
 

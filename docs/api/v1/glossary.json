@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-21",
+  "version": "2026-11-18b",
   "entries": [
     {
       "term": "SS",
@@ -88,6 +88,46 @@
     {
       "term": "frescura de alertas",
       "definition": "meta.last_evaluated_at (ISO-8601) y meta.reglas_evaluadas en get-dashboard-alertas/GET dashboard/alertas describen la evaluación ejecutada en ese request. count=0 con timestamp no nulo y reglas_evaluadas>=1 significa «corrió y no hay alertas»; timestamp null y 0 significa «no se evaluó» (p. ej. SS inválido). No es historial."
+    },
+    {
+      "term": "estado_convenio",
+      "definition": "Estado del convenio Metas por establecimiento×ley×año: BORRADOR | ENVIADO | null (sin fila de convenio). No existe VALIDADO. Distinto de etapa de resultados (AUTOEVALUACION/PRELIMINAR/FINAL en list-resultados-tool). El filtro estado=BORRADOR solo incluye filas con convenio explícito BORRADOR; null no entra."
+    },
+    {
+      "term": "comprometido",
+      "definition": "En list-formulacion-tool: casilla por indicador (config.seleccionado / «En convenio» en la GUI de formulación). No confundir con en_convenio."
+    },
+    {
+      "term": "en_convenio",
+      "definition": "Derivado a nivel establecimiento×ley: true solo si estado_convenio === ENVIADO (convenio enviado). Se repite en todas las filas del establecimiento. No es la casilla por indicador (eso es comprometido)."
+    },
+    {
+      "term": "meta_instrumento",
+      "definition": "Meta de catálogo del indicador (meta_valor). Siempre disponible como referencia."
+    },
+    {
+      "term": "meta_comprometida",
+      "definition": "Meta efectiva suscrita (meta_efectiva) solo si aplica=true y está definida; si aplica=false → null (paridad GUI)."
+    },
+    {
+      "term": "meta_vigente",
+      "definition": "Si aplica=true: meta_comprometida ?? meta_instrumento. Si aplica=false → null (paridad GUI)."
+    },
+    {
+      "term": "unidad_medida_formulacion",
+      "definition": "En Metas 20.707 (unidades internas): cada fila es establecimiento×indicador×unidad. Campos met_measurement_unit_id, unidad_codigo, unidad_nombre. En 18.834/19.664 van null."
+    },
+    {
+      "term": "justificacion",
+      "definition": "Campo del contrato de formulación siempre null: Centinela no persiste justificación de la meta comprometida."
+    },
+    {
+      "term": "fuera_de_alcance",
+      "definition": "meta.empty_reason cuando establecimiento_id no existe o pertenece a otro SS. No filtra ni revela datos ajenos."
+    },
+    {
+      "term": "formulacion",
+      "definition": "Tool MCP list-formulacion-tool: lectura de convenio/configuración Metas por establecimiento×indicador (leyes 18.834/19.664/20.707). Sin paridad REST. Solo ability read."
     }
   ]
 }

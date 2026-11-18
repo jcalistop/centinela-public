@@ -17,6 +17,11 @@ final class AgentPagination
     public const EMPTY_REASON_AUSENTE = 'ausente';
 
     /**
+     * Recurso pedido fuera del territorio del token (p. ej. establecimiento de otro SS).
+     */
+    public const EMPTY_REASON_FUERA_DE_ALCANCE = 'fuera_de_alcance';
+
+    /**
      * @param  LengthAwarePaginator<int, mixed>  $paginator
      * @param  list<array<string, mixed>>  $items
      * @param  string|null  $emptyReason  Se agrega a `meta` solo cuando `total` es 0.
