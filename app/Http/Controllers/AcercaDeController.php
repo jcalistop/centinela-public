@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Support\AcercaDePages;
+use App\Support\Configuration\InstanceIdentityMarkdown;
 use App\Support\MarkdownMermaid;
 use App\Support\MarkdownToc;
 use Illuminate\Contracts\View\View;
@@ -17,13 +18,13 @@ class AcercaDeController extends Controller
         }
 
         $page = AcercaDePages::PAGES[$slug];
-        $path = resource_path('docs/centinela/acerca-de/'.$page['file']);
+        $path = resource_path('docs/centinela/acerca-de/' . $page['file']);
 
         if (! is_readable($path)) {
             throw new NotFoundHttpException('Documento no disponible.');
         }
 
-        $markdown = (string) file_get_contents($path);
+        $markdown = InstanceIdentityMarkdown::apply((string) file_get_contents($path));
         $markdownHtml = MarkdownMermaid::toHtml($markdown);
         $enriched = MarkdownToc::enrich($markdownHtml);
 

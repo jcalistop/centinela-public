@@ -3,9 +3,11 @@
 **Documento:** Política de privacidad y tratamiento de datos personales — plataforma Centinela  
 **Versión:** 1.1 (borrador)  
 **Vigencia desde:** [FECHA] _(pendiente validación institucional)_  
-**Co-responsables del tratamiento:** Servicio de Salud del Reloncaví y el Servicio de Salud adoptante de pertenencia del usuario
+**Co-responsables del tratamiento:** {{instance.ss_display_name}} y el Servicio de Salud adoptante de pertenencia del usuario
 
-> Este texto es un **borrador orientativo** para revisión del área jurídica y del referente de datos personales del Servicio de Salud del Reloncaví y de los Servicios de Salud adoptantes. Debe alinearse con el inventario real de tratamientos y con la **Ley N° 19.628** sobre protección de los datos personales y su reforma por la **Ley N° 21.719**, y demás normativa sectorial.
+> Este texto es un **borrador orientativo** para revisión del área jurídica y del referente de datos personales del operador de esta instancia ({{instance.ss_display_name}}) y de los Servicios de Salud adoptantes. Debe alinearse con el inventario real de tratamientos y con la **Ley N° 19.628** sobre protección de los datos personales y su reforma por la **Ley N° 21.719**, y demás normativa sectorial.
+>
+> _El nombre del operador de esta instalación se toma de la configuración de la plataforma (`instance.*`)._
 
 ## 1. Co-responsables e información de contacto
 
@@ -13,14 +15,16 @@ Centinela es una plataforma **multi-Servicio de Salud**. El tratamiento de datos
 
 | Co-responsable | Ámbito del tratamiento |
 | --- | --- |
-| **Servicio de Salud del Reloncaví** | Operación de la plataforma compartida, soporte de producto, seguridad técnica transversal, solicitudes de acceso canalizadas al operador y tratamientos que afecten la instancia como conjunto |
+| **{{instance.ss_display_name}}** | Operación de la plataforma compartida en esta instancia, soporte de producto, seguridad técnica transversal, solicitudes de acceso canalizadas al operador y tratamientos que afecten la instancia como conjunto |
 | **Servicio de Salud adoptante del usuario** | Datos operativos de **su territorio**: usuarios locales, cargas de instrumentos, medios de verificación, tickets y gestión cotidiana de evaluación |
 
-### Contacto — SSR Reloncaví (plataforma)
+### Contacto — operador de la instancia (plataforma)
 
 | Campo | Detalle |
 | --- | --- |
-| Co-responsable | Servicio de Salud del Reloncaví |
+| Co-responsable | {{instance.ss_display_name}} |
+| Unidad | {{instance.unit_name}} |
+| URL institucional | {{instance.ss_url}} |
 | Domicilio | [DOMICILIO_LEGAL] _(pendiente validación institucional)_ |
 | RUT (si corresponde publicarlo) | [RUT_INSTITUCIONAL] _(pendiente validación institucional)_ |
 | Canal para ejercicio de derechos (asuntos de plataforma) | [CORREO_ARCO_O_FORMULARIO] _(pendiente validación institucional)_ |
@@ -124,7 +128,7 @@ Conforme a la legislación chilena en la materia, incluida la reforma introducid
 | Tipo de solicitud | Canal preferente |
 | --- | --- |
 | Datos operativos de su SS (cargas, tickets, asignaciones) | Servicio de Salud de **pertenencia** del usuario |
-| Asuntos transversales de la plataforma, acceso o instancia técnica | **SSR Reloncaví** (contacto sección 1) |
+| Asuntos transversales de la plataforma, acceso o instancia técnica | **{{instance.ss_display_name}}** (contacto sección 1) |
 
 ## 9. Cookies y tecnologías similares
 

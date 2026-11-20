@@ -16,12 +16,12 @@ class AcercaDePagesTest extends TestCase
     {
         parent::setUp();
 
-        Year::unguarded(fn () => Year::create([
+        Year::unguarded(fn() => Year::create([
             'ano' => 2026,
             'default' => true,
         ]));
 
-        CenHieDependency::unguarded(fn () => CenHieDependency::create([
+        CenHieDependency::unguarded(fn() => CenHieDependency::create([
             'id' => 1,
             'nombre' => 'Servicio de Salud de Prueba',
             'tipo_dependencia' => 'SERVICIO',

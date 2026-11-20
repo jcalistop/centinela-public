@@ -12,7 +12,9 @@ class CentinelaLegalDocTest extends TestCase
         $this->get('/legal/terminos-de-uso')
             ->assertOk()
             ->assertSee('Términos de uso', false)
-            ->assertSee('Servicio de Salud del Reloncaví', false);
+            ->assertSee('SS de prueba', false)
+            ->assertDontSee('Reloncaví', false)
+            ->assertDontSee('{{instance.', false);
     }
 
     /** @test */
@@ -22,7 +24,20 @@ class CentinelaLegalDocTest extends TestCase
             ->assertOk()
             ->assertSee('Política de privacidad', false)
             ->assertSee('Co-responsables del tratamiento', false)
-            ->assertSee('Servicio de Salud del Reloncaví', false);
+            ->assertSee('SS de prueba', false)
+            ->assertDontSee('Reloncaví', false)
+            ->assertDontSee('{{instance.', false);
+    }
+
+    /** @test */
+    public function legal_pages_reflect_instance_display_name_from_config(): void
+    {
+        config(['centinela.instance.ss_display_name' => 'SS Legal Lab']);
+
+        $this->get('/legal/terminos-de-uso')
+            ->assertOk()
+            ->assertSee('SS Legal Lab', false)
+            ->assertDontSee('SS de prueba', false);
     }
 
     /** @test */
