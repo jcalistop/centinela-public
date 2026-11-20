@@ -19,7 +19,8 @@
             <strong>no reemplaza</strong> la plataforma autenticada donde ocurre el trabajo operativo diario.
         </p>
         <p class="cen-publico__empty" style="margin:0;color:#333;font-size:15px;line-height:1.5;">
-            La plataforma la desarrolla el <strong>Servicio de Salud de Reloncaví</strong> y está
+            La plataforma la desarrolla el
+            <strong>{{ \App\Support\Configuration\InstanceIdentity::displayName() }}</strong> y está
             puesta a disposición de otros territorios (Servicios de Salud). Cada adoptante la opera
             en su territorio con sus propios datos de manera independiente, manteniendo la
             <strong>confidencialidad territorial</strong>.

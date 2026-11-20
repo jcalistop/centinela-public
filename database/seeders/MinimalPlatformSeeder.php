@@ -78,12 +78,13 @@ class MinimalPlatformSeeder extends Seeder
 
         $now = now();
 
+        // SDD-338: install limpia → SS de prueba habilitado (no Reloncaví / no «No Aplica»).
         DB::table('cen_hie_dependencies')->insert([
             'id' => 1,
-            'codigo' => null,
-            'nombre' => 'No Aplica',
-            'tipo_dependencia' => DependenciaTipo::Otro->value,
-            'habilitado' => false,
+            'codigo' => 'SS-PRUEBA',
+            'nombre' => 'SS de prueba',
+            'tipo_dependencia' => DependenciaTipo::Servicio->value,
+            'habilitado' => true,
             'created_at' => $now,
             'updated_at' => $now,
         ]);
@@ -567,7 +568,7 @@ class MinimalPlatformSeeder extends Seeder
 
         if ($settingsItems->isNotEmpty()) {
             $keep = $settingsItems->first(
-                fn ($item): bool => $item->parent_id !== null
+                fn($item): bool => $item->parent_id !== null
             ) ?? $settingsItems->first();
 
             foreach ($settingsItems as $item) {
@@ -830,6 +831,33 @@ class MinimalPlatformSeeder extends Seeder
                 'type' => 'text',
                 'order' => 5,
                 'group' => 'Sistema',
+            ],
+            [
+                'key' => 'instance.ss_display_name',
+                'display_name' => 'Nombre del Servicio de Salud (instancia)',
+                'value' => 'SS de prueba',
+                'details' => '{"description":"Nombre público del SS operador de esta instalación (footers, copy corto, emails). No sustituye el SS de tenancy del usuario."}',
+                'type' => 'text',
+                'order' => 1,
+                'group' => 'Servicio de Salud',
+            ],
+            [
+                'key' => 'instance.ss_url',
+                'display_name' => 'URL institucional del SS',
+                'value' => '',
+                'details' => '{"description":"URL https del sitio institucional. Vacío = mostrar solo el nombre sin enlace."}',
+                'type' => 'text',
+                'order' => 2,
+                'group' => 'Servicio de Salud',
+            ],
+            [
+                'key' => 'instance.unit_name',
+                'display_name' => 'Unidad / departamento',
+                'value' => 'Departamento de Control de Gestión',
+                'details' => '{"description":"Unidad / departamento que aparece en el pie de página."}',
+                'type' => 'text',
+                'order' => 3,
+                'group' => 'Servicio de Salud',
             ],
         ];
 

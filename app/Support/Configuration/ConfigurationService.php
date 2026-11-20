@@ -39,6 +39,9 @@ class ConfigurationService
         'module.deploy_automatic_enabled' => 'centinela.deploy.automatic_enabled',
         'module.whatsapp_enabled' => 'services.whatsapp.enabled',
         'module.metas_recalc_scope_enabled' => 'centinela.metas.recalculation_scope_enabled',
+        'instance.ss_display_name' => 'centinela.instance.ss_display_name',
+        'instance.ss_url' => 'centinela.instance.ss_url',
+        'instance.unit_name' => 'centinela.instance.unit_name',
         'notifications.contact_mail_to' => 'centinela.contact_mail_to',
         'notifications.backup_email' => 'centinela.backup.email_address',
         'notifications.scheduler_alert_email' => 'centinela.scheduler.alert_email',
@@ -141,6 +144,13 @@ class ConfigurationService
         foreach (self::MAP_BD_TO_CONFIG as $bdKey => $configPath) {
             if (array_key_exists($bdKey, $this->settingsCache)) {
                 $value = $this->settingsCache[$bdKey];
+
+                // Identidad de instancia (SDD-338): permitir vaciar URL/textos en la misma request.
+                if (str_starts_with($bdKey, 'instance.')) {
+                    config([$configPath => is_string($value) ? $value : '']);
+
+                    continue;
+                }
 
                 // Convertir 'On'/'Off' a booleano para config() que espera booleano
                 if ($value === 'On' || $value === 'Off') {

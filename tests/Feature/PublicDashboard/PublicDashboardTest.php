@@ -48,24 +48,24 @@ class PublicDashboardTest extends TestCase
 
         $this->enablePublicDashboard(ss: true);
 
-        $this->year = Year::unguarded(fn () => Year::create([
+        $this->year = Year::unguarded(fn() => Year::create([
             'ano' => 2026,
             'default' => true,
         ]));
 
-        Year::unguarded(fn () => Year::create([
+        Year::unguarded(fn() => Year::create([
             'ano' => 2025,
             'default' => false,
         ]));
 
-        $this->enabledSs = CenHieDependency::unguarded(fn () => CenHieDependency::create([
+        $this->enabledSs = CenHieDependency::unguarded(fn() => CenHieDependency::create([
             'codigo' => 'SS01',
             'nombre' => 'Servicio de Salud Habilitado',
             'tipo_dependencia' => 'SERVICIO',
             'habilitado' => true,
         ]));
 
-        $this->disabledSs = CenHieDependency::unguarded(fn () => CenHieDependency::create([
+        $this->disabledSs = CenHieDependency::unguarded(fn() => CenHieDependency::create([
             'codigo' => 'SS99',
             'nombre' => 'Servicio de Salud Deshabilitado',
             'tipo_dependencia' => 'SERVICIO',
@@ -107,7 +107,8 @@ class PublicDashboardTest extends TestCase
         $response->assertSee('Metas Ley 18.834', false);
         $response->assertSee('En desarrollo', false);
         $response->assertSee('ADP', false);
-        $response->assertSee('Servicio de Salud de Reloncaví', false);
+        $response->assertSee('SS de prueba', false);
+        $response->assertDontSee('Reloncaví', false);
         $response->assertSee('Volver al dashboard público', false);
         $response->assertSee(route('centinela.publico.landing'), false);
         $response->assertSee('solicitar acceso', false);
@@ -623,7 +624,7 @@ class PublicDashboardTest extends TestCase
         $html->assertSee('/r/', false);
 
         $this->assertSame(1, preg_match('/<base href="([^"]+)"/i', $html->getContent(), $matches));
-        $csvUrl = html_entity_decode($matches[1]).'datos.csv';
+        $csvUrl = html_entity_decode($matches[1]) . 'datos.csv';
 
         $this->flushSession();
         $this->call('GET', $csvUrl, [], [])->assertOk();
@@ -690,7 +691,7 @@ class PublicDashboardTest extends TestCase
         $panel->save();
 
         $url = PublicInfoPanelPreview::signedUrl($panel);
-        $tampered = $url.(str_contains($url, '?') ? '&' : '?').'x=1';
+        $tampered = $url . (str_contains($url, '?') ? '&' : '?') . 'x=1';
 
         $this->get($tampered)->assertForbidden();
     }
@@ -848,7 +849,7 @@ class PublicDashboardTest extends TestCase
         $suffix = bin2hex(random_bytes(4));
         $route = "metas-20707-{$suffix}";
 
-        $type = IndicatorType::unguarded(fn () => IndicatorType::create([
+        $type = IndicatorType::unguarded(fn() => IndicatorType::create([
             'clave_indicador' => $route,
             'nombre_indicador' => "Metas Sanitarias Ley Cache {$suffix}",
             'descripcion_indicador' => 'Test',
@@ -870,7 +871,7 @@ class PublicDashboardTest extends TestCase
         $before = $service->summaryFor($this->enabledSs, $this->year);
         $this->assertNotContains($route, array_column($before['metas'], 'slug'));
 
-        IndicatorTypeSetting::unguarded(fn () => IndicatorTypeSetting::create([
+        IndicatorTypeSetting::unguarded(fn() => IndicatorTypeSetting::create([
             'indicator_type_id' => $type->id,
             'year_id' => $this->year->id,
             'cen_hie_dependency_id' => $this->enabledSs->id,
@@ -902,7 +903,7 @@ class PublicDashboardTest extends TestCase
     {
         $path = tempnam(sys_get_temp_dir(), 'pip-zip-');
         $this->assertNotFalse($path);
-        $zipPath = $path.'.zip';
+        $zipPath = $path . '.zip';
         @unlink($path);
 
         $zip = new \ZipArchive;
@@ -928,7 +929,7 @@ class PublicDashboardTest extends TestCase
         $disk->put($csv, "a,b\n1,2\n");
         $disk->put($png, base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='));
 
-        return PublicInfoPanel::unguarded(fn () => PublicInfoPanel::create([
+        return PublicInfoPanel::unguarded(fn() => PublicInfoPanel::create([
             'slug' => $slug,
             'tipo' => PublicInfoPanel::TIPO_HTML_BUNDLE,
             'titulo' => $titulo ?? "Título {$slug}",
@@ -955,7 +956,7 @@ class PublicDashboardTest extends TestCase
         $png = "public-info-panels/preview/{$slug}.png";
         $disk->put($png, base64_decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='));
 
-        return PublicInfoPanel::unguarded(fn () => PublicInfoPanel::create(array_merge([
+        return PublicInfoPanel::unguarded(fn() => PublicInfoPanel::create(array_merge([
             'slug' => $slug,
             'tipo' => PublicInfoPanel::TIPO_EMBED_EXTERNO,
             'titulo' => $titulo ?? "Título {$slug}",

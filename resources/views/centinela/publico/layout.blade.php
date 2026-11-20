@@ -440,11 +440,19 @@
     <main class="cen-publico__main @yield('main_class')">
         @yield('content')
     </main>
+    @php
+        $instanceUnit = \App\Support\Configuration\InstanceIdentity::unitName();
+        $instanceName = \App\Support\Configuration\InstanceIdentity::displayName();
+        $instanceUrl = \App\Support\Configuration\InstanceIdentity::url();
+    @endphp
     <footer class="cen-publico__footer" role="contentinfo">
         <p>
-            Desarrollado por Departamento de Control de Gestión,
-            <a href="https://ssreloncavi.redsalud.gob.cl/" target="_blank" rel="noopener noreferrer">Servicio de Salud
-                del Reloncaví</a>.
+            {{ $instanceUnit }},
+            @if ($instanceUrl !== '')
+                <a href="{{ $instanceUrl }}" target="_blank" rel="noopener noreferrer">{{ $instanceName }}</a>.
+            @else
+                {{ $instanceName }}.
+            @endif
         </p>
     </footer>
 </body>

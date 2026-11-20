@@ -224,7 +224,7 @@
 
         <div class="footer">
             <p><strong>Sistema Centinela - MINSAL</strong></p>
-            <p>Servicio de Salud Del Reloncaví</p>
+            <p>{{ \App\Support\Configuration\InstanceIdentity::displayName() }}</p>
             <p style="font-size: 12px; color: #999;">Este es un correo automático del sistema de respaldos. No
                 responder.</p>
         </div>
