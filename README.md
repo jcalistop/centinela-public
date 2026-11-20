@@ -67,6 +67,8 @@ Si su Servicio de Salud aún no utiliza Centinela o desea ampliar el uso, la coo
 
 El software **Centinela** se distribuye bajo la **EUPL-1.2** (European Union Public Licence). **Derechos de propiedad:** Servicio de Salud del Reloncaví. **Derechos de autor:** José Luis Calisto Peñafiel. Texto: [`LICENSE.md`](LICENSE.md). Autores: [`AUTHORS.md`](AUTHORS.md). Cita: [`CITATION.cff`](CITATION.cff).
 
+Quien reciba una copia válida bajo EUPL-1.2 **no necesita autorización adicional** para ejercer los derechos de esa licencia (uso, modificación, redistribución según el texto oficial).
+
 ## Cómo contribuir (repositorio)
 
 Quien desee colaborar en desarrollo debe coordinar con el mantenedor del repositorio y preferentemente cumplir perfil institucional (funcionariado MINSAL/SNSS, conocimiento Laravel/MVC, Git, Voyager u otro admin CRUD). Las contribuciones se aceptan bajo la misma EUPL-1.2.
