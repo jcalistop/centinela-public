@@ -142,7 +142,7 @@ return [
             static fn(string $v): string => trim($v),
             explode(',', (string) env('CENTINELA_AGENT_IP_ALLOWLIST', ''))
         ))),
-        'token_ttl_minutes' => (int) (filter_var(env('CENTINELA_AGENT_TOKEN_TTL_MINUTES', 10080), FILTER_VALIDATE_INT) ?: 10080),
+        'token_ttl_minutes' => (int) (filter_var(env('CENTINELA_AGENT_TOKEN_TTL_MINUTES', 43200), FILTER_VALIDATE_INT) ?: 43200),
         'throttle_per_minute' => (int) (filter_var(env('CENTINELA_AGENT_THROTTLE_PER_MINUTE', 120), FILTER_VALIDATE_INT) ?: 120),
         'request_log_retention_days' => (int) (filter_var(env('CENTINELA_AGENT_REQUEST_LOG_RETENTION_DAYS', 90), FILTER_VALIDATE_INT) ?: 90),
     ],
