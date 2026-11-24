@@ -3,9 +3,11 @@
 **Documento:** Términos de uso de la plataforma Centinela  
 **Versión:** 1.1 (borrador)  
 **Vigencia desde:** [FECHA] _(pendiente validación institucional)_  
-**Operador de la plataforma:** Servicio de Salud del Reloncaví
+**Operador de la plataforma:** {{instance.ss_display_name}}
 
-> Este texto es un **borrador orientativo** para revisión del área jurídica del Servicio de Salud del Reloncaví y de los Servicios de Salud adoptantes antes de su publicación oficial.
+> Este texto es un **borrador orientativo** para revisión del área jurídica del operador de esta instancia ({{instance.ss_display_name}}) y de los Servicios de Salud adoptantes antes de su publicación oficial.
+>
+> _El nombre del operador de esta instalación se toma de la configuración de la plataforma (`instance.*`)._
 
 ## 1. Objeto y ámbito
 
@@ -17,24 +19,26 @@ El usuario opera siempre en el contexto de **su Servicio de Salud** y **su rol**
 
 ## 2. Plataforma compartida y co-responsabilidad
 
-Centinela es una **plataforma compartida**: el **Servicio de Salud del Reloncaví** (en adelante, «SSR Reloncaví») la desarrolla, publica y opera como instancia técnica, y otros Servicios de Salud pueden **adoptarla** para sus procesos de evaluación. Cada SS mantiene **datos separados**; la confidencialidad entre territorios es obligatoria.
+Centinela es una **plataforma compartida**: **{{instance.ss_display_name}}** (en adelante, el «operador de la instancia») la opera como instancia técnica en este despliegue, y otros Servicios de Salud pueden **adoptarla** para sus procesos de evaluación. Cada SS mantiene **datos separados**; la confidencialidad entre territorios es obligatoria.
 
 | Actor | Rol en la plataforma |
 | --- | --- |
-| **SSR Reloncaví** | Desarrollo, evolución, operación de la instancia y soporte de producto |
+| **{{instance.ss_display_name}}** | Operación de esta instancia y soporte de producto en el despliegue |
 | **SS adoptante** | Administración de usuarios, parametrización territorial y operación de instrumentos habilitados en su territorio |
 | **MINSAL** | Marco normativo y evaluación de instrumentos; **no** es operador centralizado de Centinela |
 | **Usuario** | Accede con credenciales institucionales en contexto de su SS y rol |
 
-En materia de datos personales, el tratamiento se rige por la [Política de privacidad](/legal/politica-de-privacidad), donde se describe el modelo de **co-responsabilidad** entre SSR Reloncaví (plataforma) y el SS adoptante del usuario (datos operativos de su territorio).
+En materia de datos personales, el tratamiento se rige por la [Política de privacidad](/legal/politica-de-privacidad), donde se describe el modelo de **co-responsabilidad** entre el operador de la instancia (plataforma) y el SS adoptante del usuario (datos operativos de su territorio).
 
 ### Identificación del operador de la plataforma
 
-- **Razón social:** Servicio de Salud del Reloncaví
+- **Razón social / nombre:** {{instance.ss_display_name}}
+- **Unidad:** {{instance.unit_name}}
+- **URL institucional:** {{instance.ss_url}}
 - **Domicilio:** [DOMICILIO_LEGAL] _(pendiente validación institucional)_
 - **Correo de contacto institucional:** [CORREO_INSTITUCIONAL] _(pendiente validación institucional)_
 
-Para asuntos propios de un SS adoptante distinto del Reloncaví, el usuario debe canalizar sus consultas operativas o de acceso ante la autoridad o unidad de gestión de **su Servicio de Salud de pertenencia**.
+Para asuntos propios de un SS adoptante distinto del operador de esta instancia, el usuario debe canalizar sus consultas operativas o de acceso ante la autoridad o unidad de gestión de **su Servicio de Salud de pertenencia**.
 
 ## 3. Módulos e instrumentos
 
@@ -109,7 +113,7 @@ El operador de la plataforma podrá **actualizar** estos Términos de uso. Se in
 
 ## 10. Ley aplicable y reclamos
 
-Estos términos se interpretan conforme a las **leyes de la República de Chile**. Las controversias o reclamos se canalizarán por los medios que el SS de pertenencia del usuario o el SSR Reloncaví dispongan, según corresponda, sin perjuicio de las vías que correspondan según la naturaleza jurídica de la relación (administrativa, laboral, etc.).
+Estos términos se interpretan conforme a las **leyes de la República de Chile**. Las controversias o reclamos se canalizarán por los medios que el SS de pertenencia del usuario o el operador de esta instancia ({{instance.ss_display_name}}) dispongan, según corresponda, sin perjuicio de las vías que correspondan según la naturaleza jurídica de la relación (administrativa, laboral, etc.).
 
 ## 11. Política de privacidad
 

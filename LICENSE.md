@@ -27,6 +27,8 @@ Las bibliotecas y frameworks incluidos como dependencias (Composer, npm, etc.) p
 
 La distribución pública del código se rige por esta licencia y por el texto oficial de la EUPL. Quienes reciban una copia válida pueden usarla bajo EUPL-1.2 (o versión posterior, a elección del licenciatario).
 
+**No se requiere autorización adicional** para ejercer los derechos que la EUPL-1.2 concede (uso, modificación, redistribución y demás derechos según el texto oficial). La titularidad patrimonial del SSDR no implica un permiso caso a caso para quienes ya recibieron una copia válida bajo esta licencia.
+
 ## Contacto
 
 Consultas sobre licencia o contribución: ver [`README.md`](README.md) y [`SECURITY.md`](SECURITY.md) (reporte de vulnerabilidades vía canal privado de GitHub cuando esté habilitado).

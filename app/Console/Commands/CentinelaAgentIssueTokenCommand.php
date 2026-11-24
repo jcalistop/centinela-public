@@ -84,7 +84,7 @@ class CentinelaAgentIssueTokenCommand extends Command
         $ttlOption = $this->option('ttl');
         $ttlMinutes = $ttlOption !== null && $ttlOption !== ''
             ? (int) $ttlOption
-            : (int) config('centinela.agent_api.token_ttl_minutes', 10080);
+            : (int) config('centinela.agent_api.token_ttl_minutes', 43200);
 
         if ($ttlMinutes < 1) {
             $this->error('TTL debe ser >= 1 minuto.');

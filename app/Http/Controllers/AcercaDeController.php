@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Support\AcercaDePages;
+use App\Support\Configuration\InstanceIdentityMarkdown;
 use App\Support\MarkdownMermaid;
 use App\Support\MarkdownToc;
 use Illuminate\Contracts\View\View;
@@ -23,7 +24,7 @@ class AcercaDeController extends Controller
             throw new NotFoundHttpException('Documento no disponible.');
         }
 
-        $markdown = (string) file_get_contents($path);
+        $markdown = InstanceIdentityMarkdown::apply((string) file_get_contents($path));
         $markdownHtml = MarkdownMermaid::toHtml($markdown);
         $enriched = MarkdownToc::enrich($markdownHtml);
 

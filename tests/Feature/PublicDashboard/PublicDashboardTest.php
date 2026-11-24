@@ -107,7 +107,8 @@ class PublicDashboardTest extends TestCase
         $response->assertSee('Metas Ley 18.834', false);
         $response->assertSee('En desarrollo', false);
         $response->assertSee('ADP', false);
-        $response->assertSee('Servicio de Salud de Reloncaví', false);
+        $response->assertSee('SS de prueba', false);
+        $response->assertDontSee('Reloncaví', false);
         $response->assertSee('Volver al dashboard público', false);
         $response->assertSee(route('centinela.publico.landing'), false);
         $response->assertSee('solicitar acceso', false);

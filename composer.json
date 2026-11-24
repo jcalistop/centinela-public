@@ -29,7 +29,7 @@
         "barryvdh/laravel-debugbar": "^3.13",
         "fakerphp/faker": "^1.9.1",
         "laravel-lang/common": "^6.8",
-        "laravel/boost": "^1.8",
+        "laravel/boost": "^2.0",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",

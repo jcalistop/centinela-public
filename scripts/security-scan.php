@@ -13,6 +13,7 @@ $excludeDirs = [
     $root.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'build',
     $root.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'vendor',
     $root.DIRECTORY_SEPARATOR.'docs'.DIRECTORY_SEPARATOR.'releases',
+    $root.DIRECTORY_SEPARATOR.'docs'.DIRECTORY_SEPARATOR.'business',
     $root.DIRECTORY_SEPARATOR.'.git',
 ];
 

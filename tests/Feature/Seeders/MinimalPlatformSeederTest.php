@@ -4,6 +4,7 @@ namespace Tests\Feature\Seeders;
 
 use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
+use Database\Seeders\MinimalPlatformSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
@@ -18,11 +19,11 @@ class MinimalPlatformSeederTest extends TestCase
 
         $this->assertDatabaseHas('roles', ['id' => 1, 'name' => 'admin']);
         $this->assertDatabaseHas('roles', ['id' => 5, 'name' => 'parametrizador']);
+        // Con UsableCatalog CEN, id 1 suele ser «No Aplica»; no se fuerza «SS de prueba».
         $this->assertDatabaseHas('cen_hie_dependencies', [
             'id' => 1,
-            'nombre' => 'No Aplica',
-            'tipo_dependencia' => 'OTRO',
         ]);
+        $this->assertGreaterThan(0, DB::table('cen_hie_dependencies')->count());
         $this->assertDatabaseHas('permissions', ['key' => 'browse_admin']);
         $this->assertTrue(
             DB::table('permission_role')
@@ -66,6 +67,19 @@ class MinimalPlatformSeederTest extends TestCase
         ]);
         $this->assertDatabaseHas('settings', ['key' => 'services.git_binary_path', 'value' => '']);
         $this->assertDatabaseHas('settings', ['key' => 'services.db_dump_path', 'value' => '']);
+        $this->assertDatabaseHas('settings', [
+            'key' => 'instance.ss_display_name',
+            'value' => 'SS de prueba',
+            'group' => 'Servicio de Salud',
+        ]);
+        $this->assertDatabaseHas('settings', [
+            'key' => 'instance.ss_url',
+            'value' => '',
+        ]);
+        $this->assertDatabaseHas('settings', [
+            'key' => 'instance.unit_name',
+            'value' => 'Departamento de Control de Gestión',
+        ]);
         $this->assertDatabaseHas('years', [
             'ano' => (int) now()->year,
             'default' => 1,
@@ -75,6 +89,20 @@ class MinimalPlatformSeederTest extends TestCase
         $this->assertNotNull($admin);
         $this->assertSame(1, (int) $admin->role_id);
         $this->assertSame(1, (int) $admin->cen_hie_dependency_id);
+    }
+
+    public function test_minimal_platform_seeds_ss_de_prueba_when_dependencies_empty(): void
+    {
+        DB::table('cen_hie_dependencies')->delete();
+
+        $this->seed(MinimalPlatformSeeder::class);
+
+        $this->assertDatabaseHas('cen_hie_dependencies', [
+            'codigo' => 'SS-PRUEBA',
+            'nombre' => 'SS de prueba',
+            'tipo_dependencia' => 'SERVICIO',
+            'habilitado' => 1,
+        ]);
     }
 
     public function test_database_seeder_loads_catalog_addresses_without_evaluations(): void

@@ -88,6 +88,7 @@ class SettingsManager extends Component
     public function orderedSettingsTabSlugs(): array
     {
         $preferredOrder = [
+            'Servicio de Salud',
             'Modulos',
             'Deploy',
             'Notificaciones',

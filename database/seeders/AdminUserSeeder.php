@@ -19,13 +19,21 @@ class AdminUserSeeder extends Seeder
         $existingUser = User::where('email', $adminEmail)->first();
 
         if (! $existingUser) {
-            // Crear usuario administrador
+            // SDD-338: preferir SS de prueba (install limpia); fallback id 1.
+            $dependencyId = (int) (DB::table('cen_hie_dependencies')
+                ->where('codigo', 'SS-PRUEBA')
+                ->value('id')
+                ?? DB::table('cen_hie_dependencies')
+                    ->where('nombre', 'SS de prueba')
+                    ->value('id')
+                ?? 1);
+
             $adminUser = User::create([
                 'role_id' => 1, // ID del rol 'admin'
                 'name' => 'Administrador del Sistema',
                 'email' => $adminEmail,
                 'password' => Hash::make('password'), // Contraseña por defecto
-                'cen_hie_dependency_id' => 1, // Dependencia por defecto
+                'cen_hie_dependency_id' => $dependencyId,
                 'email_verified_at' => now(),
             ]);
 

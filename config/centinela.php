@@ -11,6 +11,16 @@ return [
     'contact_mail_to' => env('CENTINELA_CONTACT_MAIL_TO', 'centinela-ops@ejemplo.gob.cl'),
 
     /**
+     * Identidad pública de la instalación (SDD-338). Operativo vía settings BD
+     * `instance.*` (SettingsBridge). Distinto del SS de tenancy del usuario.
+     */
+    'instance' => [
+        'ss_display_name' => env('CENTINELA_INSTANCE_SS_DISPLAY_NAME', 'SS de prueba'),
+        'ss_url' => env('CENTINELA_INSTANCE_SS_URL', ''),
+        'unit_name' => env('CENTINELA_INSTANCE_UNIT_NAME', 'Departamento de Control de Gestión'),
+    ],
+
+    /**
      * Hosts allowlist para paneles `embed_externo` (SDD-290).
      * `*.dominio` coincide con el apex y subdominios. ArcGIS exige path público conocido.
      *
@@ -132,7 +142,7 @@ return [
             static fn (string $v): string => trim($v),
             explode(',', (string) env('CENTINELA_AGENT_IP_ALLOWLIST', ''))
         ))),
-        'token_ttl_minutes' => (int) (filter_var(env('CENTINELA_AGENT_TOKEN_TTL_MINUTES', 10080), FILTER_VALIDATE_INT) ?: 10080),
+        'token_ttl_minutes' => (int) (filter_var(env('CENTINELA_AGENT_TOKEN_TTL_MINUTES', 43200), FILTER_VALIDATE_INT) ?: 43200),
         'throttle_per_minute' => (int) (filter_var(env('CENTINELA_AGENT_THROTTLE_PER_MINUTE', 120), FILTER_VALIDATE_INT) ?: 120),
         'request_log_retention_days' => (int) (filter_var(env('CENTINELA_AGENT_REQUEST_LOG_RETENTION_DAYS', 90), FILTER_VALIDATE_INT) ?: 90),
     ],
@@ -564,6 +574,11 @@ return [
         'system.failed_login_retention_days' => 'centinela.security.failed_login_retention_days',
         'system.scheduler_alert_grace_failures' => 'centinela.scheduler.alert_grace_failures',
         'system.metas_recalc_debounce_seconds' => 'centinela.metas.recalculation_debounce_seconds',
+
+        // === instance.* -> centinela.instance.* ===
+        'instance.ss_display_name' => 'centinela.instance.ss_display_name',
+        'instance.ss_url' => 'centinela.instance.ss_url',
+        'instance.unit_name' => 'centinela.instance.unit_name',
 
         // === notifications.* -> centinela.* ===
         'notifications.backup_email' => 'centinela.backup.email_address',

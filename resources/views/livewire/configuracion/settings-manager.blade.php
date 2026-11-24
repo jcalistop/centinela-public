@@ -179,6 +179,7 @@
         @php
             $tabIcons = [
                 'general' => 'voyager-paint-bucket',
+                'servicio-de-salud' => 'voyager-company',
                 'modulos' => 'voyager-power',
                 'deploy' => 'voyager-upload',
                 'notificaciones' => 'voyager-bell',

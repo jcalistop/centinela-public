@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Support\Configuration\InstanceIdentityMarkdown;
 use App\Support\MarkdownMermaid;
 use Illuminate\Contracts\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -56,7 +57,7 @@ class CentinelaLegalDocController extends Controller
             throw new NotFoundHttpException('Documento legal no disponible.');
         }
 
-        $markdown = (string) file_get_contents($path);
+        $markdown = InstanceIdentityMarkdown::apply((string) file_get_contents($path));
         $markdownHtml = MarkdownMermaid::toHtml($markdown);
 
         return view('centinela.legal.markdown', [
