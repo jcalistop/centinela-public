@@ -24,8 +24,8 @@ class AdminUserSeeder extends Seeder
                 ->where('codigo', 'SS-PRUEBA')
                 ->value('id')
                 ?? DB::table('cen_hie_dependencies')
-                ->where('nombre', 'SS de prueba')
-                ->value('id')
+                    ->where('nombre', 'SS de prueba')
+                    ->value('id')
                 ?? 1);
 
             $adminUser = User::create([

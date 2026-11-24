@@ -568,7 +568,7 @@ class MinimalPlatformSeeder extends Seeder
 
         if ($settingsItems->isNotEmpty()) {
             $keep = $settingsItems->first(
-                fn($item): bool => $item->parent_id !== null
+                fn ($item): bool => $item->parent_id !== null
             ) ?? $settingsItems->first();
 
             foreach ($settingsItems as $item) {

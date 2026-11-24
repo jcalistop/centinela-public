@@ -139,7 +139,7 @@ return [
         'enabled' => filter_var(env('CENTINELA_AGENT_API_ENABLED', false), FILTER_VALIDATE_BOOLEAN),
         /** Lista separada por comas: IPs o CIDR (ej. 10.0.0.0/8,192.168.1.10). Vacía = no restringe IP. */
         'ip_allowlist' => array_values(array_filter(array_map(
-            static fn(string $v): string => trim($v),
+            static fn (string $v): string => trim($v),
             explode(',', (string) env('CENTINELA_AGENT_IP_ALLOWLIST', ''))
         ))),
         'token_ttl_minutes' => (int) (filter_var(env('CENTINELA_AGENT_TOKEN_TTL_MINUTES', 43200), FILTER_VALIDATE_INT) ?: 43200),

@@ -30,12 +30,12 @@ class FooterSupportLegendTest extends TestCase
 
         Config::set('centinela.support.enabled', true);
 
-        $this->year = Year::unguarded(fn() => Year::create([
+        $this->year = Year::unguarded(fn () => Year::create([
             'ano' => 2026,
             'default' => true,
         ]));
 
-        CenHieDependency::unguarded(fn() => CenHieDependency::create([
+        CenHieDependency::unguarded(fn () => CenHieDependency::create([
             'id' => 1,
             'codigo' => 'SS01',
             'nombre' => 'Servicio de Salud Test',
@@ -60,8 +60,8 @@ class FooterSupportLegendTest extends TestCase
         $role = Role::firstOrCreate(['name' => $roleName], ['display_name' => ucfirst($roleName)]);
         $this->attachBrowseAdmin($role);
 
-        $user = User::unguarded(fn() => User::create([
-            'name' => 'Footer ' . $roleName,
+        $user = User::unguarded(fn () => User::create([
+            'name' => 'Footer '.$roleName,
             'email' => $email,
             'password' => Hash::make('password'),
             'role_id' => $role->id,

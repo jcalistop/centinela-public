@@ -51,7 +51,7 @@ class CentinelaLegalDocController extends Controller
         }
 
         $meta = self::DOCS[$slug];
-        $path = resource_path('docs/centinela/' . $meta['file']);
+        $path = resource_path('docs/centinela/'.$meta['file']);
 
         if (! is_readable($path)) {
             throw new NotFoundHttpException('Documento legal no disponible.');

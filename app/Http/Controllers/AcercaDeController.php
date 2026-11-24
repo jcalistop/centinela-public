@@ -18,7 +18,7 @@ class AcercaDeController extends Controller
         }
 
         $page = AcercaDePages::PAGES[$slug];
-        $path = resource_path('docs/centinela/acerca-de/' . $page['file']);
+        $path = resource_path('docs/centinela/acerca-de/'.$page['file']);
 
         if (! is_readable($path)) {
             throw new NotFoundHttpException('Documento no disponible.');

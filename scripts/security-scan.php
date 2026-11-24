@@ -4,17 +4,17 @@
  * Simple security scan to detect patterns that shouldn't exist in app code.
  * Intended to run in CI. Exits with non-zero code when dangerous patterns are found.
  */
-$root = __DIR__ . DIRECTORY_SEPARATOR . '..';
+$root = __DIR__.DIRECTORY_SEPARATOR.'..';
 
 $excludeDirs = [
-    $root . DIRECTORY_SEPARATOR . 'vendor',
-    $root . DIRECTORY_SEPARATOR . 'storage',
-    $root . DIRECTORY_SEPARATOR . 'node_modules',
-    $root . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'build',
-    $root . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'vendor',
-    $root . DIRECTORY_SEPARATOR . 'docs' . DIRECTORY_SEPARATOR . 'releases',
-    $root . DIRECTORY_SEPARATOR . 'docs' . DIRECTORY_SEPARATOR . 'business',
-    $root . DIRECTORY_SEPARATOR . '.git',
+    $root.DIRECTORY_SEPARATOR.'vendor',
+    $root.DIRECTORY_SEPARATOR.'storage',
+    $root.DIRECTORY_SEPARATOR.'node_modules',
+    $root.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'build',
+    $root.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'vendor',
+    $root.DIRECTORY_SEPARATOR.'docs'.DIRECTORY_SEPARATOR.'releases',
+    $root.DIRECTORY_SEPARATOR.'docs'.DIRECTORY_SEPARATOR.'business',
+    $root.DIRECTORY_SEPARATOR.'.git',
 ];
 
 $dangerousPatterns = [
@@ -30,13 +30,13 @@ $dangerousPatterns = [
 
 // Allow list: files where drops are expected (migrations/stubs) or system commands are necessary (backup)
 $allowIfPathContains = [
-    DIRECTORY_SEPARATOR . 'database' . DIRECTORY_SEPARATOR . 'migrations' . DIRECTORY_SEPARATOR,
-    DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR,
-    DIRECTORY_SEPARATOR . 'Console' . DIRECTORY_SEPARATOR . 'Commands' . DIRECTORY_SEPARATOR . 'DatabaseBackup.php',
-    DIRECTORY_SEPARATOR . 'Console' . DIRECTORY_SEPARATOR . 'Commands' . DIRECTORY_SEPARATOR . 'GitPullCommand.php',
-    DIRECTORY_SEPARATOR . 'Support' . DIRECTORY_SEPARATOR . 'Deploy' . DIRECTORY_SEPARATOR . 'DeployOrchestrator.php',
-    DIRECTORY_SEPARATOR . 'Support' . DIRECTORY_SEPARATOR . 'Deploy' . DIRECTORY_SEPARATOR . 'DeployedVersionResolver.php',
-    DIRECTORY_SEPARATOR . 'scripts' . DIRECTORY_SEPARATOR . 'sdd-validate.php',
+    DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR,
+    DIRECTORY_SEPARATOR.'stubs'.DIRECTORY_SEPARATOR,
+    DIRECTORY_SEPARATOR.'Console'.DIRECTORY_SEPARATOR.'Commands'.DIRECTORY_SEPARATOR.'DatabaseBackup.php',
+    DIRECTORY_SEPARATOR.'Console'.DIRECTORY_SEPARATOR.'Commands'.DIRECTORY_SEPARATOR.'GitPullCommand.php',
+    DIRECTORY_SEPARATOR.'Support'.DIRECTORY_SEPARATOR.'Deploy'.DIRECTORY_SEPARATOR.'DeployOrchestrator.php',
+    DIRECTORY_SEPARATOR.'Support'.DIRECTORY_SEPARATOR.'Deploy'.DIRECTORY_SEPARATOR.'DeployedVersionResolver.php',
+    DIRECTORY_SEPARATOR.'scripts'.DIRECTORY_SEPARATOR.'sdd-validate.php',
 ];
 
 $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root));
@@ -106,4 +106,4 @@ if (! empty($issues)) {
     exit(1);
 }
 
-echo 'Security scan passed: no dangerous patterns found.' . PHP_EOL;
+echo 'Security scan passed: no dangerous patterns found.'.PHP_EOL;
